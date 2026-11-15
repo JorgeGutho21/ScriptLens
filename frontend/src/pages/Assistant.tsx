@@ -2,7 +2,7 @@ import { Bot, CheckCircle2, ChevronRight, Cpu, Download, HardDrive, History, Loc
 import { useEffect, useRef, useState } from 'react'
 import { Confirm } from '../components/Confirm'
 import { Card } from '../components/ui'
-import { api, apiDelete, apiStream } from '../lib/api'
+import { api, apiDelete, apiStream, openLink } from '../lib/api'
 
 interface Status {
   instalado_o_activo: boolean
@@ -214,7 +214,7 @@ export function AssistantPage() {
               <p className="flex gap-1.5"><HardDrive size={14} className="mt-0.5 shrink-0" /> Modelo recomendado: Qwen3 4B Instruct (descarga ≈ 2,5 GB).</p>
               <p className="flex gap-1.5"><Cpu size={14} className="mt-0.5 shrink-0" /> Recursos: al menos 8 GB de RAM; con 4–5 GB libres responde en 10–30 s en un portátil sin tarjeta gráfica dedicada.</p>
               <ol className="list-decimal space-y-1 pl-5">
-                <li>Descargue Ollama desde su sitio oficial: ollama.com/download.</li>
+                <li>Descargue Ollama desde su sitio oficial: <button onClick={() => openLink('https://ollama.com/download')} className="text-accent hover:underline">ollama.com/download</button>.</li>
                 <li>Instálelo y ábralo (queda en la bandeja del sistema).</li>
                 <li>Vuelva aquí y descargue el modelo con el botón de abajo.</li>
                 <li>Verifique: el indicador superior debe decir «Ollama activo».</li>

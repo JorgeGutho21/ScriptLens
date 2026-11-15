@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Lens3D } from './components/Lens3D'
 import { LogoMark } from './components/Logo'
 import { Onboarding } from './components/Onboarding'
 import { Footer, Sidebar, TopBar, type PageId } from './components/Shell'
@@ -31,8 +32,9 @@ function Splash({ error }: { error: string | null }) {
   return (
     <div className="grid h-full place-items-center">
       <div className="flex flex-col items-center gap-5 text-center">
-        <div className="animate-rise">
-          <LogoMark size={76} />
+        <div className="animate-rise grid place-items-center">
+          <Lens3D size={150} />
+          <LogoMark size={44} />
         </div>
         <div>
           <div className="font-display text-2xl font-semibold">

@@ -236,6 +236,9 @@ export const api = <T,>(path: string, params?: Record<string, string | number>) 
 export const apiPost = <T,>(path: string, body?: unknown, params?: Record<string, string | number>) => request<T>('POST', path, params, body ?? {})
 export const apiDelete = <T,>(path: string) => request<T>('DELETE', path)
 
+/** Abre en el navegador una dirección de la lista permitida por el motor (repositorio, Ollama). */
+export const openLink = (url: string) => request('POST', '/api/open-link', undefined, { url })
+
 export interface DiagnosticRow {
   id: number
   created_at: number

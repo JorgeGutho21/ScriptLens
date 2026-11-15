@@ -44,6 +44,24 @@ def monitoring_router(engine: Engine) -> APIRouter:
             "uptime_backend": round(time.time() - engine.sampler.started_at, 1),
         }
 
+    @r.post("/api/open-link")
+    def open_link(body: dict):
+        """Abre en el navegador solo direcciones oficiales conocidas (lista permitida)."""
+        url = str(body.get("url", ""))
+        allowed = ("https://github.com/JorgeGutho21/ScriptLens", "https://ollama.com/download")
+        if not url.startswith(allowed) or any(c in url for c in ' "\'<>|^&'):
+            raise HTTPException(400, "Dirección no permitida")
+        import webbrowser
+
+        webbrowser.open(url)
+        return {"abierto": url}
+
+    @r.get("/api/updates/check")
+    def check_updates():
+        from .updates import check
+
+        return check()
+
     @r.get("/api/system/info")
     def info():
         return engine.info()

@@ -1,4 +1,7 @@
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, RefreshCcw } from 'lucide-react'
+import { useState } from 'react'
+import { Lens3D } from '../components/Lens3D'
+import { api, openLink } from '../lib/api'
 import type { ReactNode } from 'react'
 import { LogoMark } from '../components/Logo'
 import { Card } from '../components/ui'
@@ -70,12 +73,35 @@ export function SettingsPage() {
   )
 }
 
+interface UpdateInfo {
+  actual: string
+  ultima: string | null
+  hay_nueva: boolean
+  url?: string
+  mensaje: string
+}
+
 export function AboutPage() {
+  const [upd, setUpd] = useState<UpdateInfo | null>(null)
+  const [checking, setChecking] = useState(false)
+  const check = async () => {
+    setChecking(true)
+    try {
+      setUpd(await api<UpdateInfo>('/api/updates/check'))
+    } finally {
+      setChecking(false)
+    }
+  }
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto flex max-w-2xl flex-col gap-5">
       <Card>
         <div className="flex items-center gap-4">
-          <LogoMark size={64} />
+          <div className="relative">
+            <LogoMark size={64} />
+          </div>
+          <div className="ml-auto order-last hidden sm:block">
+            <Lens3D size={120} />
+          </div>
           <div>
             <h2 className="font-display text-2xl font-semibold">
               ScriptLens <span className="text-accent">IA</span>
@@ -94,9 +120,9 @@ export function AboutPage() {
           <dd className="text-fg">@JorgeGutho21</dd>
           <dt className="text-faint">Repositorio</dt>
           <dd>
-            <a href={REPOSITORY_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent hover:underline">
+            <button onClick={() => openLink(REPOSITORY_URL)} className="inline-flex items-center gap-1 text-accent hover:underline">
               github.com/JorgeGutho21/ScriptLens <ExternalLink size={13} />
-            </a>
+            </button>
           </dd>
           <dt className="text-faint">Licencia</dt>
           <dd className="text-fg">MIT. Componentes de terceros: ver THIRD_PARTY_NOTICES.md</dd>
@@ -104,6 +130,23 @@ export function AboutPage() {
         <p className="mt-5 border-t border-line pt-4 text-xs leading-relaxed text-faint">
           Privacidad: todo el análisis se realiza en este equipo. ScriptLens no envía listas de procesos, registros ni datos personales a ningún servidor.
         </p>
+      </Card>
+      <Card title="Actualizaciones">
+        <p className="mb-3 text-sm text-muted">ScriptLens solo consulta GitHub cuando usted pulsa el botón, no envía datos del equipo y nunca instala actualizaciones por sí misma.</p>
+        <button onClick={check} disabled={checking} className="flex items-center gap-2 rounded-xl border border-line px-4 py-2 text-sm hover:bg-surface-2 disabled:opacity-60">
+          <RefreshCcw size={15} className={checking ? 'animate-spin' : ''} /> Buscar actualizaciones
+        </button>
+        {upd && (
+          <div className="mt-3 text-sm" role="status">
+            <p className={upd.hay_nueva ? 'text-warn' : 'text-muted'}>{upd.mensaje}</p>
+            <p className="text-xs text-faint">Versión instalada: {upd.actual}{upd.ultima ? ` · Última publicada: ${upd.ultima}` : ''}</p>
+            {upd.hay_nueva && upd.url && (
+              <button onClick={() => openLink(upd.url!)} className="mt-2 text-accent hover:underline">
+                Abrir la página de la versión
+              </button>
+            )}
+          </div>
+        )}
       </Card>
     </div>
   )
