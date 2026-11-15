@@ -22,15 +22,20 @@ export interface Executed {
 export function useSupervised(onDone?: (r: Executed) => void) {
   const [prepared, setPrepared] = useState<(Prepared & { title: string; label: string; danger: boolean }) | null>(null)
   const [busy, setBusy] = useState(false)
+  const [preparing, setPreparing] = useState(false)
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null)
 
   const request = async (path: string, body: unknown, title: string, label: string, danger = false) => {
+    if (preparing) return // evita solicitudes duplicadas mientras se prepara el resumen
     setMessage(null)
+    setPreparing(true)
     try {
       const p = await apiPost<Prepared>(path, body)
       setPrepared({ ...p, title, label, danger })
     } catch (e) {
       setMessage({ ok: false, text: (e as Error).message })
+    } finally {
+      setPreparing(false)
     }
   }
 
@@ -63,11 +68,16 @@ export function useSupervised(onDone?: (r: Executed) => void) {
     </Confirm>
   ) : null
 
-  const banner = message ? (
+  const banner = preparing ? (
+    <p role="status" aria-live="polite" className="flex items-center gap-2 rounded-xl bg-surface-2 px-3.5 py-2.5 text-sm text-muted">
+      <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-accent border-t-transparent" aria-hidden="true" />
+      Preparando el resumen de la acción… Nada se modifica hasta que usted confirme.
+    </p>
+  ) : message ? (
     <p role="status" className={`rounded-xl px-3.5 py-2.5 text-sm ${message.ok ? 'bg-ok-soft text-ok' : 'bg-danger-soft text-danger'}`}>
       {message.text}
     </p>
   ) : null
 
-  return { request, dialog, banner }
+  return { request, dialog, banner, preparing }
 }

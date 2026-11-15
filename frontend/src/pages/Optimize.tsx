@@ -133,7 +133,9 @@ export function OptimizePage({ goProcesses }: { goProcesses: () => void }) {
                     <div className="text-xs text-faint">{a.detail}</div>
                   </td>
                   <td className="py-2 text-right tabular text-muted">
-                    {a.before?.ram_used != null ? bytes(a.before.ram_used) : '—'} → {a.after?.ram_used != null ? bytes(a.after.ram_used) : 'midiendo…'}
+                    {a.before?.ram_used == null
+                      ? '—' // acción sin medición (p. ej., un informe)
+                      : `${bytes(a.before.ram_used)} → ${a.after?.ram_used != null ? bytes(a.after.ram_used) : Date.now() / 1000 - a.created_at < 60 ? 'midiendo…' : 'sin medición'}`}
                   </td>
                 </tr>
               ))}

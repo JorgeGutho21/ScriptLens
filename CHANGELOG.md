@@ -23,3 +23,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 - Interruptores dibujados como activados en celdas alineadas a la derecha.
 - Motor huérfano al cerrar la aplicación; instancias duplicadas.
 - Análisis de scripts de 1 MB: de 10,4 s a 3,4 s.
+- **(P1)** El motor empaquetado en modo ventana no podía anunciar su puerto a la aplicación: se empaqueta en modo consola (ventana oculta) y, como defensa, escribe en el descriptor heredado si falta `sys.stdout`.
+- **(P1)** Con `TEMP` vacía, la limpieza de temporales actuaba sobre el directorio de trabajo: se rechazan rutas ausentes, relativas, personales, del sistema o enlazadas, en la vista previa y otra vez al ejecutar, y no se entra en uniones NTFS.
+- Los informes no llegaban a la carpeta Documentos visible cuando OneDrive la redirige.
+- El asistente tomaba «esta alerta» como nombre de proceso, no consultaba los elementos en revisión ante «¿qué proceso requiere investigación?» y daba un ranking de CPU nulo recién iniciado.
+- Acerca de y el README indicaban una carpeta de datos incorrecta.
+
+### Cambiado
+- El instalador se publica como `ScriptLens-IA_<versión>_x64-setup.exe` (sin espacios) con su `.sha256`.
+- README reescrito como página de instalación; nueva *Guía de instalación* (DOCX y PDF) y matriz de compatibilidad.
+- Acerca de muestra la identidad oficial, la información técnica y las rutas reales; la tabla de procesos se adapta a ventanas estrechas; el asistente permite comprobar de nuevo Ollama.
