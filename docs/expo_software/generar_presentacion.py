@@ -188,7 +188,7 @@ bullets(s, [
 
 # 10. Pruebas y distribución
 s = base("Pruebas y distribución", "Calidad")
-for i, (n, t) in enumerate([("110", "pruebas automatizadas aprobadas"), ("< 0,05 s", "lectura de ≈ 345 procesos (antes 3,4 s)"), ("49 MB", "instalador probado: instalar, desinstalar, reinstalar"), ("5", "defectos hallados en la app instalada y corregidos")]):
+for i, (n, t) in enumerate([("135", "pruebas automatizadas aprobadas"), ("< 0,05 s", "lectura de ≈ 345 procesos (antes 3,4 s)"), ("49 MB", "instalador probado: instalar, desinstalar, reinstalar"), ("5", "defectos hallados en la app instalada y corregidos")]):
     card(s, Inches(0.7 + i * 3.1), Inches(2.1), Inches(2.9), Inches(3.0), t, "", num=n)
 text(s, "GitHub Actions: pruebas del motor, compilación de la interfaz y del contenedor; flujo que genera el instalador con SHA-256.", Inches(0.7), Inches(5.6), Inches(12), Inches(0.8), 15, MUTED)
 

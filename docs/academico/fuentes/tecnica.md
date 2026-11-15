@@ -2,7 +2,7 @@
 
 # Resumen
 
-ScriptLens IA es una aplicación de escritorio para Windows que diagnostica el rendimiento y la seguridad del equipo, analiza scripts BAT, CMD y PowerShell sin ejecutarlos y explica sus resultados en lenguaje sencillo mediante un asistente de inteligencia artificial que funciona localmente. Se construyó con una interfaz Tauri 2, React y TypeScript, y con un motor de análisis en Python que usa psutil, la API nativa de Windows, SQLite, scikit-learn y Ollama. El proyecto conserva y amplía la propuesta académica previa del autor: un catálogo de 24 reglas asociadas a MITRE ATT&CK y un clasificador de regresión logística con clases balanceadas sobre rasgos TF-IDF de n-gramas de caracteres. La evaluación reproducible muestra, en validación cruzada sobre 180 scripts sintéticos, un F1 macro de 0,955 para el modelo y de 0,966 para la política híbrida; en un conjunto independiente de 18 scripts realistas, la política híbrida alcanzó un recall de 1,0 en la clase sensible, mientras que el modelo por sí solo obtuvo 0,667. El asistente usa Qwen3 4B Instruct mediante herramientas internas de solo lectura y verifica cada cifra de su respuesta contra los datos medidos. La aplicación se distribuye como un instalador NSIS de 49,26 MB que no requiere privilegios de administrador ni la instalación de Python, Node.js o Rust; se verificó su instalación, desinstalación, reinstalación y funcionamiento en Windows 11. El desarrollo se registró en commits progresivos y 110 pruebas automatizadas.
+ScriptLens IA es una aplicación de escritorio para Windows que diagnostica el rendimiento y la seguridad del equipo, analiza scripts BAT, CMD y PowerShell sin ejecutarlos y explica sus resultados en lenguaje sencillo mediante un asistente de inteligencia artificial que funciona localmente. Se construyó con una interfaz Tauri 2, React y TypeScript, y con un motor de análisis en Python que usa psutil, la API nativa de Windows, SQLite, scikit-learn y Ollama. El proyecto conserva y amplía la propuesta académica previa del autor: un catálogo de 24 reglas asociadas a MITRE ATT&CK y un clasificador de regresión logística con clases balanceadas sobre rasgos TF-IDF de n-gramas de caracteres. La evaluación reproducible muestra, en validación cruzada sobre 180 scripts sintéticos, un F1 macro de 0,955 para el modelo y de 0,966 para la política híbrida; en un conjunto independiente de 18 scripts realistas, la política híbrida alcanzó un recall de 1,0 en la clase sensible, mientras que el modelo por sí solo obtuvo 0,667. El asistente usa Qwen3 4B Instruct mediante herramientas internas de solo lectura y verifica cada cifra de su respuesta contra los datos medidos. La aplicación se distribuye como un instalador NSIS de 49,26 MB que no requiere privilegios de administrador ni la instalación de Python, Node.js o Rust; se verificó su instalación, desinstalación, reinstalación y funcionamiento en Windows 11. El desarrollo se registró en commits progresivos y 135 pruebas automatizadas.
 
 *Palabras clave:* diagnóstico de Windows, análisis estático, regresión logística, MITRE ATT&CK, inteligencia artificial local, Tauri.
 
@@ -173,7 +173,7 @@ Tabla: Estructura del repositorio
 | backend/ | Motor de análisis en Python (4 946 líneas) |
 | frontend/ | Interfaz React y TypeScript (3 733 líneas) |
 | src-tauri/ | Contenedor Rust, configuración e iconos |
-| tests/backend/ | 110 pruebas de pytest y conjunto realista de scripts |
+| tests/backend/ | 135 pruebas de pytest y conjunto realista de scripts |
 | scripts/ | Construcción del instalador, entorno MSVC, capturas, extracción de ATT&CK |
 | docs/ | Arquitectura, desarrollo, instalación, pruebas, capturas y documentos académicos |
 | .github/workflows/ | Integración continua e instalador |
@@ -328,10 +328,17 @@ Tabla: Commits principales de la rama de desarrollo
 | aab7b22 | Corregir defectos encontrados al probar la aplicación instalada |
 | 04f9709 | Preparar el instalador de Windows con el motor empaquetado |
 | 4c2e76a | Añadir capturas reales de la aplicación instalada |
+| fac9596 | Elaborar la documentación técnica, el informe de ExpoSoftware y el manual de usuario |
+| 109b712 | Corregir la comunicación del motor empaquetado con la interfaz Windows |
+| b2e4ce8 | Impedir limpiezas de temporales cuando TEMP no sea segura |
+| 0794f85 | Garantizar el anuncio de conexión del motor aunque falte stdout |
+| 8dc8706 | Proteger la limpieza de temporales frente a uniones y carpetas personales |
+| f6e962e | Corregir el enrutado del asistente para alertas, investigación y arranque reciente |
+| 451f19b | Respetar las carpetas de usuario redirigidas a OneDrive |
 
 # Pruebas
 
-Se ejecutaron 110 pruebas automatizadas con pytest, todas aprobadas al cierre, distribuidas en 13 archivos. Las pruebas usan procesos hijos reales para simular procesos que terminan durante la medición, una base de datos aislada para no tocar los datos del usuario y una clave del Registro de pruebas para el inicio automático. GitHub Actions ejecuta las pruebas del motor, la compilación con comprobación de tipos de la interfaz y `cargo check` del contenedor.
+Se ejecutaron 135 pruebas automatizadas con pytest, todas aprobadas al cierre, distribuidas en 14 archivos. La prueba de rendimiento CP6 (archivo de 5 MB truncado a 1 MB) tardó entre 3,4 y 8,5 s según la carga del equipo y falló una vez, con 17,5 s, mientras otro conjunto de pruebas y el modelo de lenguaje ocupaban el procesador; se repitió con menor carga y se aprobó. Las pruebas usan procesos hijos reales para simular procesos que terminan durante la medición, una base de datos aislada para no tocar los datos del usuario y una clave del Registro de pruebas para el inicio automático. GitHub Actions ejecuta las pruebas del motor, la compilación con comprobación de tipos de la interfaz y `cargo check` del contenedor.
 
 Tabla: Distribución de las pruebas automatizadas
 | Archivo | Pruebas | Qué comprueba |
@@ -343,8 +350,8 @@ Tabla: Distribución de las pruebas automatizadas
 | test_history.py | 5 | Migraciones, borrado en cascada, comparación sin causalidad |
 | test_security.py | 11 | Estructura de hallazgos, permisos insuficientes, recolección real |
 | test_scripts.py | 14 | Casos CP1–CP6, desofuscación, independencia de resultados, no ejecución |
-| test_actions.py | 8 | Token único, revalidación, protección, reversibilidad, limpieza acotada |
-| test_assistant.py | 24 | 15 preguntas obligatorias, saneamiento, verificación, ausencia de Ollama |
+| test_actions.py y test_known_folders.py | 23 | Token único, revalidación, protección, reversibilidad, TEMP vacía, relativa o personal, uniones NTFS, carpetas redirigidas a OneDrive |
+| test_assistant.py | 34 | 15 preguntas obligatorias, 10 preguntas de referencia, saneamiento, verificación, ausencia de Ollama |
 | test_reports.py y test_updates_links.py | 7 | PDF válido, marca de agua, lista permitida, actualizaciones sin red |
 
 Además se realizaron pruebas manuales en la aplicación instalada: recorrido de todas las pantallas, consultas reales al asistente, comparación de diagnósticos, generación de un informe, modo claro y oscuro, instalación, desinstalación, reinstalación e instancia única.
@@ -368,10 +375,26 @@ Tabla: Problemas encontrados durante el desarrollo
 | Dos instancias y dos motores | Sin control de instancia única |
 | Informes dentro de la carpeta del repositorio | Ruta predeterminada coincidente |
 | Análisis de 1 MB en 10,4 s | El catálogo se evaluaba cuatro veces sobre el mismo texto |
+| Motor empaquetado sin canal de arranque (P1) | PyInstaller en modo ventana deja `sys.stdout` en `None` y el puerto no llega a Tauri |
+| Limpieza fuera de la carpeta temporal (P1) | `TEMP` vacía se resolvía como el directorio de trabajo |
+| Recorrido de temporales dentro de uniones NTFS | `os.walk` entra en las uniones aunque no siga enlaces simbólicos |
+| Informes fuera de la carpeta Documentos visible | Documentos redirigida a OneDrive y ruta fija `%USERPROFILE%\Documents` |
+| «Esta» tomado como nombre de proceso por el asistente | Patrón de «qué significa…» sin lista de palabras excluidas |
+| Ranking de CPU nulo al iniciar | El promedio de un minuto aún no existía |
 
 # Correcciones
 
 Cada problema de la tabla anterior se corrigió y se cubrió con una prueba cuando fue posible: lectura nativa de procesos; script de entorno MSVC; escucha del socket antes de anunciar el arranque; vigilancia del PID de la aplicación; eliminación de la variable `PSModulePath`; carpeta de datos aislada para pruebas; corrección por contexto de P01; identificadores vigentes de ATT&CK; adopción de Qwen3 4B Instruct; efectos de React sin valor de retorno y límite de errores; posición fija del indicador de los interruptores; complemento de instancia única de Tauri; carpeta `Documentos\ScriptLens IA\Informes`; y memorización de los hallazgos, que redujo el análisis de 1 MB de 10,4 s a 3,4 s.
+
+# Revisión de cierre y defectos de prioridad alta
+
+La revisión automática del pull request señaló dos defectos de prioridad P1 que las pruebas anteriores no habían detectado. Ambos se corrigieron, se cubrieron con pruebas de regresión y se volvieron a comprobar con el instalador reconstruido.
+
+**Comunicación entre Tauri y el motor empaquetado.** El motor anuncia su puerto y su token en una única línea JSON por la salida estándar, y el contenedor Rust la lee de la tubería del proceso hijo. PyInstaller, en modo ventana (`--noconsole`), deja `sys.stdout` con valor `None`, de modo que el anuncio podía perderse y la aplicación quedarse en la pantalla de inicio. Se empaquetó el motor en modo consola, manteniendo la ventana oculta con la bandera `CREATE_NO_WINDOW` que ya aplicaba el contenedor, y se añadió una segunda defensa: si `sys.stdout` falta, el anuncio se escribe directamente en el descriptor de salida que Windows entregó al proceso. La corrección se validó instalando la aplicación y comprobando que el motor empaquetado responde a la interfaz.
+
+**Limpieza de archivos temporales.** Si la variable `TEMP` estaba vacía, `Path("").resolve()` devolvía el directorio de trabajo y la limpieza podía borrar archivos antiguos ajenos a la carpeta temporal; la comprobación de contención usaba esa misma raíz incorrecta. La validación actual rechaza, tanto en la vista previa como de nuevo en la ejecución, una variable ausente, vacía, relativa, inexistente o que sea un enlace, así como la raíz de una unidad, el perfil del usuario, cualquier carpeta que lo contenga, las carpetas personales conocidas y la carpeta de Windows. El recorrido no entra en enlaces simbólicos ni en uniones NTFS (`os.walk` sí entra en las uniones aunque no siga enlaces), cada archivo se resuelve y debe seguir dentro de la carpeta temporal, y la ejecución exige el token emitido por la confirmación del usuario. Las pruebas usan carpetas temporales aisladas: una unión hacia una carpeta externa con un documento antiguo comprueba que el documento permanece intacto mientras se elimina el residuo legítimo.
+
+**Otros defectos de la revisión de cierre.** Al recorrer las diez preguntas de referencia del asistente se encontraron tres fallos de enrutado: «¿Qué significa esta alerta?» tomaba «esta» como nombre de proceso, «¿Qué proceso requiere investigación?» solo consultaba el resumen de rendimiento y, recién iniciado el motor, el ranking de CPU devolvía promedios nulos que el modelo interpretaba como «ningún proceso usa CPU». Se añadieron la intención «alerta», una lista de palabras que no son procesos y una nota explícita cuando el motor lleva menos de un minuto midiendo. En la interfaz se completó la sección Acerca de con la identidad oficial y la información técnica, la tabla de procesos se adaptó al ancho mínimo de la ventana y el asistente ofrece «Comprobar de nuevo» cuando Ollama no está activo. La prueba del motor empaquetado en el equipo de desarrollo, cuya carpeta Documentos está redirigida a OneDrive, reveló que los informes se guardaban en `%USERPROFILE%\Documents`, una carpeta que el usuario no ve como «Documentos»; ahora las carpetas se obtienen de Windows con `SHGetKnownFolderPath` y la limpieza protege tanto las rutas reales como las clásicas. Por último, el instalador se publica con un nombre sin espacios, porque GitHub sustituye los espacios de los archivos adjuntos por puntos y los enlaces de la documentación no coincidirían.
 
 # Compilación
 

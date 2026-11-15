@@ -115,7 +115,9 @@ Tabla: Funcionalidades implementadas
 
 # Experimentos y pruebas
 
-Se ejecutaron 110 pruebas automatizadas, todas aprobadas, que incluyen procesos que terminan durante la medición, permisos insuficientes, ausencia de Ollama, rutas maliciosas tratadas como datos, tokens caducados y reutilizados, y los seis casos funcionales de la guía original. Se entrenó y evaluó el clasificador con un script reproducible. Por último, se instaló la aplicación con su instalador, se recorrieron todas las pantallas, se consultó al asistente con preguntas reales y se probaron la desinstalación, la reinstalación y la instancia única.
+Se ejecutaron 135 pruebas automatizadas, todas aprobadas, que incluyen procesos que terminan durante la medición, permisos insuficientes, ausencia de Ollama, rutas maliciosas tratadas como datos, tokens caducados y reutilizados, y los seis casos funcionales de la guía original. Se entrenó y evaluó el clasificador con un script reproducible. Por último, se instaló la aplicación con su instalador, se recorrieron todas las pantallas, se consultó al asistente con preguntas reales y se probaron la desinstalación, la reinstalación y la instancia única.
+
+La revisión del pull request antes de publicar encontró dos defectos graves que las pruebas no cubrían. El primero impedía que la aplicación empaquetada recibiera el puerto del motor, porque el empaquetado en modo ventana anulaba la salida estándar; el segundo permitía que, con la variable `TEMP` vacía, la limpieza de temporales actuara sobre el directorio de trabajo. Ambos se corrigieron, se añadieron pruebas de regresión con carpetas aisladas (incluida una unión NTFS hacia una carpeta externa) y se comprobaron con el instalador reconstruido. La misma revisión mostró que los informes no llegaban a la carpeta Documentos visible cuando OneDrive la redirige, y que el asistente confundía «esta alerta» con un nombre de proceso. La lección es que las pruebas automáticas no sustituyen a revisar el producto empaquetado en condiciones reales.
 
 # Resultados medidos
 
