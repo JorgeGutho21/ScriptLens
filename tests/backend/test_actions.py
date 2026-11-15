@@ -161,3 +161,43 @@ def test_installed_programs_are_listed_without_uninstall_strings(ctx):
     c, _ = ctx
     progs = c.get("/api/actions/programs").json()["programas"]
     assert progs and all("_uninstall" not in p for p in progs)
+
+
+@pytest.mark.parametrize("bad_temp", [None, "", ".", "relative\\temp"])
+def test_temp_cleanup_rejects_unsafe_environment(ctx, tmp_path, monkeypatch, bad_temp):
+    """La vista previa y la ejecución nunca deben operar desde el CWD."""
+    c, _ = ctx
+    if bad_temp is None:
+        monkeypatch.delenv("TEMP", raising=False)
+    else:
+        monkeypatch.setenv("TEMP", bad_temp)
+    outside = tmp_path / "documento_importante.txt"
+    outside.write_text("NO BORRAR", encoding="utf-8")
+    previous = os.getcwd()
+    try:
+        os.chdir(tmp_path)
+        assert c.get("/api/actions/temp/preview").status_code == 409
+        assert c.post("/api/actions/temp/prepare").status_code == 409
+        assert outside.read_text(encoding="utf-8") == "NO BORRAR"
+    finally:
+        os.chdir(previous)
+
+
+def test_temp_cleanup_revalidates_path_on_execution(ctx, tmp_path, monkeypatch):
+    """Si TEMP cambia tras preparar, la ejecución se cancela sin borrar nada."""
+    c, _ = ctx
+    temp = tmp_path / "temp"
+    temp.mkdir()
+    monkeypatch.setenv("TEMP", str(temp))
+    prep = c.post("/api/actions/temp/prepare").json()
+    assert prep["token"]
+    monkeypatch.delenv("TEMP")
+    outside = tmp_path / "documento_importante.txt"
+    outside.write_text("NO BORRAR", encoding="utf-8")
+    previous = os.getcwd()
+    try:
+        os.chdir(tmp_path)
+        assert c.post("/api/actions/execute", json={"token": prep["token"]}).status_code == 409
+        assert outside.read_text(encoding="utf-8") == "NO BORRAR"
+    finally:
+        os.chdir(previous)
