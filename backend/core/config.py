@@ -29,7 +29,7 @@ class Settings:
     host: str = "127.0.0.1"
     port: int = 0  # 0 = puerto libre asignado por el sistema
     token: str = ""
-    data_dir: Path = field(default_factory=default_data_dir)
+    data_dir: Path = field(default_factory=lambda: default_data_dir())
     # Muestreo del sistema
     sample_interval: float = 1.0  # segundos entre mediciones globales
     process_interval: float = 2.0  # segundos entre mediciones de procesos

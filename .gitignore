@@ -22,3 +22,6 @@ src-tauri/gen/
 # Sistema
 Thumbs.db
 .DS_Store
+
+# Datos de desarrollo del motor
+.dev-data/

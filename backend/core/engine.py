@@ -12,6 +12,7 @@ from backend.monitoring.sampler import SystemSampler, system_info
 from backend.processes.analysis import PathCache
 from backend.processes.collector import ProcessMonitor
 from backend.processes.signatures import SignatureCache
+from backend.storage.db import Database
 
 from .config import Settings
 
@@ -23,6 +24,7 @@ class Engine:
         self.processes = ProcessMonitor(settings.history_seconds)
         self.paths = PathCache()
         self.signatures = SignatureCache()
+        self.db = Database(settings.data_dir / "scriptlens.db")
         self._stop = threading.Event()
         self._threads: list[threading.Thread] = []
         self._info_cache: tuple[float, dict] | None = None
