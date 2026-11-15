@@ -2,6 +2,8 @@
 
 Esta guía distingue siempre **dónde** se realiza cada paso: navegador, Explorador de archivos, PowerShell o terminal del editor.
 
+> **Estado de publicación:** hasta que se vuelvan a ejecutar las pruebas y se reconstruya el instalador tras las correcciones de seguridad, esta guía describe el procedimiento previsto. No interprete la existencia de un instalador anterior como una versión segura o definitivamente aprobada.
+
 ## Requisitos mínimos
 
 | Elemento | Mínimo | Recomendado |
@@ -14,14 +16,14 @@ Esta guía distingue siempre **dónde** se realiza cada paso: navegador, Explora
 
 ## Método A — Instalación gráfica (para principiantes)
 
-1. **Navegador:** entre a <https://github.com/JorgeGutho21/ScriptLens> y pulse **Releases** en la columna derecha.
+1. **Navegador:** entre a <https://github.com/JorgeGutho21/ScriptLens> y pulse **Releases** en la columna derecha. Si aún no hay una versión estable publicada, deténgase aquí: todavía no hay instalador público validado.
 2. **Navegador:** en la versión más reciente, en «Assets», descargue `ScriptLens IA_0.1.0_x64-setup.exe` y `ScriptLens IA_0.1.0_x64-setup.exe.sha256`.
 3. **Verifique la procedencia:** la página debe pertenecer a `github.com/JorgeGutho21/ScriptLens`. Para comprobar que el archivo no fue alterado, siga el Método B (pasos 1–3).
 4. **Explorador de archivos:** haga doble clic en el instalador. Se abrirá el asistente de instalación (Figura 1).
 
    ![Figura 1. Primera pantalla del instalador de ScriptLens IA](../capturas/00_instalador_bienvenida.png)
 
-5. Si aparece **«Windows protegió su PC»** (SmartScreen), pulse **Más información → Ejecutar de todos modos**. El aviso aparece porque el instalador no tiene una firma de código comercial, no porque se haya detectado un problema.
+5. Si aparece **«Windows protegió su PC»** (SmartScreen), no omita automáticamente la advertencia. Compruebe el origen, la versión, el hash y las notas de seguridad. Un archivo sin firma puede generar avisos, pero también es necesario investigar cualquier alerta de seguridad real.
 6. Pulse **Siguiente**, acepte la licencia MIT y pulse **Instalar**. La instalación se realiza en `%LOCALAPPDATA%\ScriptLens IA` y crea accesos en el menú Inicio y el escritorio.
 7. Abra **ScriptLens IA** desde el menú Inicio. La primera vez el motor puede tardar hasta 30 segundos en iniciar mientras Microsoft Defender examina los archivos nuevos; las siguientes veces tarda unos 10 segundos.
 8. Se mostrará el asistente de primera ejecución (ocho pasos) que explica qué analiza la aplicación y qué datos permanecen en el equipo.
@@ -78,7 +80,7 @@ Tras abrir una terminal nueva después de instalar herramientas, `python`, `node
 | `python` abre la Microsoft Store | Alias de ejecución de Windows | Use `py -3.12` o la ruta `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`, o desactive el alias en Configuración → Aplicaciones → Configuración avanzada → Alias de ejecución |
 | `linker 'link.exe' not found` | Build Tools no registradas en la sesión | Ejecute `. .\scripts\msvc-env.ps1` en la misma ventana |
 | `Get-AuthenticodeSignature` no se reconoce | PowerShell 5.1 hereda módulos de PowerShell 7 | Corregido en ScriptLens (no hereda `PSModulePath`); en consola propia abra «Windows PowerShell» |
-| SmartScreen bloquea el instalador | Sin firma de código comercial | Verifique el SHA-256 y use «Más información → Ejecutar de todos modos» |
+| SmartScreen bloquea el instalador | Posible falta de firma o advertencia de reputación | Verifique la procedencia, hash y alertas de seguridad; no omita la protección sin comprender el aviso |
 | La ventana muestra «Iniciando el motor de análisis…» más de 30 s | Primer arranque analizado por el antivirus | Espere; si persiste, cierre y vuelva a abrir |
 | El asistente responde «sin IA» | Ollama no está abierto o el modelo no está descargado | Abra Ollama y descargue el modelo desde la pantalla del asistente |
 
