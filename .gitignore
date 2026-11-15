@@ -25,3 +25,6 @@ Thumbs.db
 
 # Datos de desarrollo del motor
 .dev-data/
+
+# Informes generados localmente
+Informes/

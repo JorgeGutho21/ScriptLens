@@ -19,8 +19,10 @@ export function PrivacyCard({ Row, Toggle }: { Row: React.FC<{ label: string; hi
   const [pending, setPending] = useState<What | null>(null)
   const [msg, setMsg] = useState<string | null>(null)
 
+  const [info, setInfo] = useState<{ carpeta_datos: string; carpeta_informes: string } | null>(null)
   useEffect(() => {
     api<Settings>('/api/settings').then(setS).catch(() => setS(null))
+    api<{ carpeta_datos: string; carpeta_informes: string }>('/api/privacy/info').then(setInfo).catch(() => setInfo(null))
   }, [])
 
   const set = async (key: keyof Settings, value: boolean) => setS(await apiPost<Settings>('/api/settings', { key, value }))
@@ -34,8 +36,16 @@ export function PrivacyCard({ Row, Toggle }: { Row: React.FC<{ label: string; hi
   return (
     <Card title="Privacidad y datos guardados">
       <p className="mb-4 text-[13px] leading-relaxed text-muted">
-        ScriptLens guarda la información únicamente en este equipo (carpeta %LOCALAPPDATA%\ScriptLens). Nada se envía a Internet. Las mediciones en tiempo real solo se conservan en memoria durante 10 minutos.
+        ScriptLens guarda la información únicamente en este equipo. Nada se envía a Internet. Las mediciones en tiempo real solo se conservan en memoria durante 10 minutos.
       </p>
+      {info && (
+        <dl className="mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
+          <dt className="text-faint">Datos e historial</dt>
+          <dd className="break-all font-mono text-muted">{info.carpeta_datos}</dd>
+          <dt className="text-faint">Informes</dt>
+          <dd className="break-all font-mono text-muted">{info.carpeta_informes}</dd>
+        </dl>
+      )}
       {s && (
         <>
           <Row label="Guardar diagnósticos" hint="Permite usar «Comparar mi PC». Si lo desactiva, no se guardan nuevos diagnósticos.">

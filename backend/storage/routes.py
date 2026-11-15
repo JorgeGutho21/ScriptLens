@@ -78,6 +78,12 @@ def router(engine) -> APIRouter:
         db.set_setting(req.key, req.value)
         return db.settings()
 
+    @r.get("/privacy/info")
+    def privacy_info():
+        from backend.reports.routes import reports_dir
+
+        return {"carpeta_datos": str(engine.settings.data_dir), "base_datos": str(db.path), "carpeta_informes": str(reports_dir())}
+
     @r.delete("/privacy/{what}")
     def clear(what: str):
         if what not in ("diagnostics", "conversations", "actions"):

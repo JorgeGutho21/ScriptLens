@@ -122,7 +122,7 @@ def analyze(data: bytes, filename: str = "") -> dict:
     estr = estructuras(texto, tipo)
     obf = obfuscation_signals(texto)
 
-    reglas = clasificar_por_reglas(normalizado + "\n" + "\n".join(p["texto"] for p in payloads))
+    reglas = clasificar_por_reglas(normalizado + "\n" + "\n".join(p["texto"] for p in payloads) if payloads else normalizado)
     model = _model()
     if model is not None:
         proba = {c: round(float(p), 4) for c, p in zip(model.classes_, model.predict_proba([normalizado])[0])}

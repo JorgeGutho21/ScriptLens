@@ -1,4 +1,4 @@
-"""Generación de informes. Los archivos se guardan en Documentos\\ScriptLens\\Informes."""
+"""Generación de informes. Los archivos se guardan en Documentos\\ScriptLens IA\\Informes."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from . import data, html_report, pdf_report
 
 
 def reports_dir() -> Path:
-    base = Path(os.environ.get("SCRIPTLENS_REPORTS_DIR") or (Path.home() / "Documents" / "ScriptLens" / "Informes"))
+    base = Path(os.environ.get("SCRIPTLENS_REPORTS_DIR") or (Path.home() / "Documents" / "ScriptLens IA" / "Informes"))
     base.mkdir(parents=True, exist_ok=True)
     return base
 

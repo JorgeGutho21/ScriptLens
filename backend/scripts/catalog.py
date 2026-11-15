@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from functools import lru_cache
 
 
 @dataclass(frozen=True)
@@ -123,6 +124,17 @@ def is_comment(line: str) -> bool:
 
 
 def hallazgos(texto: str) -> list[dict]:
+    """Copia de los hallazgos de ``texto`` (memorizados: el mismo texto se analiza
+    varias veces en una misma solicitud — reglas, conteos del modelo y baseline)."""
+    return [dict(h) for h in _hallazgos_cached(texto)]
+
+
+@lru_cache(maxsize=16)
+def _hallazgos_cached(texto: str) -> tuple[dict, ...]:
+    return tuple(_hallazgos(texto))
+
+
+def _hallazgos(texto: str) -> list[dict]:
     """Una fila por coincidencia: línea, regla, categoría, ATT&CK y explicación.
 
     Igual que el original, omite comentarios de BAT (rem, ::) y de PowerShell (#);
