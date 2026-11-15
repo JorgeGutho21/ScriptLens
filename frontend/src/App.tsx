@@ -6,6 +6,7 @@ import { MetricsProvider, useMetrics } from './lib/metrics'
 import { PrefsProvider, usePrefs } from './lib/prefs'
 import { Dashboard } from './pages/Dashboard'
 import { ProcessesPage } from './pages/Processes'
+import { ComparePage } from './pages/Compare'
 import { AboutPage, Planned, SettingsPage } from './pages/Other'
 
 const TITLES: Record<PageId, string> = {
@@ -24,7 +25,6 @@ const PLANNED: Partial<Record<PageId, string>> = {
   seguridad: 'Estado de Microsoft Defender y del firewall, detecciones registradas y auditoría de inicio automático y tareas programadas.',
   scripts: 'Análisis sin ejecución de archivos BAT, CMD y PowerShell con reglas, técnicas MITRE ATT&CK y regresión logística balanceada.',
   asistente: 'Asistente local con Ollama y Qwen3 que responde con base en las mediciones reales de este equipo.',
-  comparar: 'Guarde diagnósticos y compare su computador antes y después de un cambio.',
   informes: 'Informes PDF y HTML con métricas, hallazgos, recomendaciones y limitaciones.',
 }
 
@@ -72,6 +72,7 @@ function Main() {
         <main className="flex-1 overflow-y-auto px-6 py-6" key={page}>
           {page === 'panel' && <Dashboard />}
           {page === 'procesos' && <ProcessesPage />}
+          {page === 'comparar' && <ComparePage />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
           {PLANNED[page] && <Planned title={label ?? TITLES[page]} description={PLANNED[page]!} />}

@@ -4,6 +4,7 @@ import { LogoMark } from '../components/Logo'
 import { Card } from '../components/ui'
 import { usePrefs } from '../lib/prefs'
 import { APP_VERSION, REPOSITORY_URL } from '../version'
+import { PrivacyCard } from './Privacy'
 
 /** Módulo aún no implementado: se indica con honestidad, sin datos simulados. */
 export function Planned({ title, description }: { title: string; description: string }) {
@@ -53,7 +54,7 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: 
 export function SettingsPage() {
   const { prefs, update } = usePrefs()
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto flex max-w-2xl flex-col gap-5">
       <Card title="Apariencia y accesibilidad">
         <Row label="Modo oscuro" hint="Colores oscuros, más cómodos con poca luz.">
           <Toggle label="Modo oscuro" checked={prefs.theme === 'dark'} onChange={(v) => update({ theme: v ? 'dark' : 'light' })} />
@@ -82,6 +83,7 @@ export function SettingsPage() {
           </button>
         </Row>
       </Card>
+      <PrivacyCard Row={Row} Toggle={Toggle} />
     </div>
   )
 }

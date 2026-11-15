@@ -166,7 +166,15 @@ async function resolveConnection(): Promise<Connection> {
   return { baseUrl, token }
 }
 
-export async function api<T>(path: string, params?: Record<string, string | number>): Promise<T> {
+export class ApiError extends Error {
+  status: number
+  constructor(status: number, message: string) {
+    super(message)
+    this.status = status
+  }
+}
+
+async function request<T>(method: string, path: string, params?: Record<string, string | number>, body?: unknown): Promise<T> {
   connection ??= resolveConnection().catch((e) => {
     connection = null
     throw e
@@ -174,7 +182,54 @@ export async function api<T>(path: string, params?: Record<string, string | numb
   const { baseUrl, token } = await connection
   const url = new URL(path, baseUrl)
   if (params) for (const [k, v] of Object.entries(params)) url.searchParams.set(k, String(v))
-  const res = await fetch(url, { headers: { 'X-ScriptLens-Token': token } })
-  if (!res.ok) throw new Error(`Error ${res.status} al consultar ${path}`)
+  const headers: Record<string, string> = { 'X-ScriptLens-Token': token }
+  if (body !== undefined) headers['Content-Type'] = 'application/json'
+  const res = await fetch(url, { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined })
+  if (!res.ok) {
+    let detail = `Error ${res.status}`
+    try {
+      const j = await res.json()
+      if (typeof j.detail === 'string') detail = j.detail
+    } catch {
+      /* respuesta sin JSON */
+    }
+    throw new ApiError(res.status, detail)
+  }
   return (await res.json()) as T
+}
+
+export const api = <T,>(path: string, params?: Record<string, string | number>) => request<T>('GET', path, params)
+export const apiPost = <T,>(path: string, body?: unknown, params?: Record<string, string | number>) => request<T>('POST', path, params, body ?? {})
+export const apiDelete = <T,>(path: string) => request<T>('DELETE', path)
+
+export interface DiagnosticRow {
+  id: number
+  created_at: number
+  label: string
+  window_seconds: number
+  cpu_avg: number | null
+  ram_avg: number | null
+  ram_used: number
+  ram_total: number
+  process_count: number
+}
+
+export interface Comparison {
+  a: { id: number | null; label: string; created_at: number; window_seconds: number }
+  b: { id: number | null; label: string; created_at: number; window_seconds: number }
+  metrics: Record<'cpu_avg' | 'ram_avg' | 'ram_used' | 'process_count', { antes: number | null; despues: number | null; delta: number | null }>
+  processes: {
+    name: string
+    estado: 'nuevo' | 'ausente' | 'presente'
+    memory_antes: number | null
+    memory_despues: number | null
+    memory_delta: number
+    cpu_antes: number | null
+    cpu_despues: number | null
+    cpu_delta: number
+    instancias_antes: number
+    instancias_despues: number
+  }[]
+  summary: string[]
+  limitaciones: string[]
 }
