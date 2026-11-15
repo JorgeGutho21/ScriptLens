@@ -1,0 +1,6 @@
+$umbral = 15
+foreach ($v in Get-Volume | Where-Object DriveLetter) {
+    $libre = [math]::Round($v.SizeRemaining / $v.Size * 100, 1)
+    if ($libre -lt $umbral) { Write-Warning "Unidad $($v.DriveLetter): solo $libre % libre" }
+    else { Write-Host "Unidad $($v.DriveLetter): $libre % libre" }
+}

@@ -1,0 +1,6 @@
+@echo off
+md C:\Auditoria 2>nul
+systeminfo > C:\Auditoria\sistema.txt
+tasklist > C:\Auditoria\procesos.txt
+ipconfig /all > C:\Auditoria\red.txt
+echo Informe generado el %DATE% >> C:\Auditoria\resumen.txt

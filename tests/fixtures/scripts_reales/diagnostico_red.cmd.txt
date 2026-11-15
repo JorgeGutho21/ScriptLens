@@ -1,0 +1,9 @@
+@echo off
+setlocal
+echo Diagnostico de red - %DATE% %TIME%
+ipconfig /all
+ping -n 4 8.8.8.8
+tracert -d -h 10 www.unicesar.edu.co
+nslookup www.unicesar.edu.co
+netstat -ano | findstr ESTABLISHED
+endlocal

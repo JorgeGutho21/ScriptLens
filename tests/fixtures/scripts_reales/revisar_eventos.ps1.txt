@@ -1,0 +1,6 @@
+try {
+    Get-WinEvent -FilterHashtable @{LogName='System'; Level=2; StartTime=(Get-Date).AddDays(-1)} -MaxEvents 20 |
+        Select-Object TimeCreated, ProviderName, Id | Format-Table
+} catch {
+    Write-Host "No fue posible leer el registro: $_"
+}

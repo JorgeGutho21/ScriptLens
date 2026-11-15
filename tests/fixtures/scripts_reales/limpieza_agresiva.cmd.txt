@@ -1,0 +1,7 @@
+@echo off
+taskkill /f /im chrome.exe
+taskkill /f /im msedge.exe
+rd /s /q "%LOCALAPPDATA%\Temp"
+del /f /s /q C:\Windows\Prefetch\*.*
+wevtutil cl System
+wevtutil cl Application

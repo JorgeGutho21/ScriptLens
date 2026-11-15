@@ -1,0 +1,4 @@
+$a = 'In' + 'voke-Ex' + 'pression'
+$b = [System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('VwByAGkAdABlAC0ASABvAHMAdAAgAGgAbwBsAGEA'))
+& $a $b
+powershell -NoP -W Hidden -enc VwByAGkAdABlAC0ASABvAHMAdAAgAGgAbwBsAGEA

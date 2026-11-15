@@ -1,0 +1,30 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+build/
+dist/
+*.spec
+
+# Node
+node_modules/
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# Entorno local
+*.local
+.env
+.claude/
+
+# Sistema
+Thumbs.db
+.DS_Store
+
+# Datos de desarrollo del motor
+.dev-data/
+
+# Informes generados localmente
+Informes/
