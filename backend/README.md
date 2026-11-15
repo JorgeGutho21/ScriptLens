@@ -1,27 +1,33 @@
 # Motor de análisis (backend)
 
-Proceso Python que mide el equipo y expone una API local de solo lectura en `127.0.0.1`.
+Proceso Python que mide el equipo y expone una API local en `127.0.0.1` (puerto aleatorio, token aleatorio por arranque). En la aplicación instalada se ejecuta empaquetado como `scriptlens-backend.exe` y se cierra solo si la aplicación desaparece.
 
-| Módulo | Responsabilidad |
+| Paquete | Responsabilidad |
 |---|---|
-| `core/config.py` | Versión, autoría, rutas de datos locales, parámetros de muestreo |
-| `core/api.py` | API FastAPI con token, hilos de muestreo (`Engine`) |
-| `monitoring/sampler.py` | Muestras de CPU, núcleos, RAM, paginación, disco y red; información del equipo |
-| `monitoring/diagnosis.py` | Reglas de consumo sostenido con explicaciones sencillas |
-| `processes/ntquery.py` | Enumeración nativa de procesos (`NtQuerySystemInformation`) |
-| `processes/collector.py` | Ranking de procesos, CPU normalizada, consumo sostenido, respaldo psutil |
-| `__main__.py` | Arranque: imprime `{"event":"ready","port","token"}` |
-
-Ejecutar: `.\.venv\Scripts\python -m backend` (variables opcionales `SCRIPTLENS_PORT`, `SCRIPTLENS_TOKEN`, `SCRIPTLENS_DATA_DIR`).
+| `core/` | Configuración, API (`api.py`), motor e hilos (`engine.py`), PowerShell controlado (`winps.py`), actualizaciones (`updates.py`) |
+| `monitoring/` | Muestreo de CPU, núcleos, RAM, disco y red; reglas de consumo sostenido |
+| `processes/` | Lectura nativa de procesos, rutas, firmas, base de conocimiento, señales y explicaciones |
+| `storage/` | SQLite: diagnósticos, comparación, conversaciones, auditoría, ajustes |
+| `security/` | Recolección de solo lectura y reglas de auditoría |
+| `scripts/` | Analizador estático, catálogo, flujo, desofuscación, modelo, corpus y entrenamiento |
+| `actions/` | Acciones supervisadas con confirmación y auditoría |
+| `assistant/` | Enrutador, herramientas de solo lectura, cliente de Ollama, verificación y plantillas |
+| `reports/` | Informes HTML y PDF |
 
 ## Endpoints (todos requieren `X-ScriptLens-Token`)
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| GET | `/api/health` | Estado, versión, autoría |
-| GET | `/api/system/info` | Sistema operativo, CPU, RAM total, discos, disponibilidad de temperatura |
-| GET | `/api/metrics/current` | Última muestra y tiempo encendido |
-| GET | `/api/metrics/history?seconds=10..3600` | Serie temporal |
-| GET | `/api/metrics/summary` | Promedios y hallazgos de diagnóstico; consumo propio de ScriptLens |
-| GET | `/api/processes/top?by=cpu|memory&limit=1..50` | Procesos con mayor consumo actual |
-| GET | `/api/processes/sustained?seconds=10..600` | Procesos con mayor CPU promedio en la ventana |
+| GET | `/api/health`, `/api/system/info`, `/api/metrics/current`, `/api/metrics/history`, `/api/metrics/summary` | Monitoreo |
+| GET | `/api/processes`, `/api/processes/{pid}`, `/api/processes/top`, `/api/processes/sustained` | Procesos |
+| GET/POST/DELETE | `/api/history/diagnostics[/{id}]`, `/api/history/compare` | Historial y comparación |
+| GET/POST | `/api/settings` · GET `/api/privacy/info` · DELETE `/api/privacy/{diagnostics,conversations,actions}` | Privacidad |
+| GET/POST | `/api/security/audit` | Auditoría de seguridad (bajo demanda) |
+| POST · GET | `/api/scripts/analyze` · `/api/scripts/model` | Analizador de scripts y métricas del modelo |
+| POST | `/api/actions/{process,startup,programs,temp}/prepare` → `/api/actions/execute` | Acciones en dos pasos |
+| GET | `/api/actions/log`, `/api/actions/programs`, `/api/actions/temp/preview` | Auditoría y vistas previas |
+| GET · POST | `/api/assistant/status`, `/api/assistant/conversations[/{id}]` · `/api/assistant/ask` (NDJSON), `/api/assistant/pull` | Asistente |
+| GET · POST | `/api/reports` · `/api/reports`, `/api/reports/open/{nombre}`, `/api/reports/open-folder` | Informes |
+| GET · POST | `/api/updates/check` · `/api/open-link` | Actualizaciones y enlaces de la lista permitida |
+
+Ejecutar en desarrollo: `.\scripts\dev-backend.ps1` (puerto 8765) o `.\.venv\Scripts\python -m backend`.

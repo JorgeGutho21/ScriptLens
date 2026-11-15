@@ -6,7 +6,7 @@
 .EXAMPLE
   PowerShell: .\scripts\capturar-ventana.ps1 -Salida docs\capturas\01_panel.png
 #>
-param([Parameter(Mandatory)] [string] $Salida)
+param([Parameter(Mandatory)] [string] $Salida, [string] $Titulo = 'ScriptLens IA', [string] $Proceso = 'scriptlens')
 
 Add-Type -AssemblyName System.Drawing
 Add-Type @'
@@ -37,9 +37,9 @@ public static class SLWin {
 }
 '@
 [SLWin]::SetProcessDPIAware() | Out-Null
-$pids = [uint32[]]@(Get-Process scriptlens -ErrorAction Stop | ForEach-Object Id)
-$hwnd = [SLWin]::Find('ScriptLens IA', $pids)
-if ($hwnd -eq [IntPtr]::Zero) { throw 'No se encontró la ventana "ScriptLens IA"' }
+$pids = [uint32[]]@(Get-Process $Proceso -ErrorAction Stop | ForEach-Object Id)
+$hwnd = [SLWin]::Find($Titulo, $pids)
+if ($hwnd -eq [IntPtr]::Zero) { throw "No se encontró la ventana $Titulo" }
 
 $wasMin = [SLWin]::IsIconic($hwnd)
 if ($wasMin) { [SLWin]::ShowWindow($hwnd, 9) | Out-Null; Start-Sleep -Milliseconds 1500 }  # SW_RESTORE

@@ -34,3 +34,84 @@
 | `6267e26` | Diseñar el panel principal y el sistema de diseño de la interfaz |
 | `63b96c2` | Configurar el contenedor de escritorio Tauri y la identidad gráfica |
 | `ed90d66` | Documentar la arquitectura, la investigación de repositorios y la integración continua |
+
+## Auditoría previa a la fase 2 · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Objetivo | Corregir problemas recuperables antes de continuar |
+| Resultado | Rust 1.100, cargo y MSVC 14.44 operativos con `scripts/msvc-env.ps1`; acciones de CI actualizadas a versiones con Node.js 24 (`efc02c7`, CI en verde); ZIP académico localizado en Descargas y analizado en una carpeta aislada (guía 03B usada como fuente) |
+| Observación | En los documentos del ZIP el docente figura como «Oswaldo Rueda Carreño» |
+
+## Fase 2 — Administrador de procesos · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/processes/{analysis,knowledge,signatures,winapi,routes}.py`, `backend/core/{engine,winps}.py`, `frontend/src/pages/Processes.tsx`, pruebas `test_process_manager.py` |
+| Pruebas | 41 pruebas aprobadas al cierre de la fase; verificación con datos reales: 331 procesos con firma válida, 7 sin firma |
+| Errores y soluciones | (1) `Get-AuthenticodeSignature` no cargaba: Windows PowerShell 5.1 heredaba `PSModulePath` de PowerShell 7 → se elimina esa variable al invocarlo. (2) Rutas ficticias «Registry»/«MemCompression» y el proceso inactivo marcado como consumo elevado → se descartan |
+| Commits | `3108cbd`, `f721be0` |
+
+## Fase 3 — Historial y comparación · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/storage/*`, `frontend/src/pages/{Compare,Privacy}.tsx`, `frontend/src/components/Confirm.tsx`, `tests/backend/{conftest,test_history}.py` |
+| Pruebas | 46 aprobadas; prueba en navegador con datos reales (advertencia de menos de 20 s de mediciones) |
+| Error y solución | `Settings.data_dir` capturaba la función por defecto al definir la clase y las pruebas escribían en la base real → fábrica diferida y carpeta aislada para pruebas |
+| Commits | `47519d0`, `1ec4a2c` |
+
+## Fase 4 — Auditoría y seguridad · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/security/*`, `frontend/src/pages/{Security,StartupActions}.tsx`, `test_security.py` |
+| Pruebas | 57 aprobadas; recolección real sin administrador en 3,4–6,4 s (Defender, firewall 3/3, 180 tareas, 314 servicios, 83 eventos, 13 entradas de inicio) |
+| Hallazgos reales | Entrada de inicio «SoyMicrosoft» → `C:\taller1\gestion.bat` (archivo inexistente) y tarea «EcoAccess P3 - vigilante del bot»: ambas «requieren revisión», ninguna calificada como malware |
+| Commits | `b4b93ff`, `9f34330` |
+
+## Fase 5 — Analizador de scripts · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/scripts/*`, `scripts/extraer_attack.py`, `tests/fixtures/scripts_reales/*`, `docs/pruebas/evaluacion_clasificador.md`, `frontend/src/pages/Scripts.tsx` |
+| Pruebas | 14 pruebas (incluye CP1–CP6 de la guía 03B y la verificación estática de que el analizador nunca ejecuta procesos) |
+| Hallazgos | ATT&CK 20.1 revocó T1562.001, T1070.001 y T1562.004 (reemplazos T1685, T1685.005, T1686, comprobados en el paquete STIX). La regla P01 marcaba la lectura de la clave Run como persistencia: en validación cruzada el baseline tenía F1 macro 0,732 y 43,3 % de falsos positivos en «consulta»; tras la corrección por contexto, 0 % |
+| Resultados finales | Validación cruzada (180 scripts sintéticos): baseline 1,000 (circular), modelo 0,955, híbrida 0,966. Conjunto realista independiente (18 scripts): baseline 1,000, modelo 0,886 (recall «sensible» 0,667), híbrida 1,000 |
+| Commits | `b82ab66`, `a9c9cb4`, `34fd86f` |
+
+## Fase 6 — Acciones supervisadas · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/actions/*`, `frontend/src/lib/supervised.tsx`, `frontend/src/pages/{ProcessActions,StartupActions,Optimize}.tsx`, `test_actions.py` |
+| Pruebas | 8 pruebas: token de un solo uso y caducidad, revalidación de identidad, procesos protegidos y propios, inicio automático reversible en clave aislada, limpieza que no toca archivos fuera de `%TEMP%` |
+| Ajuste | Se excluyó `explorer.exe` de las recomendaciones de cierre |
+| Commits | `6c26621`, `4368a1a` |
+
+## Fase 7 — Asistente IA local · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/assistant/*`, `frontend/src/pages/Assistant.tsx`, `test_assistant.py` |
+| Pruebas | 24 pruebas: 15 preguntas obligatorias enrutadas, saneamiento, verificación de cifras, sin acceso a acciones, funcionamiento sin Ollama y prueba con el modelo real (18,4 s, cifras verificadas) |
+| Hallazgo | `qwen3:4b` es la variante de razonamiento: 2 940 tokens y 256 s para una frase, `think:false` y `/no_think` no lo desactivan → se adoptó `qwen3:4b-instruct` |
+| Commits | `bc7a547`, `f5e0669` |
+
+## Fase 8 — Informes · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `backend/reports/*`, `frontend/src/pages/Reports.tsx`, `test_reports.py` |
+| Pruebas | 4 pruebas (identidad, secciones, marca de agua, escape de HTML, PDF válido con autor en metadatos, rutas fuera de la carpeta rechazadas) |
+| Commits | `7d8f06a`, `85c6c5a`, `b45a00a` (elemento 3D y actualizaciones) |
+
+## Fase 9 — Instalador y distribución · 2026-11-14
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `scripts/{scriptlens_backend,construir_instalador}.py/.ps1`, `src-tauri/*`, `.github/workflows/instalador.yml` |
+| Pruebas | Motor empaquetado probado sin Python (159 MB, arranque 9 s); instalación silenciosa por usuario en 8,3 s; desinstalación limpia; reinstalación; instancia única; motor sin huérfanos tras cierre forzado; recorrido completo de la app instalada con 20 capturas |
+| Errores y soluciones | Pantalla en blanco del asistente (`scrollIntoView` devuelve Promise en WebView2) → efectos sin valor de retorno y límite de errores; interruptor mal dibujado; segunda instancia → `tauri-plugin-single-instance`; informes dentro de la carpeta del repositorio → `Documentos\ScriptLens IA\Informes`; análisis de 1 MB 10,4 s → 3,4 s con memorización |
+| Resultado | Instalador NSIS de 49,26 MB con SHA-256 |
+| Commits | `aab7b22`, `04f9709`, `ae0504a`, `4c2e76a`, `94884bf`, `b4b0437` |
