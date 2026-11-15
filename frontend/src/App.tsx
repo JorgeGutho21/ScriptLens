@@ -5,6 +5,7 @@ import { Footer, NAV, Sidebar, TopBar, type PageId } from './components/Shell'
 import { MetricsProvider, useMetrics } from './lib/metrics'
 import { PrefsProvider, usePrefs } from './lib/prefs'
 import { Dashboard } from './pages/Dashboard'
+import { ProcessesPage } from './pages/Processes'
 import { AboutPage, Planned, SettingsPage } from './pages/Other'
 
 const TITLES: Record<PageId, string> = {
@@ -20,7 +21,6 @@ const TITLES: Record<PageId, string> = {
 }
 
 const PLANNED: Partial<Record<PageId, string>> = {
-  procesos: 'Árbol de procesos, rutas, firmas digitales, editor y explicación en lenguaje natural de cada programa.',
   seguridad: 'Estado de Microsoft Defender y del firewall, detecciones registradas y auditoría de inicio automático y tareas programadas.',
   scripts: 'Análisis sin ejecución de archivos BAT, CMD y PowerShell con reglas, técnicas MITRE ATT&CK y regresión logística balanceada.',
   asistente: 'Asistente local con Ollama y Qwen3 que responde con base en las mediciones reales de este equipo.',
@@ -71,6 +71,7 @@ function Main() {
         <TopBar title={TITLES[page]} />
         <main className="flex-1 overflow-y-auto px-6 py-6" key={page}>
           {page === 'panel' && <Dashboard />}
+          {page === 'procesos' && <ProcessesPage />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
           {PLANNED[page] && <Planned title={label ?? TITLES[page]} description={PLANNED[page]!} />}

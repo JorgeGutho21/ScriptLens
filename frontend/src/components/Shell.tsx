@@ -22,7 +22,7 @@ export type PageId = 'panel' | 'procesos' | 'seguridad' | 'scripts' | 'asistente
 
 export const NAV: { id: PageId; label: string; icon: ReactNode; ready: boolean }[] = [
   { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} />, ready: true },
-  { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} />, ready: false },
+  { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} />, ready: true },
   { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} />, ready: false },
   { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} />, ready: false },
   { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} />, ready: false },

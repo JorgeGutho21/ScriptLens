@@ -75,6 +75,60 @@ export interface ProcessRow {
   acceso_limitado: boolean
 }
 
+export type EstadoProceso = Estado | 'actividad_sospechosa' | 'amenaza_detectada'
+export type Categoria = 'sistema' | 'servicio' | 'aplicacion' | 'segundo_plano'
+
+export interface ProcessListRow extends ProcessRow {
+  session_id: number | null
+  private_bytes: number | null
+  handles: number | null
+  path: string | null
+  category: Categoria
+  category_label: string
+  publisher: string | null
+  description: string | null
+  signature: 'valida' | 'sin_firma' | 'alterada' | 'no_confiable' | 'desconocido' | 'no_aplica' | 'pendiente' | null
+  estado: EstadoProceso
+  signals: string[]
+  cpu_avg_60s: number | null
+}
+
+export interface Signal {
+  code: string
+  estado: EstadoProceso
+  titulo: string
+  evidencia: string
+  fuente: string
+  tipo: 'comprobado' | 'estimado'
+}
+
+export interface ProcessDetail extends Omit<ProcessListRow, 'signature' | 'signals'> {
+  measured_at: number
+  signature: SignatureInfo | null
+  signals: Signal[]
+  stats: { seconds: number; samples: number; cpu_avg: number | null; cpu_max: number | null; memory_avg: number | null; memory_max: number | null } | null
+  parent: { pid: number; name: string; create_time: number | null } | null
+  children: { pid: number; name: string; create_time: number | null }[]
+  can_terminate: boolean
+  terminate_reason: string
+  cmdline: string | null
+  user: string | null
+  status: string | null
+  connections: { total: number; establecidas: number; escuchando: number[]; remotas: string[] } | null
+  explicacion: { pregunta: string; respuesta: string; tipo: 'comprobado' | 'estimado' }[]
+}
+
+export interface SignatureInfo {
+  estado: string
+  descripcion_estado: string
+  firmante: string | null
+  binario_windows: boolean
+  editor: string | null
+  descripcion: string | null
+  producto: string | null
+  version: string | null
+}
+
 export interface SustainedRow {
   pid: number
   name: string
