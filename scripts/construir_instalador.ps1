@@ -17,7 +17,7 @@ $py = Join-Path $root '.venv\Scripts\python.exe'
 
 Write-Host '1/3 Empaquetando el motor de análisis (PyInstaller)…'
 & $py -m PyInstaller --noconfirm --clean --log-level WARN `
-  --name scriptlens-backend --onedir --noconsole `
+  --name scriptlens-backend --onedir --console `
   --distpath build\backend --workpath build\pyinstaller --specpath build `
   --paths $root `
   --add-data "$root\backend\scripts\data;backend\scripts\data" `
