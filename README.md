@@ -65,8 +65,10 @@ La guía completa, con capturas y errores habituales, está en [docs/instalacion
 
 ### Método A — Instalador gráfico (recomendado)
 
-1. Abra [Releases](https://github.com/JorgeGutho21/ScriptLens/releases) y descargue `ScriptLens IA_0.1.0_x64-setup.exe` y su archivo `.sha256`.
-2. Haga doble clic en el instalador. Si Windows SmartScreen avisa «Windows protegió su PC», pulse **Más información → Ejecutar de todos modos** (el instalador no tiene firma comercial; verifique antes el hash).
+**Estado:** la versión v0.1.0 todavía requiere reconstrucción y validación tras corregir dos defectos importantes. No descargue artefactos antiguos como versión final.
+
+1. **Solo cuando haya una versión publicada y comprobada**, abra [Releases](https://github.com/JorgeGutho21/ScriptLens/releases) y descargue `ScriptLens IA_0.1.0_x64-setup.exe` y su archivo `.sha256`.
+2. Compruebe el SHA-256 y el origen del archivo antes de abrirlo. Si Windows SmartScreen muestra una advertencia, **no la ignore automáticamente**: confirme que corresponde a la versión oficial y revise las notas de seguridad. El instalador no está firmado comercialmente.
 3. Abra **ScriptLens IA** desde el menú Inicio. No requiere permisos de administrador.
 
 > Mientras no exista una versión publicada, el instalador puede construirse con el Método C (`scripts\construir_instalador.ps1`).
