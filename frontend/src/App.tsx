@@ -8,6 +8,7 @@ import { Dashboard } from './pages/Dashboard'
 import { ProcessesPage } from './pages/Processes'
 import { ComparePage } from './pages/Compare'
 import { SecurityPage } from './pages/Security'
+import { ScriptsPage } from './pages/Scripts'
 import { AboutPage, Planned, SettingsPage } from './pages/Other'
 
 const TITLES: Record<PageId, string> = {
@@ -23,7 +24,6 @@ const TITLES: Record<PageId, string> = {
 }
 
 const PLANNED: Partial<Record<PageId, string>> = {
-  scripts: 'Análisis sin ejecución de archivos BAT, CMD y PowerShell con reglas, técnicas MITRE ATT&CK y regresión logística balanceada.',
   asistente: 'Asistente local con Ollama y Qwen3 que responde con base en las mediciones reales de este equipo.',
   informes: 'Informes PDF y HTML con métricas, hallazgos, recomendaciones y limitaciones.',
 }
@@ -74,6 +74,7 @@ function Main() {
           {page === 'procesos' && <ProcessesPage />}
           {page === 'comparar' && <ComparePage />}
           {page === 'seguridad' && <SecurityPage />}
+          {page === 'scripts' && <ScriptsPage />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
           {PLANNED[page] && <Planned title={label ?? TITLES[page]} description={PLANNED[page]!} />}
