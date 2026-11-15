@@ -122,7 +122,7 @@ s = base("Arquitectura", "Diseño del sistema")
 card(s, Inches(0.7), Inches(2.0), Inches(3.6), Inches(3.9), "Interfaz", "Tauri 2 (Rust) + React 19 + TypeScript + Tailwind. Modo sencillo/avanzado, claro/oscuro, accesibilidad, glosario.")
 card(s, Inches(4.6), Inches(2.0), Inches(4.1), Inches(3.9), "Motor de análisis (Python)", "API solo en 127.0.0.1 con token aleatorio. psutil · NtQuerySystemInformation · Authenticode · SQLite · scikit-learn · reportlab.")
 card(s, Inches(9.0), Inches(2.0), Inches(3.6), Inches(3.9), "IA local", "Ollama + Qwen3 4B Instruct. Herramientas de solo lectura, verificación de cifras, sin acceso a acciones.")
-text(s, "Instalador NSIS de 49,26 MB · sin administrador · sin instalar Python, Node.js ni Rust", Inches(0.7), Inches(6.2), Inches(12), Inches(0.5), 16, MUTED)
+text(s, "Instalador NSIS de 49,3 MB · sin administrador · sin instalar Python, Node.js ni Rust", Inches(0.7), Inches(6.2), Inches(12), Inches(0.5), 16, MUTED)
 
 # 5. Procesos y seguridad
 s = base("Procesos y seguridad, explicados", "Funcionalidades")
@@ -188,7 +188,7 @@ bullets(s, [
 
 # 10. Pruebas y distribución
 s = base("Pruebas y distribución", "Calidad")
-for i, (n, t) in enumerate([("135", "pruebas automatizadas aprobadas"), ("< 0,05 s", "lectura de ≈ 345 procesos (antes 3,4 s)"), ("49 MB", "instalador probado: instalar, desinstalar, reinstalar"), ("5", "defectos hallados en la app instalada y corregidos")]):
+for i, (n, t) in enumerate([("135", "pruebas automatizadas aprobadas"), ("< 0,05 s", "lectura de ≈ 345 procesos (antes 3,4 s)"), ("49,3 MB", "instalador probado: instalar, actualizar, desinstalar, reinstalar"), ("5", "defectos hallados en la app instalada y corregidos")]):
     card(s, Inches(0.7 + i * 3.1), Inches(2.1), Inches(2.9), Inches(3.0), t, "", num=n)
 text(s, "GitHub Actions: pruebas del motor, compilación de la interfaz y del contenedor; flujo que genera el instalador con SHA-256.", Inches(0.7), Inches(5.6), Inches(12), Inches(0.8), 15, MUTED)
 

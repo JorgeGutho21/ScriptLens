@@ -19,7 +19,51 @@ Fecha: 2026-11-15. Este documento registra solo lo que se probó de verdad. Las 
 
 ## Matriz
 
-[[RESULTADOS]]
+| Entorno | Estado | Evidencia y resultado |
+|---|---|---|
+| Windows 11 Pro 25H2 x64, 31,8 GB, sesión sin elevación | **Probado: aprobado** | Instalación silenciosa por usuario 17,7–18,3 s, código 0; apertura desde el menú Inicio; motor escuchando solo en 127.0.0.1 en 10–12 s (2,3 s con el motor ya en caché); lectura real de CPU, RAM, disco, red y 365 procesos; todos los módulos abiertos; informe PDF guardado en la carpeta Documentos real (redirigida a OneDrive); cierre normal sin procesos en 1 s; cierre forzado: motor terminado en 1,6 s; segunda apertura: 1 aplicación y 1 motor; desinstalación limpia conservando historial e informes; reinstalación correcta |
+| Equipo sin Python, Node.js ni Rust en el PATH | **Aproximado** | Motor empaquetado iniciado con `PATH=%SystemRoot%\System32;%SystemRoot%` y sin variables de Python: línea de arranque en 3,2–3,3 s, 15 de 15 rutas de la interfaz respondidas, auditoría, diagnóstico e informes PDF/HTML generados. No es un equipo limpio: las herramientas siguen instaladas en el disco |
+| Usuario estándar sin privilegios administrativos | **Probado (sesión sin elevación)** | Toda la prueba se hizo con un token no administrativo (`IsInRole(Administrator) = False`); el instalador es por usuario y no pidió elevación. No se probó una cuenta del grupo «Usuarios» sin pertenencia a Administradores |
+| Con Ollama 0.40.16 y `qwen3:4b-instruct` | **Probado: aprobado** | Diez preguntas de referencia respondidas con herramientas de datos medidos; respuestas de 10–65 s; cifras verificadas; la aplicación instalada respondió «¿Qué significa esta alerta?» con los dos hallazgos reales |
+| Sin Ollama (modo sin IA) | **Probado: aprobado** | «Usar IA local» desactivado en la aplicación instalada: respuesta inmediata con plantillas y los mismos datos; pruebas automáticas con Ollama inalcanzable |
+| Carpetas de usuario redirigidas a OneDrive | **Probado: aprobado tras corrección** | Los informes se guardaban fuera de la carpeta Documentos visible; corregido con `SHGetKnownFolderPath` y verificado en la aplicación instalada |
+| Pantalla 1920 × 1080 al 125 % | **Probado** | Ventana predeterminada 1360 × 860 y mínima 980 × 640; en 1024 px de ancho la tabla de procesos cabe sin desplazamiento horizontal |
+| Windows 10 de 64 bits | No probado | Sin equipo ni máquina virtual disponibles |
+| Equipo con 4 GB de RAM | No probado | Memoria medida de la aplicación instalada tras un minuto: contenedor Tauri 28 MB, motor 163 MB (conjunto de trabajo; 581 MB de memoria privada comprometida por scikit-learn y NumPy) y WebView2 485 MB en 6 procesos (270 MB privados). Con 4 GB el sistema puede necesitar paginar; no se verificó |
+| Otras escalas (100 %, 150 %, 4K) | No probado | — |
+| Sin conexión a Internet tras instalar | No probado directamente | El diseño no depende de la red (ver limitaciones) |
+| Windows de 32 bits, ARM64, macOS, Linux | No compatible | El instalador es x64 y usa API de Windows |
+
+## Casos críticos del instalador final
+
+| # | Caso | Resultado |
+|---|---|---|
+| 1 | Generación del ejecutable y del motor empaquetado | Aprobado |
+| 2 | Generación del instalador NSIS y su SHA-256 | Aprobado |
+| 3 | Instalación desde una sesión sin elevación | Aprobado |
+| 4 | Apertura desde el menú Inicio | Aprobado |
+| 5 | Inicio del motor empaquetado | Aprobado |
+| 6 | Comunicación entre Tauri y el motor (P1) | Aprobado: panel con datos en vivo |
+| 7 | Lectura real de CPU y RAM | Aprobado |
+| 8 | Listado de procesos | Aprobado |
+| 9 | Apertura de todos los módulos | Aprobado |
+| 10 | Funcionamiento con y sin Ollama | Aprobado |
+| 11 | Exportación de informes | Aprobado |
+| 12 | Cierre correcto | Aprobado |
+| 13 | Ausencia de procesos huérfanos (cierre normal y forzado) | Aprobado |
+| 14 | Desinstalación | Aprobado |
+| 15 | Ausencia de errores críticos | Aprobado en el entorno probado |
+
+## Problemas encontrados durante estas pruebas
+
+| Problema | Solución | Commit |
+|---|---|---|
+| Informes fuera de la carpeta Documentos visible con OneDrive | `SHGetKnownFolderPath`; protección de carpetas reales en la limpieza | `451f19b` |
+| Acerca de y README indicaban una carpeta de datos incorrecta | Acerca de muestra las rutas que informa el motor | `5ff1ad8` |
+| Diálogo de confirmación descentrado y fondo parcial | Diálogos en un portal sobre `<body>` | `4e564a4` |
+| Sin indicación mientras se prepara una limpieza (≈ 8 s) | Mensaje «Preparando el resumen de la acción…» | `9f5087c` |
+| Registro de acciones con «midiendo…» permanente | «—» o «sin medición» | `9f5087c` |
+| Prueba CP6 por encima de 10 s con el equipo saturado | Se repitió con menos carga (8,5 s); se documenta la dependencia de la carga | — |
 
 ## Procedimiento
 

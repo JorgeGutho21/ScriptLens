@@ -90,7 +90,7 @@ Figura: docs/capturas/00_instalador_bienvenida.png | Pantalla 1 del instalador: 
 2. **Acuerdo de licencia.** Muestra la licencia MIT de ScriptLens IA. Léala y pulse **Acepto**.
 3. **Ya está instalado** (solo si había una versión anterior). Elija desinstalar antes de instalar o instalar encima, y pulse **Siguiente**. Su historial se conserva en ambos casos.
 4. **Carpeta de instalación.** Propone `C:\Users\<su usuario>\AppData\Local\ScriptLens IA`. No hace falta cambiarla: es una carpeta de su usuario y por eso no se piden permisos de administrador. Pulse **Instalar**.
-5. **Instalando.** Copia los archivos (unos 10 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Pulse **Siguiente** cuando termine.
+5. **Instalando.** Copia los archivos (entre 10 y 20 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Pulse **Siguiente** cuando termine.
 6. **Finalización.** Dos casillas: «Crear acceso directo en el escritorio» y «Ejecutar ScriptLens IA». Márquelas si lo desea y pulse **Terminar**.
 
 El instalador no instala servicios, no cambia la configuración de seguridad de Windows y no se ejecuta en segundo plano después de terminar.
@@ -142,17 +142,19 @@ Para usuarios que prefieren escribir comandos. Abra **PowerShell** desde el men�
 # 1. Ir a la carpeta Descargas y descargar los dos archivos de la versión v0.1.0
 cd $HOME\Downloads
 $base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0"
-Invoke-WebRequest "$base/ScriptLens-IA_0.1.0_x64-setup.exe" -OutFile "ScriptLens-IA_0.1.0_x64-setup.exe"
-Invoke-WebRequest "$base/ScriptLens-IA_0.1.0_x64-setup.exe.sha256" -OutFile "ScriptLens-IA_0.1.0_x64-setup.exe.sha256"
+$f = "ScriptLens-IA_0.1.0_x64-setup.exe"
+Invoke-WebRequest "$base/$f" -OutFile $f
+Invoke-WebRequest "$base/$f.sha256" -OutFile "$f.sha256"
 ```
 
 Resultado esperado: no aparece ningún mensaje; los dos archivos quedan en Descargas.
 
 ```
 # 2. Comparar la huella
-$esperado = (Get-Content "ScriptLens-IA_0.1.0_x64-setup.exe.sha256").Split(" ")[0]
-$real = (Get-FileHash "ScriptLens-IA_0.1.0_x64-setup.exe" -Algorithm SHA256).Hash
-if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale este archivo" }
+$f = "ScriptLens-IA_0.1.0_x64-setup.exe"
+$esperado = (Get-Content "$f.sha256").Split(" ")[0]
+$real = (Get-FileHash $f -Algorithm SHA256).Hash
+if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale" }
 ```
 
 Resultado esperado: la palabra `Coincide`.
@@ -162,7 +164,7 @@ Resultado esperado: la palabra `Coincide`.
 Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe"
 ```
 
-Si prefiere instalar sin ventanas, use `Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe" -ArgumentList "/S" -Wait`. La instalación tarda unos 10 segundos y crea el acceso directo en el menú Inicio.
+Si prefiere instalar sin ventanas, use `Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe" -ArgumentList "/S" -Wait`. La instalación tarda entre 10 y 20 segundos y crea el acceso directo en el menú Inicio.
 
 Esta guía nunca le pedirá ejecutar un script descargado directamente de Internet (por ejemplo, comandos con `iex` o `Invoke-Expression`). Si encuentra instrucciones así en otra página, no las use.
 
@@ -176,10 +178,12 @@ En **Símbolo del sistema** (menú Inicio → escriba `cmd`):
 
 ```
 cd %USERPROFILE%\Downloads
-curl -L -o ScriptLens-IA_0.1.0_x64-setup.exe https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0/ScriptLens-IA_0.1.0_x64-setup.exe
-curl -L -o ScriptLens-IA_0.1.0_x64-setup.exe.sha256 https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0/ScriptLens-IA_0.1.0_x64-setup.exe.sha256
-certutil -hashfile ScriptLens-IA_0.1.0_x64-setup.exe SHA256
-type ScriptLens-IA_0.1.0_x64-setup.exe.sha256
+set BASE=https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0
+set F=ScriptLens-IA_0.1.0_x64-setup.exe
+curl -L -O %BASE%/%F%
+curl -L -O %BASE%/%F%.sha256
+certutil -hashfile %F% SHA256
+type %F%.sha256
 ```
 
 Compare la huella que muestra `certutil` con la del archivo `.sha256`. Si coinciden: `start ScriptLens-IA_0.1.0_x64-setup.exe`.

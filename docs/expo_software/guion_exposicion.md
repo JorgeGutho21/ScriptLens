@@ -6,7 +6,7 @@ Autor: Jorge Gutiérrez (@JorgeGutho21) · Universidad Popular del Cesar · Doce
 
 ScriptLens IA es una aplicación de escritorio para Windows que explica, en lenguaje sencillo, por qué un computador va lento, qué programas funcionan, qué arranca con el sistema y si algo merece revisión. Analiza scripts BAT, CMD y PowerShell **sin ejecutarlos** con reglas asociadas a MITRE ATT&CK y una regresión logística balanceada, y responde preguntas con un modelo de lenguaje **local** (Qwen3 4B Instruct en Ollama) cuyas cifras se verifican contra los datos medidos. Ninguna acción se ejecuta sin confirmación y la IA no puede actuar.
 
-Resultados medidos: 135 pruebas automatizadas aprobadas; en 18 scripts realistas no vistos, la política híbrida detectó 6 de 6 scripts sensibles (el modelo solo, 4 de 6); lectura de procesos en menos de 0,05 s; instalador de 49,26 MB sin administrador, probado en Windows 11.
+Resultados medidos: 135 pruebas automatizadas aprobadas; en 18 scripts realistas no vistos, la política híbrida detectó 6 de 6 scripts sensibles (el modelo solo, 4 de 6); lectura de procesos en menos de 0,05 s; instalador de 49,3 MB sin administrador, probado en Windows 11.
 
 ## 2. Guion de exposición (7 minutos)
 

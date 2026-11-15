@@ -1,6 +1,6 @@
 # Resumen
 
-Muchos usuarios de Windows no saben por qué su equipo está lento, qué programas se ejecutan en segundo plano ni qué hace un script antes de ejecutarlo. ScriptLens IA es una aplicación de escritorio que mide el equipo en tiempo real, explica los procesos con evidencia comprobada, audita la seguridad sin privilegios de administrador, analiza scripts BAT, CMD y PowerShell sin ejecutarlos y responde preguntas mediante un modelo de lenguaje que funciona localmente. El analizador combina un catálogo de 43 reglas asociadas a MITRE ATT&CK con una regresión logística balanceada sobre TF-IDF de n-gramas de caracteres. En un conjunto independiente de 18 scripts realistas, la política híbrida de reglas y modelo detectó los 6 scripts sensibles (recall de 1,0), mientras que el modelo por sí solo detectó 4 de 6. El asistente, basado en Qwen3 4B Instruct, consulta únicamente herramientas de solo lectura y verifica cada cifra de su respuesta; en una prueba real detectó una cifra inventada por el modelo. La aplicación se distribuye en un instalador de 49,26 MB, verificado en Windows 11, que no requiere privilegios de administrador.
+Muchos usuarios de Windows no saben por qué su equipo está lento, qué programas se ejecutan en segundo plano ni qué hace un script antes de ejecutarlo. ScriptLens IA es una aplicación de escritorio que mide el equipo en tiempo real, explica los procesos con evidencia comprobada, audita la seguridad sin privilegios de administrador, analiza scripts BAT, CMD y PowerShell sin ejecutarlos y responde preguntas mediante un modelo de lenguaje que funciona localmente. El analizador combina un catálogo de 43 reglas asociadas a MITRE ATT&CK con una regresión logística balanceada sobre TF-IDF de n-gramas de caracteres. En un conjunto independiente de 18 scripts realistas, la política híbrida de reglas y modelo detectó los 6 scripts sensibles (recall de 1,0), mientras que el modelo por sí solo detectó 4 de 6. El asistente, basado en Qwen3 4B Instruct, consulta únicamente herramientas de solo lectura y verifica cada cifra de su respuesta; en una prueba real detectó una cifra inventada por el modelo. La aplicación se distribuye en un instalador de 49,3 MB, verificado en Windows 11, que no requiere privilegios de administrador.
 
 *Palabras clave:* diagnóstico de sistemas operativos, análisis estático de scripts, regresión logística, MITRE ATT&CK, inteligencia artificial local, verificación de respuestas.
 
@@ -139,9 +139,9 @@ Tabla: Otras mediciones del producto
 | Auditoría de seguridad sin administrador | 3,4 – 6,4 s |
 | Respuesta del asistente (Qwen3 4B Instruct, CPU) | 10 – 58 s |
 | Respuesta con `qwen3:4b` (razonamiento) | 256 s |
-| Memoria del motor de análisis | ≈ 77 MB |
-| Tamaño del instalador | 49,26 MB |
-| Instalación silenciosa por usuario | 8,3 s |
+| Memoria de la aplicación instalada | Motor 163 MB, contenedor 28 MB, WebView2 485 MB (conjunto de trabajo tras un minuto) |
+| Tamaño del instalador | 49,3 MB |
+| Instalación silenciosa por usuario | 11,8–18,3 s (sin administrador) |
 | Primer arranque / arranques siguientes | ≈ 25 s / ≈ 9 s |
 | Procesos con firma válida en el equipo de prueba | 331 de 338 verificados |
 

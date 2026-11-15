@@ -103,15 +103,17 @@ Abra **PowerShell** (menú Inicio → escriba «PowerShell»; no hace falta «Ej
 # 1. Descargar el instalador y su huella a la carpeta Descargas
 cd $HOME\Downloads
 $base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0"
-Invoke-WebRequest "$base/ScriptLens-IA_0.1.0_x64-setup.exe" -OutFile "ScriptLens-IA_0.1.0_x64-setup.exe"
-Invoke-WebRequest "$base/ScriptLens-IA_0.1.0_x64-setup.exe.sha256" -OutFile "ScriptLens-IA_0.1.0_x64-setup.exe.sha256"
+$f = "ScriptLens-IA_0.1.0_x64-setup.exe"
+Invoke-WebRequest "$base/$f" -OutFile $f
+Invoke-WebRequest "$base/$f.sha256" -OutFile "$f.sha256"
 ```
 
 ```powershell
 # 2. Comprobar la huella: debe responder "Coincide"
-$esperado = (Get-Content "ScriptLens-IA_0.1.0_x64-setup.exe.sha256").Split(" ")[0]
-$real = (Get-FileHash "ScriptLens-IA_0.1.0_x64-setup.exe" -Algorithm SHA256).Hash
-if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale este archivo" }
+$f = "ScriptLens-IA_0.1.0_x64-setup.exe"
+$esperado = (Get-Content "$f.sha256").Split(" ")[0]
+$real = (Get-FileHash $f -Algorithm SHA256).Hash
+if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale" }
 ```
 
 ```powershell
@@ -127,10 +129,12 @@ En **Símbolo del sistema** (menú Inicio → escriba «cmd»):
 
 ```bat
 cd %USERPROFILE%\Downloads
-curl -L -o ScriptLens-IA_0.1.0_x64-setup.exe https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0/ScriptLens-IA_0.1.0_x64-setup.exe
-curl -L -o ScriptLens-IA_0.1.0_x64-setup.exe.sha256 https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0/ScriptLens-IA_0.1.0_x64-setup.exe.sha256
-certutil -hashfile ScriptLens-IA_0.1.0_x64-setup.exe SHA256
-type ScriptLens-IA_0.1.0_x64-setup.exe.sha256
+set BASE=https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0
+set F=ScriptLens-IA_0.1.0_x64-setup.exe
+curl -L -O %BASE%/%F%
+curl -L -O %BASE%/%F%.sha256
+certutil -hashfile %F% SHA256
+type %F%.sha256
 ```
 
 Compare a simple vista la huella que muestra `certutil` con la del archivo `.sha256` (deben ser iguales, sin importar mayúsculas). Si coinciden, ejecute `start ScriptLens-IA_0.1.0_x64-setup.exe`.
