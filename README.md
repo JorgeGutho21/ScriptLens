@@ -12,30 +12,48 @@
 
 <p align="center">
   <a href="https://github.com/JorgeGutho21/ScriptLens/releases">Descargas (Releases)</a> ·
-  <a href="docs/instalacion/INSTALACION.md">Guía de instalación</a> ·
-  <a href="docs/PRIVACIDAD.md">Privacidad</a> ·
-  <a href="docs/ESTADO_DESARROLLO.md">Estado del desarrollo</a>
+  <a href="docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf">Guía de instalación (PDF)</a> ·
+  <a href="docs/manual_usuario/Manual_Usuario_ScriptLens_IA.pdf">Manual de usuario (PDF)</a> ·
+  <a href="docs/PRIVACIDAD.md">Privacidad</a>
 </p>
 
 ![Panel general de ScriptLens IA](docs/capturas/02_panel_general.png)
 
+## Contenido
+
+[Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Licencias](#licencias) · [Soporte](#soporte)
+
 ## Qué es
 
-ScriptLens IA explica, en lenguaje sencillo, por qué un computador con Windows va lento, qué programas están funcionando, qué arranca con el sistema y si algo merece revisión. Analiza scripts BAT, CMD y PowerShell **sin ejecutarlos** y responde preguntas con un asistente de inteligencia artificial que funciona **dentro del propio equipo**. Ninguna acción que modifique el sistema se realiza sin la confirmación explícita del usuario.
+ScriptLens IA es una aplicación de escritorio para Windows que explica, en lenguaje sencillo, por qué un computador va lento, qué programas están funcionando, qué arranca con el sistema y si algo merece revisión. Analiza scripts BAT, CMD y PowerShell **sin ejecutarlos** y responde preguntas con un asistente de inteligencia artificial que funciona **dentro del propio equipo**. Ninguna acción que modifique el sistema se realiza sin la confirmación explícita del usuario, y la IA no puede ejecutar acciones.
 
-## Características
+## Problema que resuelve y objetivos
+
+Las herramientas incluidas en Windows muestran cifras (porcentajes, identificadores, nombres de procesos) pero no explican qué significan ni qué conviene hacer. Al mismo tiempo, es habitual ejecutar scripts recibidos de compañeros o descargados de Internet sin leerlos. ScriptLens une medición real, explicación y supervisión humana.
+
+**Objetivo general:** desarrollar una aplicación de escritorio para Windows que diagnostique el rendimiento y la seguridad del equipo y analice scripts de forma estática, con explicaciones comprensibles para personas sin formación técnica y acciones siempre supervisadas.
+
+**Objetivos específicos:**
+
+1. Medir en tiempo real CPU, memoria, disco, red y procesos, distinguiendo consumo sostenido de picos.
+2. Revisar en modo de solo lectura Defender, firewall, inicio automático, tareas programadas, servicios y eventos.
+3. Clasificar scripts con reglas asociadas a MITRE ATT&CK y una regresión logística balanceada, evaluada con datos no vistos.
+4. Responder preguntas con un modelo de lenguaje local cuyas cifras se comprueban contra los datos medidos.
+5. Ejecutar solo acciones reversibles o confirmadas, registradas con mediciones antes y después.
+
+## Funcionalidades
 
 | Módulo | Qué hace |
 |---|---|
 | Panel general | CPU total y por núcleo, RAM, disco, red y tiempo encendido medidos en tiempo real; diagnóstico de consumo **sostenido** (promedio de 1 minuto), no de picos |
 | Procesos | Tabla con búsqueda y filtros, árbol padre-hijo, ruta, firma digital (Authenticode), editor, conexiones y respuestas a «¿qué hace?, ¿puedo cerrarlo?, ¿es sospechoso?» separando datos comprobados de conclusiones estimadas |
-| Optimizar | Recomendaciones basadas en mediciones, solicitud de cierre o finalización de procesos no protegidos, limpieza de temporales con vista previa, desinstaladores oficiales y registro de acciones con mediciones antes/después |
-| Seguridad | Microsoft Defender, firewall, inicio automático (con activación/desactivación reversible), tareas programadas, servicios y eventos; hallazgos con ocho puntos (qué, dónde, por qué, evidencia, qué falta, consecuencias, qué hacer, qué evitar) |
-| Analizar scripts | Catálogo de 43 reglas (24 del proyecto académico original), técnicas MITRE ATT&CK 20.1, desofuscación estática, flujo, explicación línea por línea y regresión logística balanceada sobre TF-IDF de n-gramas de caracteres |
+| Optimizar | Recomendaciones basadas en mediciones, cierre o finalización supervisados de procesos no protegidos, limpieza de temporales con vista previa, desinstaladores oficiales y registro de acciones con mediciones antes/después |
+| Seguridad | Microsoft Defender, firewall, inicio automático (activación/desactivación reversible), tareas programadas, servicios y eventos; cada hallazgo explica qué, dónde, por qué, evidencia, qué falta, consecuencias, qué hacer y qué evitar |
+| Analizar scripts | 43 reglas (24 del proyecto académico original), técnicas MITRE ATT&CK 20.1, desofuscación estática, flujo, explicación línea por línea y regresión logística balanceada sobre TF-IDF de n-gramas de caracteres |
 | Asistente IA | Ollama + Qwen3 4B Instruct, herramientas internas de solo lectura, verificación cifra por cifra y respuestas sin IA cuando Ollama no está instalado |
 | Comparar mi PC | Guarda diagnósticos en SQLite y compara dos momentos sin atribuir causas sin evidencia |
-| Informes | PDF y HTML con métricas, evidencias, recomendaciones, acciones y limitaciones, con marca de agua discreta |
-| Experiencia | Modo sencillo y avanzado, modo claro y oscuro, tamaño de texto, reducción de animaciones, glosario contextual, asistente de primera ejecución y un elemento 3D discreto |
+| Informes | PDF y HTML con métricas, evidencias, recomendaciones, acciones y limitaciones |
+| Experiencia | Modo sencillo y avanzado, tema claro y oscuro, tamaño de texto, reducción de animaciones, glosario contextual y asistente de primera ejecución |
 
 <p>
   <img src="docs/capturas/05_detalle_proceso.png" width="49%" alt="Detalle de un proceso">
@@ -44,51 +62,82 @@ ScriptLens IA explica, en lenguaje sencillo, por qué un computador con Windows 
   <img src="docs/capturas/12_asistente_ia.png" width="49%" alt="Asistente con IA local">
 </p>
 
-Todas las capturas de [docs/capturas](docs/capturas) se tomaron de la versión instalada con el instalador de este repositorio.
+Todas las capturas de [docs/capturas](docs/capturas) son de la aplicación instalada con el instalador de este repositorio, con datos reales del equipo de pruebas.
 
-## Tecnologías
+## Requisitos mínimos y sistemas compatibles
 
-Tauri 2 · React 19 · TypeScript · Tailwind CSS 4 · Three.js · Python 3.12 · FastAPI · psutil · API nativa de Windows (`NtQuerySystemInformation`) · SQLite · scikit-learn · reportlab · Ollama · Qwen3 · PyInstaller · NSIS · pytest · GitHub Actions.
+| | Mínimo | Recomendado para la IA local |
+|---|---|---|
+| Sistema operativo | Windows 10 (1809 o posterior) u 11, **64 bits** | Windows 11 de 64 bits actualizado |
+| Memoria RAM | 4 GB | 8 GB o más |
+| Disco libre | 200 MB | 3 GB (incluye el modelo de IA) |
+| Componentes | Microsoft Edge WebView2 (incluido en Windows 11 y en Windows 10 actualizado) | Ollama |
+| Permisos | Cuenta de usuario estándar; no requiere administrador | — |
 
-Arquitectura: [docs/arquitectura/arquitectura.md](docs/arquitectura/arquitectura.md) · Sistema de diseño: [sistema_diseno.md](docs/arquitectura/sistema_diseno.md) · Investigación de repositorios: [investigacion_repositorios.md](docs/arquitectura/investigacion_repositorios.md) · Evaluación del clasificador: [evaluacion_clasificador.md](docs/pruebas/evaluacion_clasificador.md).
+**No compatible:** Windows de 32 bits, Windows 7/8, macOS y Linux. La versión empaquetada **no** necesita Python, Node.js, Rust ni Visual Studio. Los entornos realmente probados están en [docs/pruebas/compatibilidad.md](docs/pruebas/compatibilidad.md).
 
-## Requisitos
+## Descarga e instalación
 
-- Windows 10 (versión 1809 o posterior) u 11, 64 bits.
-- 4 GB de RAM para la aplicación; 8 GB o más para usar el asistente con IA local.
-- ≈ 200 MB de disco para la aplicación; ≈ 2,5 GB adicionales para el modelo de IA (opcional).
-- Microsoft Edge WebView2 (incluido en Windows 11 y en Windows 10 actualizado).
+La guía paso a paso para principiantes, con capturas numeradas, está en [Guia_Instalacion_ScriptLens_IA.pdf](docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf) (versión editable: [.docx](docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx); versión web: [INSTALACION.md](docs/instalacion/INSTALACION.md)).
 
-## Instalación
+Archivos de cada versión publicada en [Releases](https://github.com/JorgeGutho21/ScriptLens/releases):
 
-La guía completa, con capturas y errores habituales, está en [docs/instalacion/INSTALACION.md](docs/instalacion/INSTALACION.md).
+| Archivo | Para qué sirve |
+|---|---|
+| `ScriptLens-IA_0.1.0_x64-setup.exe` | Instalador para Windows de 64 bits |
+| `ScriptLens-IA_0.1.0_x64-setup.exe.sha256` | Huella SHA-256 para comprobar que el archivo descargado es el original |
 
 ### Método A — Instalador gráfico (recomendado)
 
-**Estado:** la versión v0.1.0 todavía requiere reconstrucción y validación tras corregir dos defectos importantes. No descargue artefactos antiguos como versión final.
-
-1. **Solo cuando haya una versión publicada y comprobada**, abra [Releases](https://github.com/JorgeGutho21/ScriptLens/releases) y descargue `ScriptLens IA_0.1.0_x64-setup.exe` y su archivo `.sha256`.
-2. Compruebe el SHA-256 y el origen del archivo antes de abrirlo. Si Windows SmartScreen muestra una advertencia, **no la ignore automáticamente**: confirme que corresponde a la versión oficial y revise las notas de seguridad. El instalador no está firmado comercialmente.
-3. Abra **ScriptLens IA** desde el menú Inicio. No requiere permisos de administrador.
-
-> Mientras no exista una versión publicada, el instalador puede construirse con el Método C (`scripts\construir_instalador.ps1`).
+1. Abra [github.com/JorgeGutho21/ScriptLens/releases](https://github.com/JorgeGutho21/ScriptLens/releases), elija la versión más reciente marcada como **Latest** y, en **Assets**, descargue los dos archivos de la tabla anterior.
+2. Compruebe la huella SHA-256 (Método B, paso 2). Si no coincide, **no abra el archivo**.
+3. Haga doble clic en el instalador. El instalador no tiene firma de código comercial, por lo que Windows SmartScreen puede mostrar «Windows protegió su PC». Continúe solo si descargó el archivo de la página oficial y la huella coincide: pulse **Más información** → **Ejecutar de todas formas**. Si tiene dudas, no continúe.
+4. Siga el asistente (**Siguiente** → **Instalar** → **Finalizar**). La instalación es solo para su usuario y no pide permisos de administrador.
+5. Abra **ScriptLens IA** desde el menú Inicio.
 
 ### Método B — PowerShell con verificación de integridad
 
-En **PowerShell** (no requiere administrador), dentro de la carpeta donde descargó los dos archivos:
+Abra **PowerShell** (menú Inicio → escriba «PowerShell»; no hace falta «Ejecutar como administrador») y copie estos comandos uno por uno:
 
 ```powershell
-$archivo = "ScriptLens IA_0.1.0_x64-setup.exe"
-$esperado = (Get-Content "$archivo.sha256").Split(" ")[0]
-$real = (Get-FileHash $archivo -Algorithm SHA256).Hash
-if ($real -eq $esperado) { Start-Process ".\$archivo" } else { Write-Error "El hash no coincide: no instale este archivo." }
+# 1. Descargar el instalador y su huella a la carpeta Descargas
+cd $HOME\Downloads
+$base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0"
+Invoke-WebRequest "$base/ScriptLens-IA_0.1.0_x64-setup.exe" -OutFile "ScriptLens-IA_0.1.0_x64-setup.exe"
+Invoke-WebRequest "$base/ScriptLens-IA_0.1.0_x64-setup.exe.sha256" -OutFile "ScriptLens-IA_0.1.0_x64-setup.exe.sha256"
 ```
 
-No existe todavía un paquete oficial de WinGet para ScriptLens IA.
+```powershell
+# 2. Comprobar la huella: debe responder "Coincide"
+$esperado = (Get-Content "ScriptLens-IA_0.1.0_x64-setup.exe.sha256").Split(" ")[0]
+$real = (Get-FileHash "ScriptLens-IA_0.1.0_x64-setup.exe" -Algorithm SHA256).Hash
+if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale este archivo" }
+```
 
-### Método C — Desarrolladores (código fuente)
+```powershell
+# 3. Abrir el instalador (solo si respondió "Coincide")
+Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe"
+```
 
-Requisitos: Git, Python 3.12, Node.js 20+, Rust estable y Visual Studio Build Tools con «Desarrollo de escritorio con C++». En **PowerShell**:
+Instalación silenciosa para su usuario (sin ventanas): `Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe" -ArgumentList "/S" -Wait`.
+
+### Método C — Símbolo del sistema (CMD)
+
+En **Símbolo del sistema** (menú Inicio → escriba «cmd»):
+
+```bat
+cd %USERPROFILE%\Downloads
+curl -L -o ScriptLens-IA_0.1.0_x64-setup.exe https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0/ScriptLens-IA_0.1.0_x64-setup.exe
+curl -L -o ScriptLens-IA_0.1.0_x64-setup.exe.sha256 https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0/ScriptLens-IA_0.1.0_x64-setup.exe.sha256
+certutil -hashfile ScriptLens-IA_0.1.0_x64-setup.exe SHA256
+type ScriptLens-IA_0.1.0_x64-setup.exe.sha256
+```
+
+Compare a simple vista la huella que muestra `certutil` con la del archivo `.sha256` (deben ser iguales, sin importar mayúsculas). Si coinciden, ejecute `start ScriptLens-IA_0.1.0_x64-setup.exe`.
+
+### Método D — Desarrolladores (código fuente)
+
+Solo para quien quiera modificar o compilar ScriptLens. Requisitos: Git, Python 3.12, Node.js 20+, Rust estable y Visual Studio Build Tools con «Desarrollo de escritorio con C++». En **PowerShell**:
 
 ```powershell
 git clone https://github.com/JorgeGutho21/ScriptLens.git
@@ -104,37 +153,85 @@ npm run dev                          # aplicación de escritorio en modo desarro
 
 Si Rust informa `link.exe not found`, ejecute antes `. .\scripts\msvc-env.ps1` en la misma ventana.
 
-## Configurar la IA local (opcional)
+## Configurar el asistente de IA (opcional)
+
+Todas las funciones, salvo la redacción con IA, funcionan sin instalar nada más.
 
 1. Instale Ollama desde [ollama.com/download](https://ollama.com/download) y ábralo.
-2. En ScriptLens, abra **Asistente IA** y pulse **Descargar** junto a «Qwen3 4B Instruct» (≈ 2,5 GB; requiere su confirmación). También puede hacerlo en PowerShell: `ollama pull qwen3:4b-instruct`.
+2. En ScriptLens, abra **Asistente IA** y pulse **Descargar** junto a «Qwen3 4B Instruct» (≈ 2,5 GB; pide su confirmación). También puede hacerlo en PowerShell: `ollama pull qwen3:4b-instruct`.
 3. El indicador debe mostrar «Ollama activo». Sin Ollama, el asistente responde con plantillas basadas en los mismos datos medidos.
 
-Se usa la variante *Instruct* porque la etiqueta `qwen3:4b` corresponde a un modelo que razona antes de responder: en el equipo de desarrollo tardó 256 s en una respuesta frente a 10–60 s de la variante Instruct.
+Se usa la variante *Instruct* porque `qwen3:4b` razona antes de responder: en el equipo de pruebas tardó 256 s en una respuesta, frente a 10–60 s de la variante Instruct. En equipos con 8 GB de RAM o menos puede elegir `qwen3:1.7b`.
 
-## Guía rápida de uso
+## Primer análisis
 
-1. **Panel general:** observe CPU y RAM; el recuadro «Qué está pasando» resume la situación.
-2. **Procesos:** pulse un programa para saber qué hace y si puede cerrarlo.
-3. **Seguridad → Revisar ahora:** revise los hallazgos que «requieren revisión».
-4. **Analizar scripts:** arrastre un `.bat`, `.cmd` o `.ps1` antes de ejecutarlo.
-5. **Asistente IA:** pregunte, por ejemplo, «¿Por qué mi computador está lento?».
-6. **Comparar mi PC:** guarde un diagnóstico antes de un cambio y compárelo después.
-7. **Informes:** genere un PDF o HTML para conservar o compartir el diagnóstico.
+1. Al abrir ScriptLens por primera vez, un asistente de bienvenida explica cada sección y permite elegir el modo sencillo o avanzado.
+2. Espere un minuto en el **Panel general**: ScriptLens necesita ese tiempo para distinguir un consumo sostenido de un pico momentáneo.
+3. Abra **Seguridad** y pulse **Revisar ahora** (tarda entre 5 y 30 s).
+4. Lea el recuadro «Qué está pasando» del panel y los hallazgos marcados «Requiere revisión».
 
-El manual completo para principiantes está en `docs/manual_usuario/Manual_Usuario_ScriptLens_IA.pdf`.
+## Qué hace cada módulo
 
-## Preguntas frecuentes
+- **Panel general:** los anillos muestran CPU (cuánto trabaja el procesador) y RAM (cuánta memoria de trabajo está ocupada). El diagnóstico usa el promedio del último minuto.
+- **Procesos:** cada programa en ejecución con su tipo (aplicación abierta, segundo plano, servicio, Windows), consumo, editor y firma. Al pulsar uno se explica qué hace y si es seguro cerrarlo. El árbol muestra qué programa inició a cuál.
+- **Optimizar:** recomendaciones basadas en las mediciones, limpieza de temporales con vista previa y desinstalación mediante el desinstalador oficial de cada programa.
+- **Seguridad:** estado de Defender y del firewall, programas de inicio, tareas programadas, servicios de terceros y eventos recientes. Solo Microsoft Defender puede declarar «Amenaza detectada».
+- **Analizar scripts:** arrastre un `.bat`, `.cmd` o `.ps1`; ScriptLens lo lee **sin ejecutarlo**, decide «Consulta», «Modifica» o «Sensible» y explica cada línea.
+- **Asistente IA:** preguntas en lenguaje natural respondidas con datos medidos.
+- **Comparar mi PC:** guarde un diagnóstico, haga un cambio y compare.
+- **Informes:** PDF o HTML del estado del equipo.
 
-- **¿ScriptLens es un antivirus?** No. Solo Microsoft Defender puede producir el estado «Amenaza detectada»; ScriptLens señala aspectos que conviene revisar.
-- **¿Envía mis datos a Internet?** No. El análisis y la IA son locales. La única conexión opcional es «Buscar actualizaciones», que consulta GitHub sin enviar datos del equipo.
-- **¿Puede dañar Windows?** No finaliza procesos críticos, servicios ni componentes de seguridad, no desactiva protecciones y toda acción requiere confirmación.
-- **¿Por qué Windows advierte al instalar?** El instalador no tiene firma de código comercial. Verifique el SHA-256 publicado.
+## Ejemplos de preguntas al asistente
+
+«¿Qué proceso consume más CPU?» · «¿Qué aplicación consume más RAM?» · «¿Por qué está lento el computador?» · «¿Qué tareas se ejecutan en segundo plano?» · «¿Qué programas puedo cerrar?» · «¿Qué proceso requiere investigación?» · «¿Qué significa esta alerta?» · «¿Tengo amenazas registradas?» · «¿Qué programas se inician con Windows?» · «¿Qué cambió desde el último diagnóstico?» · «¿Qué es svchost.exe?»
+
+Cada respuesta muestra la evidencia usada y si sus cifras se verificaron. El asistente no puede cerrar programas, borrar archivos ni cambiar configuraciones.
+
+## Acciones supervisadas
+
+Cerrar o finalizar un programa, activar o desactivar un programa de inicio, limpiar temporales o abrir un desinstalador siempre muestra primero qué se hará, con **Cancelar** seleccionado por defecto. ScriptLens:
+
+- No finaliza procesos críticos de Windows, servicios ni componentes de seguridad.
+- Solo limpia archivos de más de 7 días dentro de la carpeta temporal de su usuario; rechaza rutas vacías, relativas, personales o del sistema y no sigue enlaces ni uniones.
+- No desactiva Defender ni el firewall, y no modifica permisos del sistema.
+- Registra cada acción con mediciones antes y después (**Optimizar → Registro de acciones**).
+
+## Exportar informes
+
+En **Informes**, pulse **Crear PDF** o **Crear HTML**. Los archivos se guardan en `Documentos\ScriptLens IA\Informes` e incluyen métricas, hallazgos, acciones realizadas y limitaciones.
+
+## Actualizaciones
+
+En **Acerca de → Buscar actualizaciones**, ScriptLens consulta GitHub Releases solo cuando usted lo pide y nunca instala nada por sí misma. Para actualizar, descargue la nueva versión, compruebe su SHA-256 e instálela encima: el historial se conserva.
+
+## Solución de errores
+
+| Síntoma | Qué hacer |
+|---|---|
+| «Windows protegió su PC» | Es el aviso de SmartScreen para instaladores sin firma comercial. Compruebe la huella SHA-256; si coincide y lo descargó de la página oficial, pulse **Más información → Ejecutar de todas formas** |
+| La aplicación se queda en «Iniciando el motor de análisis» más de 1 minuto | El antivirus puede estar examinando el motor la primera vez. Cierre y vuelva a abrir. Si persiste, reinstale |
+| Pantalla en blanco | Instale o repare Microsoft Edge WebView2 Runtime desde la página oficial de Microsoft |
+| El asistente dice «Ollama no está activo» | Abra Ollama desde el menú Inicio y pulse **Comprobar de nuevo**; o use las respuestas sin IA |
+| Las respuestas de la IA tardan mucho | Conecte el cargador, cierre programas pesados o elija `qwen3:1.7b` |
+| «Información insuficiente» en el historial de Defender | Windows restringe ese dato a administradores; ScriptLens no eleva privilegios |
+
+Más casos en [docs/instalacion/INSTALACION.md](docs/instalacion/INSTALACION.md).
+
+## Desinstalación
+
+**Configuración → Aplicaciones → Aplicaciones instaladas → ScriptLens IA → Desinstalar.** El historial (`%LOCALAPPDATA%\ScriptLens`) se conserva por si reinstala; puede borrarlo antes desde **Ajustes → Privacidad** (botones «Borrar diagnósticos», «Borrar conversaciones» y «Borrar registro de acciones»). Los informes en `Documentos\ScriptLens IA` también se conservan. Ollama y sus modelos se desinstalan aparte.
 
 ## Privacidad
 
-Consulte [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md) y [SECURITY.md](SECURITY.md).
+El análisis y la IA son locales. ScriptLens no envía listas de procesos, registros ni datos personales a ningún servidor; la única conexión opcional es «Buscar actualizaciones». Detalles en [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md) y [SECURITY.md](SECURITY.md).
 
-## Licencia y atribuciones
+## Licencias
 
-MIT © 2026 Jorge Gutiérrez. Componentes de terceros y referencias conceptuales en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). ATT&CK® es una marca registrada de The MITRE Corporation.
+MIT © 2026 Jorge Gutiérrez. Componentes de terceros (Tauri, React, three.js, FastAPI, psutil, scikit-learn, reportlab, PyInstaller, datos de MITRE ATT&CK, entre otros) conservan sus licencias, detalladas en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). ATT&CK® es una marca registrada de The MITRE Corporation. Ollama y Qwen3 se instalan aparte y se rigen por sus propias licencias.
+
+## Soporte
+
+- Repositorio oficial: [github.com/JorgeGutho21/ScriptLens](https://github.com/JorgeGutho21/ScriptLens)
+- Errores y sugerencias: [Issues](https://github.com/JorgeGutho21/ScriptLens/issues)
+- Vulnerabilidades: siga [SECURITY.md](SECURITY.md)
+- Documentación técnica: [docs/desarrollo/Documentacion_Tecnica_ScriptLens_IA.pdf](docs/desarrollo/Documentacion_Tecnica_ScriptLens_IA.pdf)

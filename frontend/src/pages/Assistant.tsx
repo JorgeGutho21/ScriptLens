@@ -1,4 +1,4 @@
-import { Bot, CheckCircle2, ChevronRight, Cpu, Download, HardDrive, History, Lock, MessageSquarePlus, Send, ShieldCheck, Trash2, TriangleAlert, User } from 'lucide-react'
+import { Bot, CheckCircle2, ChevronRight, Cpu, Download, HardDrive, History, Lock, MessageSquarePlus, RefreshCcw, Send, ShieldCheck, Trash2, TriangleAlert, User } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Confirm } from '../components/Confirm'
 import { Card } from '../components/ui'
@@ -205,9 +205,14 @@ export function AssistantPage() {
               <CheckCircle2 size={16} /> Ollama {status.version} activo
             </p>
           ) : (
-            <p className="flex items-center gap-2 text-sm text-warn">
-              <TriangleAlert size={16} /> Ollama no está instalado o no está abierto
-            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="flex items-center gap-2 text-sm text-warn">
+                <TriangleAlert size={16} /> Ollama no está instalado o no está abierto
+              </p>
+              <button type="button" onClick={() => loadStatus()} className="ml-auto flex items-center gap-1.5 rounded-lg border border-line px-2.5 py-1 text-xs hover:bg-surface-2">
+                <RefreshCcw size={13} /> Comprobar de nuevo
+              </button>
+            </div>
           )}
           <details className="mt-3 text-[13px] text-muted" open={!!status && !status.instalado_o_activo}>
             <summary className="cursor-pointer font-medium text-fg">¿Qué es y cómo activarla?</summary>
