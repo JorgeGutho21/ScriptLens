@@ -141,3 +141,12 @@
 | Documentos | README reescrito, *Guía de instalación* (DOCX/PDF, 13 págs.), matriz de compatibilidad, documentación técnica (50 págs.), informe ExpoSoftware (20 págs.), manual (20 págs.), presentación |
 | Pendiente | Fusionar el PR y publicar la release (autorización del autor); capturas de las pantallas 2–6 del instalador (no se autorizó controlarlo; existe `scripts/capturar-instalador.ps1`); pruebas en Windows 10 y equipos de 4 GB |
 | Commits | `109b712` … `4e564a4` (21 commits en esta fase) |
+
+## Fase 12 — Publicación de v0.1.0 · 2026-11-15
+
+| Campo | Detalle |
+|---|---|
+| Fusión | El autor fusionó el PR #1 en `main` (squash `d376dbb`); árbol idéntico a `fdd63c5` |
+| Release | `v0.1.0` sobre `d376dbb`, *Latest*; recursos `ScriptLens-IA_0.1.0_x64-setup.exe` (51 678 985 bytes) y `.sha256` (101 bytes); descarga pública verificada con la misma huella `111397CF…B6D13A`; la API `releases/latest` devuelve `v0.1.0` |
+| Corrección | Las notas indicaban 100 bytes para el `.sha256`; son 101 (salto de línea final). Corregido en el repositorio y en la release |
+| Guía | Capturas reales de la página del repositorio, de la versión y de Assets (navegador sin sesión); guía regenerada (14 págs., 7 figuras) |
