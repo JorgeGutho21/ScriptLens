@@ -29,12 +29,16 @@ ScriptLens **no** funciona en Windows de 32 bits, Windows 7 u 8, macOS ni Linux.
 2. En la barra de direcciones (la parte superior, donde se escriben las páginas) escriba `github.com/JorgeGutho21/ScriptLens` y pulse **Enter**.
 3. Compruebe que arriba a la izquierda aparece **JorgeGutho21 / ScriptLens**. Si el nombre es distinto, cierre la página: no es la oficial.
 
+Figura: docs/instalacion/capturas/01_repositorio.png | Página oficial del repositorio en GitHub | Arriba a la izquierda se lee JorgeGutho21 / ScriptLens. En la columna derecha, el apartado Releases muestra «ScriptLens IA v0.1.0» con la etiqueta Latest.
+
 
 ## 2.2 Encontrar la versión publicada
 
 1. En la columna derecha de la página, busque el apartado **Releases** y pulse sobre él (o sobre la versión que aparece debajo, marcada **Latest**).
 2. Se abre la página de versiones. Use la más reciente que tenga la etiqueta verde **Latest**: es la versión estable.
 3. Baje hasta el apartado **Assets** (archivos). Si está cerrado, pulse la palabra **Assets** para desplegarlo.
+
+Figura: docs/instalacion/capturas/02_releases.png | Página de la versión v0.1.0 | La etiqueta verde Latest indica la versión estable. Más abajo están las notas de la versión y el apartado Assets.
 
 
 ## 2.3 Descargar el instalador correcto
@@ -49,6 +53,8 @@ Tabla: Archivos que debe descargar
 | `ScriptLens-IA_0.1.0_x64-setup.exe.sha256` | La huella digital del instalador, para comprobar que no fue alterado |
 
 Los archivos «Source code (zip)» y «Source code (tar.gz)» son el código fuente para programadores: **no** los necesita.
+
+Figura: docs/instalacion/capturas/03_assets.png | Apartado Assets de la versión v0.1.0 | Los dos primeros archivos son los que debe descargar. Junto a cada uno, GitHub muestra el comienzo de su huella SHA-256 (sha256:111397cf…).
 
 Pulse el nombre de cada archivo. El navegador lo guarda en la carpeta **Descargas**. Si el navegador pregunta si desea conservar el archivo, elija **Conservar**.
 
