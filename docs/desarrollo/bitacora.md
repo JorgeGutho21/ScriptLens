@@ -115,3 +115,13 @@
 | Errores y soluciones | Pantalla en blanco del asistente (`scrollIntoView` devuelve Promise en WebView2) → efectos sin valor de retorno y límite de errores; interruptor mal dibujado; segunda instancia → `tauri-plugin-single-instance`; informes dentro de la carpeta del repositorio → `Documentos\ScriptLens IA\Informes`; análisis de 1 MB 10,4 s → 3,4 s con memorización |
 | Resultado | Instalador NSIS de 49,26 MB con SHA-256 |
 | Commits | `aab7b22`, `04f9709`, `ae0504a`, `4c2e76a`, `94884bf`, `b4b0437` |
+
+## Fase 10 — Documentación y entrega · 2026-11-15
+
+| Campo | Detalle |
+|---|---|
+| Archivos | `README.md`, `CHANGELOG.md`, `THIRD_PARTY_NOTICES.md`, `docs/PRIVACIDAD.md`, `docs/instalacion/INSTALACION.md`, `docs/release/v0.1.0.md`, `docs/academico/*`, `docs/{desarrollo,expo_software,manual_usuario}/*`, `scripts/demo_consumo.py` |
+| Pruebas | 110 pruebas aprobadas, compilación de interfaz y `cargo check` correctos, enlaces internos verificados, DOI de las referencias verificados en Crossref y arXiv, licencias de dependencias revisadas |
+| Errores y soluciones | Listas numeradas que continuaban entre secciones en los DOCX → numeración explícita; referencias que heredaban la sangría francesa en los anexos → se reinicia en el siguiente encabezado |
+| Observación | No se autorizó controlar el instalador gráfico: solo se capturó su primera pantalla |
+| Commits | `fce51c1`, `fac9596`, `2ff98d3` y el commit de cierre |
