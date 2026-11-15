@@ -1,6 +1,6 @@
 # Estado del desarrollo — ScriptLens IA
 
-Última actualización: 2026-11-15 · Rama: `feat/desarrollo-integral` · PR: [#1](https://github.com/JorgeGutho21/ScriptLens/pull/1) (abierto, sin fusionar) · Último commit: ver `git log -1`.
+Última actualización: 2026-11-15 · Rama: `feat/desarrollo-integral` · PR [#1](https://github.com/JorgeGutho21/ScriptLens/pull/1) fusionado en `main` (`d376dbb`) · Release [v0.1.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0) publicada · Último commit: ver `git log -1`.
 
 ## Fases
 
@@ -16,7 +16,8 @@
 | 8 | Informes PDF/HTML | ✅ |
 | 9 | Instalador NSIS | ✅ |
 | 10 | Documentación APA 7, manual, material de exposición, pull request | ✅ |
-| 11 | Revisión de cierre: defectos P1, OneDrive, asistente, diálogos, identidad del instalador, guía de instalación, compatibilidad | ✅ (pendiente de fusión y publicación) |
+| 11 | Revisión de cierre: defectos P1, OneDrive, asistente, diálogos, identidad del instalador, guía de instalación, compatibilidad | ✅ |
+| 12 | Publicación de v0.1.0 y capturas reales de GitHub en la guía | ✅ |
 
 ## Verificación final (2026-11-15)
 
@@ -38,14 +39,17 @@
 | Matriz de compatibilidad | `docs/pruebas/compatibilidad.md` |
 | Notas de la versión | `docs/release/v0.1.0.md` |
 
-## Pendientes que requieren al autor
+## Publicación (2026-11-15)
 
-1. **Revisar y fusionar el PR #1** hacia `main` (no se fusiona automáticamente).
-2. **Publicar la release v0.1.0** con `build\release\ScriptLens-IA_0.1.0_x64-setup.exe`, su `.sha256` y `docs/release/v0.1.0.md` como notas (requiere autorización expresa). Conviene publicarla después de fusionar, porque las notas enlazan a documentos de `main`.
-3. **Tras publicar:** capturar la página del repositorio y la de Releases para los apartados 2.1 y 2.2 de la guía (sus figuras se retiraron hasta que existan) y regenerar la guía.
-4. **Capturas de las pantallas 2–6 del instalador:** no se autorizó controlarlo. El autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.1.0_x64-setup.exe` y recorrerlo; el script guarda cada pantalla.
-5. **Confirmar la grafía oficial del docente:** los documentos originales dicen «Oswaldo Rueda Carreño»; no se encontró una fuente institucional pública que lo confirme.
-6. Opcionales: firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
+- El autor fusionó el PR #1 en `main` (`d376dbb`); el árbol de `main` es idéntico al del commit desde el que se construyó el instalador (`fdd63c5`).
+- Release `v0.1.0` publicada sobre `d376dbb`, marcada como *Latest*, con `ScriptLens-IA_0.1.0_x64-setup.exe` y su `.sha256`. Se descargaron ambos archivos desde la URL pública y la huella coincide (`111397CF…B6D13A`, 51 678 985 bytes).
+- La guía de instalación incluye las capturas reales de la página del repositorio, de la versión y de sus archivos (Assets).
+
+## Pendientes
+
+1. **Capturas de las pantallas 2–6 del instalador:** no se autorizó controlarlo. El autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.1.0_x64-setup.exe` y recorrerlo; el script guarda cada pantalla.
+2. **Confirmar la grafía oficial del docente:** los documentos originales dicen «Oswaldo Rueda Carreño»; no se encontró una fuente institucional pública que lo confirme.
+3. Opcionales: descripción y temas del repositorio en GitHub (apartado *About* vacío), firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
 
 ## Reanudar (PowerShell, en `C:\Users\Usuario\Documents\ScriptLens`)
 
