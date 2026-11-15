@@ -208,6 +208,8 @@ class Builder:
             setattr(sec, m, Cm(2.54))
         page_number_header(sec)
         d.core_properties.author = "Jorge Gutiérrez (@JorgeGutho21)"
+        d.core_properties.last_modified_by = "Jorge Gutiérrez (@JorgeGutho21)"
+        d.core_properties.comments = ""
         d.core_properties.title = self.cfg["titulo"]
         d.core_properties.subject = self.cfg["subtitulo"]
         d.core_properties.language = "es-CO"

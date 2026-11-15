@@ -214,6 +214,7 @@ text(s, "github.com/JorgeGutho21/ScriptLens", Inches(0.9), Inches(4.7), Inches(1
 text(s, "Jorge Gutiérrez · @JorgeGutho21 · ¡Gracias!", Inches(0.9), Inches(5.4), Inches(10), Inches(0.6), 18, MUTED)
 
 prs.core_properties.author = "Jorge Gutiérrez (@JorgeGutho21)"
+prs.core_properties.last_modified_by = "Jorge Gutiérrez (@JorgeGutho21)"
 prs.core_properties.title = "ScriptLens IA — ExpoSoftware 2026-II"
 prs.save(OUT)
 print(f"{OUT.relative_to(ROOT)}: {len(prs.slides)} diapositivas")
