@@ -1,0 +1,6 @@
+$descargas = Join-Path $env:USERPROFILE 'Downloads'
+foreach ($ext in 'pdf','docx','zip') {
+    $carpeta = Join-Path $descargas $ext
+    New-Item -ItemType Directory -Path $carpeta -Force | Out-Null
+    Get-ChildItem $descargas -Filter "*.$ext" -File | Move-Item -Destination $carpeta
+}

@@ -27,6 +27,7 @@ class Engine:
         self.signatures = SignatureCache()
         self.db = Database(settings.data_dir / "scriptlens.db")
         self.security = SecurityState()
+        self.last_script_analysis: dict | None = None
         self._stop = threading.Event()
         self._threads: list[threading.Thread] = []
         self._info_cache: tuple[float, dict] | None = None

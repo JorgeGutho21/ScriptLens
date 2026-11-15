@@ -1,0 +1,5 @@
+$destino = Join-Path $env:USERPROFILE 'Desktop\inventario'
+New-Item -ItemType Directory -Path $destino -Force | Out-Null
+Get-Process | Select-Object Name, Id, CPU | Export-Csv "$destino\procesos.csv" -NoTypeInformation
+Get-Service | Export-Csv "$destino\servicios.csv" -NoTypeInformation
+Get-ComputerInfo | Out-File "$destino\equipo.txt"

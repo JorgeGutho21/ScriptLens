@@ -1,0 +1,11 @@
+@echo off
+chcp 65001 >nul
+title Inventario del equipo
+echo ===== Inventario %COMPUTERNAME% =====
+hostname
+ver
+systeminfo | findstr /B /C:"Nombre del sistema operativo" /C:"Memoria fisica total"
+wmic cpu get name
+wmic logicaldisk get caption,freespace,size
+ipconfig | findstr IPv4
+pause

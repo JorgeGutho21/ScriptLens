@@ -101,6 +101,7 @@ def create_app(settings: Settings, engine: Engine | None = None) -> FastAPI:
     )
 
     from backend.processes.routes import router as processes_router
+    from backend.scripts.routes import router as scripts_router
     from backend.security.routes import router as security_router
     from backend.storage.routes import router as storage_router
 
@@ -108,4 +109,5 @@ def create_app(settings: Settings, engine: Engine | None = None) -> FastAPI:
     app.include_router(processes_router(engine))
     app.include_router(storage_router(engine))
     app.include_router(security_router(engine))
+    app.include_router(scripts_router(engine))
     return app

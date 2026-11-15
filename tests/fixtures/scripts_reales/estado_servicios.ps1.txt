@@ -1,0 +1,6 @@
+param([int]$Top = 10)
+# Muestra los servicios y procesos que mas memoria usan
+Get-Service | Where-Object { $_.Status -eq 'Running' } | Sort-Object DisplayName | Format-Table -AutoSize
+Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First $Top Name, Id, @{n='MB';e={[math]::Round($_.WorkingSet64/1MB)}}
+Get-CimInstance Win32_OperatingSystem | Select-Object Caption, LastBootUpTime
+Write-Host "Consulta terminada"

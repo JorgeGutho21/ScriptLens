@@ -1,0 +1,7 @@
+@echo off
+whoami
+whoami /groups
+query user
+net user %USERNAME%
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
+tasklist /v | findstr /i "%USERNAME%"
