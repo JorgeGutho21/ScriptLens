@@ -41,14 +41,14 @@ fn backend_info(state: tauri::State<'_, Arc<BackendState>>) -> Option<BackendInf
 }
 
 /// Construye el comando que inicia el motor de análisis.
-/// - Producción: ejecutable empaquetado junto a la aplicación.
+/// - Producción: motor empaquetado con PyInstaller en los recursos de la aplicación.
 /// - Desarrollo: intérprete del entorno virtual del repositorio.
 fn backend_command(app: &tauri::AppHandle) -> Command {
-    let exe_dir = std::env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(PathBuf::from))
+    let bundled = app
+        .path()
+        .resource_dir()
+        .map(|d| d.join("backend").join("scriptlens-backend.exe"))
         .unwrap_or_default();
-    let bundled = exe_dir.join("scriptlens-backend.exe");
     let mut cmd = if bundled.exists() {
         Command::new(bundled)
     } else {
@@ -108,6 +108,15 @@ fn stop_backend(state: &BackendState) {
 pub fn run() {
     let state = Arc::new(BackendState::default());
     let app = tauri::Builder::default()
+        // Una sola instancia: abrir ScriptLens de nuevo enfoca la ventana existente
+        // en lugar de iniciar un segundo motor de análisis.
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(w) = app.get_webview_window("main") {
+                let _ = w.unminimize();
+                let _ = w.show();
+                let _ = w.set_focus();
+            }
+        }))
         .manage(state.clone())
         .invoke_handler(tauri::generate_handler![backend_info])
         .setup({
