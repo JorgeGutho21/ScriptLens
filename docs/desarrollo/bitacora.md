@@ -125,3 +125,19 @@
 | Errores y soluciones | Listas numeradas que continuaban entre secciones en los DOCX → numeración explícita; referencias que heredaban la sangría francesa en los anexos → se reinicia en el siguiente encabezado |
 | Observación | No se autorizó controlar el instalador gráfico: solo se capturó su primera pantalla |
 | Commits | `fce51c1`, `fac9596`, `2ff98d3` y el commit de cierre |
+
+## Fase 11 — Revisión de cierre, defectos P1 e instalación pública · 2026-11-15
+
+| Campo | Detalle |
+|---|---|
+| Origen | Dos observaciones P1 de la revisión automática del PR #1 y la orden de finalización del autor |
+| P1 A — motor empaquetado | PyInstaller en modo ventana deja `sys.stdout = None` y el puerto no llegaba a Tauri. El autor cambió el empaquetado a `--console` (`109b712`); se añadió una defensa que escribe en el descriptor heredado si falta `sys.stdout` (`0794f85`). Verificado con el motor empaquetado (PATH mínimo, línea de arranque en 3,2 s, 15/15 rutas) y con la aplicación instalada (panel con datos en vivo) |
+| P1 B — limpieza de temporales | `TEMP` vacía se resolvía como el directorio de trabajo. Validación en vista previa y ejecución (`b2e4ce8`, `151770c`, `79532b2`); además se rechazan el perfil, sus carpetas superiores, las carpetas personales reales (OneDrive) y Windows, y no se entra en uniones NTFS (`8dc8706`, `451f19b`). Pruebas con carpetas aisladas, una unión hacia un documento externo y token inexistente |
+| Otros defectos | Informes fuera de Documentos visible con OneDrive; ruta de datos incorrecta en Acerca de y README; enrutado del asistente («esta alerta», «requiere investigación», ranking de CPU nulo al iniciar); diálogos descentrados por `transform` en el ancestro; sin indicación al preparar una limpieza; «midiendo…» permanente en el registro |
+| Interfaz | Acerca de con identidad oficial, información técnica y rutas reales; tabla de procesos adaptada a 1024 px; «Comprobar de nuevo» para Ollama; imágenes de marca en el instalador NSIS |
+| Marcas | Sin referencias promocionales en código, documentos, metadatos ni imágenes; se corrigió el autor de los metadatos de la presentación (plantilla de python-pptx). Se conservan el historial de commits y la lista de colaboradores de GitHub |
+| Pruebas | 135 pruebas en 14 archivos; la prueba de rendimiento CP6 falló una vez con el equipo saturado (17,5 s) y se aprobó al repetirla (8,5 s). Diez preguntas de referencia con y sin Ollama. Ciclo completo del instalador final: actualización, apertura, motor solo en 127.0.0.1, instancia única, cierre forzado sin huérfanos, desinstalación conservando datos y reinstalación |
+| Instalador final | `ScriptLens-IA_0.1.0_x64-setup.exe`, 51 678 985 bytes, SHA-256 `111397CF7D8164943D79F99488F3B868603A4CA32053D116D8B522AC37B6D13A` |
+| Documentos | README reescrito, *Guía de instalación* (DOCX/PDF, 13 págs.), matriz de compatibilidad, documentación técnica (50 págs.), informe ExpoSoftware (20 págs.), manual (20 págs.), presentación |
+| Pendiente | Fusionar el PR y publicar la release (autorización del autor); capturas de las pantallas 2–6 del instalador (no se autorizó controlarlo; existe `scripts/capturar-instalador.ps1`); pruebas en Windows 10 y equipos de 4 GB |
+| Commits | `109b712` … `4e564a4` (21 commits en esta fase) |
