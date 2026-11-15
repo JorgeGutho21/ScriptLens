@@ -45,11 +45,22 @@
 - Release `v0.1.0` publicada sobre `d376dbb`, marcada como *Latest*, con `ScriptLens-IA_0.1.0_x64-setup.exe` y su `.sha256`. Se descargaron ambos archivos desde la URL pública y la huella coincide (`111397CF…B6D13A`, 51 678 985 bytes).
 - La guía de instalación incluye las capturas reales de la página del repositorio, de la versión y de sus archivos (Assets).
 
+## Estado en GitHub (2026-11-15)
+
+| Elemento | Estado |
+|---|---|
+| Rama `main` | Contiene todo el desarrollo (PR #1, #2 y #3 fusionados); CI en verde en cada commit |
+| Release | [v0.1.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0), *Latest*, instalador y `.sha256` verificados por descarga pública |
+| Actualizaciones | «Buscar actualizaciones» (API `releases/latest`) responde «Tiene la versión más reciente» |
+| Flujo «Instalador de Windows» | Ejecutado sobre `main` (`1d7bfd6`) en un equipo limpio de GitHub: pruebas, compilación e instalador generados con éxito; el artefacto contiene `ScriptLens-IA_0.1.0_x64-setup.exe` (51 522 853 bytes) y su `.sha256` coherente. El tamaño difiere del instalador publicado porque la compilación no es reproducible bit a bit; el publicado es el verificado en el equipo de pruebas |
+| Apartado *About* | Descripción, enlace a la última versión y temas configurados |
+| Issues | Habilitados para errores y sugerencias |
+
 ## Pendientes
 
 1. **Capturas de las pantallas 2–6 del instalador:** no se autorizó controlarlo. El autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.1.0_x64-setup.exe` y recorrerlo; el script guarda cada pantalla.
 2. **Confirmar la grafía oficial del docente:** los documentos originales dicen «Oswaldo Rueda Carreño»; no se encontró una fuente institucional pública que lo confirme.
-3. Opcionales: descripción y temas del repositorio en GitHub (apartado *About* vacío), firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
+3. Opcionales: firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
 
 ## Reanudar (PowerShell, en `C:\Users\Usuario\Documents\ScriptLens`)
 

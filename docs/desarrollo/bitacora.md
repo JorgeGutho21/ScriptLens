@@ -150,3 +150,12 @@
 | Release | `v0.1.0` sobre `d376dbb`, *Latest*; recursos `ScriptLens-IA_0.1.0_x64-setup.exe` (51 678 985 bytes) y `.sha256` (101 bytes); descarga pública verificada con la misma huella `111397CF…B6D13A`; la API `releases/latest` devuelve `v0.1.0` |
 | Corrección | Las notas indicaban 100 bytes para el `.sha256`; son 101 (salto de línea final). Corregido en el repositorio y en la release |
 | Guía | Capturas reales de la página del repositorio, de la versión y de Assets (navegador sin sesión); guía regenerada (14 págs., 7 figuras) |
+
+## Fase 13 — Cierre en GitHub · 2026-11-15
+
+| Campo | Detalle |
+|---|---|
+| Fusiones | PR #2 (capturas de GitHub en la guía, `af10652`) y PR #3 (regla local de `.gitignore`, `1d7bfd6`), con CI en verde |
+| Repositorio | Apartado *About* con descripción, enlace a la última versión y temas |
+| Flujo del instalador | `instalador.yml` ejecutado en `main` desde un equipo limpio de GitHub: éxito; artefacto con instalador y `.sha256` coherentes |
+| Actualizaciones | `backend.core.updates.check()` contra la release real: versión 0.1.0, «Tiene la versión más reciente» |
