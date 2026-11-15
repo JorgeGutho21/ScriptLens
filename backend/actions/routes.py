@@ -48,7 +48,7 @@ def router(engine) -> APIRouter:
 
     @r.get("/temp/preview")
     def temp_preview():
-        return mgr.temp_preview()
+        return wrap(mgr.temp_preview)
 
     @r.post("/temp/prepare")
     def prepare_temp():
