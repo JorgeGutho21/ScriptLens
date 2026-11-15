@@ -1,9 +1,12 @@
 import { AlertTriangle } from 'lucide-react'
 import { useEffect, useRef, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 
 /**
  * Diálogo de confirmación explícita para acciones importantes.
  * El botón por defecto (foco inicial) es «Cancelar», nunca la acción.
+ * Se dibuja en un portal sobre <body>: si se renderizara dentro de una tarjeta con
+ * transform (animación de entrada), «fixed» quedaría limitado a esa tarjeta.
  */
 export function Confirm({
   title,
@@ -26,7 +29,7 @@ export function Confirm({
   useEffect(() => {
     cancelRef.current?.focus()
   }, [])
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[90] grid place-items-center bg-black/55 p-6 backdrop-blur-sm" onKeyDown={(e) => e.key === 'Escape' && !busy && onCancel()}>
       <div role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" className="card animate-rise w-full max-w-md p-6">
         <div className="flex items-start gap-3">
@@ -54,6 +57,7 @@ export function Confirm({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

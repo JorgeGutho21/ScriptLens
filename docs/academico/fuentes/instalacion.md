@@ -29,7 +29,6 @@ ScriptLens **no** funciona en Windows de 32 bits, Windows 7 u 8, macOS ni Linux.
 2. En la barra de direcciones (la parte superior, donde se escriben las páginas) escriba `github.com/JorgeGutho21/ScriptLens` y pulse **Enter**.
 3. Compruebe que arriba a la izquierda aparece **JorgeGutho21 / ScriptLens**. Si el nombre es distinto, cierre la página: no es la oficial.
 
-Figura: docs/instalacion/capturas/01_repositorio.png | Página oficial del repositorio en GitHub | En la parte superior se lee JorgeGutho21 / ScriptLens. A la derecha está el enlace Releases.
 
 ## 2.2 Encontrar la versión publicada
 
@@ -37,7 +36,6 @@ Figura: docs/instalacion/capturas/01_repositorio.png | Página oficial del repos
 2. Se abre la página de versiones. Use la más reciente que tenga la etiqueta verde **Latest**: es la versión estable.
 3. Baje hasta el apartado **Assets** (archivos). Si está cerrado, pulse la palabra **Assets** para desplegarlo.
 
-Figura: docs/instalacion/capturas/02_releases.png | Página de versiones (Releases) | La versión estable lleva la etiqueta Latest. Los archivos descargables están en Assets.
 
 ## 2.3 Descargar el instalador correcto
 
@@ -84,7 +82,20 @@ Como el instalador no tiene una firma de código comercial (un certificado de pa
 
 ## 2.6 Seguir el asistente de instalación
 
-[[CAPTURAS_INSTALADOR]]
+El instalador tiene la identidad de ScriptLens IA y está en español. Sus pantallas aparecen en este orden:
+
+Figura: docs/capturas/00_instalador_bienvenida.png | Pantalla 1 del instalador: bienvenida | Captura real del instalador de la versión 0.1.0. Pulse **Siguiente**.
+
+1. **Bienvenida.** Recomienda cerrar otras aplicaciones. Pulse **Siguiente**.
+2. **Acuerdo de licencia.** Muestra la licencia MIT de ScriptLens IA. Léala y pulse **Acepto**.
+3. **Ya está instalado** (solo si había una versión anterior). Elija desinstalar antes de instalar o instalar encima, y pulse **Siguiente**. Su historial se conserva en ambos casos.
+4. **Carpeta de instalación.** Propone `C:\Users\<su usuario>\AppData\Local\ScriptLens IA`. No hace falta cambiarla: es una carpeta de su usuario y por eso no se piden permisos de administrador. Pulse **Instalar**.
+5. **Instalando.** Copia los archivos (unos 10 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Pulse **Siguiente** cuando termine.
+6. **Finalización.** Dos casillas: «Crear acceso directo en el escritorio» y «Ejecutar ScriptLens IA». Márquelas si lo desea y pulse **Terminar**.
+
+El instalador no instala servicios, no cambia la configuración de seguridad de Windows y no se ejecuta en segundo plano después de terminar.
+
+Nota sobre las capturas: esta guía incluye la captura real de la primera pantalla. Las demás pantallas se describen a partir del script del instalador generado por Tauri (`installer.nsi`), sin imágenes inventadas. Para capturarlas todas, el autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador <ruta del instalador>` y recorrer el instalador: el script guarda una imagen de cada pantalla.
 
 ## 2.7 Localizar y abrir ScriptLens
 
@@ -220,6 +231,6 @@ Tabla: Problemas y soluciones
 
 **Actualizar:** en **Acerca de**, pulse **Buscar actualizaciones**. Si hay una versión nueva, descárguela como en el apartado 2, compruebe su huella e instálela encima de la anterior: su historial se conserva.
 
-**Desinstalar:** abra **Configuración → Aplicaciones → Aplicaciones instaladas**, busque **ScriptLens IA**, pulse los tres puntos y elija **Desinstalar**. El historial se conserva por si vuelve a instalar, salvo que marque en el desinstalador la casilla para borrar los datos de la aplicación; también puede borrarlo antes desde **Ajustes → Privacidad**. Los informes de la carpeta Documentos no se borran. Ollama se desinstala aparte.
+**Desinstalar:** abra **Configuración → Aplicaciones → Aplicaciones instaladas**, busque **ScriptLens IA**, pulse los tres puntos y elija **Desinstalar**. El historial se conserva por si vuelve a instalar, salvo que marque en el desinstalador la casilla «Eliminar los datos de aplicación»; también puede borrarlo antes desde **Ajustes → Privacidad**. Los informes de la carpeta Documentos no se borran. Ollama se desinstala aparte.
 
 Para aprender a usar cada sección después de instalar, consulte el *Manual de usuario de ScriptLens IA*.

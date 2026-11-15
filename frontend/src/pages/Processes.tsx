@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronRight, FolderTree, List, Search, X } from 'lucide-react'
 import { useMemo, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { EstadoPill, FirmaTag, TipoTag } from '../components/Badges'
 import { Term } from '../components/Term'
 import { Card, Skeleton } from '../components/ui'
@@ -282,7 +283,8 @@ function ProcessDrawer({ target, onClose, advanced }: { target: { pid: number; c
     [target.pid, target.create_time],
   )
   const d = data
-  return (
+  // Portal: un ancestro con transform (animación de entrada) rompería el posicionamiento fijo.
+  return createPortal(
     <div className="fixed inset-0 z-40 flex justify-end bg-black/30 backdrop-blur-[2px]" onClick={onClose}>
       <aside
         role="dialog"
@@ -407,7 +409,8 @@ function ProcessDrawer({ target, onClose, advanced }: { target: { pid: number; c
           )}
         </div>
       </aside>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
