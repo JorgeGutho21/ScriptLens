@@ -197,8 +197,23 @@ class ActionManager:
 
     # --- Archivos temporales -------------------------------------------------
     @staticmethod
+    def _safe_temp_dir() -> Path:
+        """Exige una ruta temporal absoluta del usuario, nunca el directorio actual."""
+        raw = os.environ.get("TEMP", "").strip()
+        if not raw:
+            raise ActionError("TEMP no está configurada. Se cancela la limpieza por seguridad.")
+        candidate = Path(raw)
+        if not candidate.is_absolute() or not candidate.is_dir() or candidate.is_symlink():
+            raise ActionError("TEMP no identifica una carpeta temporal absoluta y válida.")
+        resolved = candidate.resolve()
+        # No aceptar raíz de unidad ni carpetas personales genéricas.
+        if resolved == Path(resolved.anchor) or resolved == Path.home().resolve():
+            raise ActionError("TEMP apunta a una ubicación insegura.")
+        return resolved
+
+    @staticmethod
     def temp_preview() -> dict:
-        user_temp = Path(os.environ.get("TEMP", ""))
+        user_temp = ActionManager._safe_temp_dir()
         cutoff = time.time() - TEMP_MIN_AGE_DAYS * 86400
         old_files, old_bytes, total_bytes, total_files = [], 0, 0, 0
         if user_temp.is_dir():
@@ -269,7 +284,7 @@ class ActionManager:
         return {"token": token, "resumen": resumen, "advertencias": ["La eliminación es permanente (no pasa por la Papelera).", "Algunos programas podrían tener que volver a descargar datos de caché."], "expira_en": TOKEN_TTL}
 
     def _exec_temp(self, p: Pending) -> dict:
-        user_temp = Path(os.environ.get("TEMP", "")).resolve()
+        user_temp = self._safe_temp_dir()
         cutoff = time.time() - TEMP_MIN_AGE_DAYS * 86400
         deleted = skipped = freed = 0
         for root, _dirs, files in os.walk(user_temp):
