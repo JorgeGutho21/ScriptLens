@@ -1,0 +1,28 @@
+[package]
+name = "scriptlens"
+version = "0.1.0"
+description = "ScriptLens IA — diagnóstico, seguridad y auditoría de Windows"
+authors = ["Jorge Gutiérrez (@JorgeGutho21)"]
+license = "MIT"
+repository = "https://github.com/JorgeGutho21/ScriptLens"
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "scriptlens_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
