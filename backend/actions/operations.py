@@ -27,6 +27,7 @@ from pathlib import Path
 
 import psutil
 
+from backend.core.known_folders import known_folder, personal_folders
 from backend.processes.analysis import can_terminate
 from backend.processes.winapi import post_close, window_handles
 from backend.security.collect import _APPROVED, startup_entries
@@ -221,7 +222,7 @@ class ActionManager:
             raise ActionError("La variable TEMP no identifica una carpeta temporal absoluta y válida.")
         resolved = candidate.resolve()
         home = Path.home().resolve()
-        protected = [home / n for n in ("Documents", "Desktop", "Downloads", "Pictures", "Music", "Videos", "OneDrive")]
+        protected = personal_folders() + [home / "OneDrive"]
         windir = Path(os.environ.get("SystemRoot", r"C:\Windows")).resolve()
         if (
             resolved == Path(resolved.anchor)
@@ -295,8 +296,8 @@ class ActionManager:
                 {
                     "id": "descargas",
                     "nombre": "Carpeta Descargas",
-                    "ubicacion": str(Path.home() / "Downloads"),
-                    "bytes": size_of(Path.home() / "Downloads"),
+                    "ubicacion": str(known_folder("Downloads")),
+                    "bytes": size_of(known_folder("Downloads")),
                     "limpiable": False,
                     "nota": "Puede contener documentos personales: ScriptLens nunca la limpia. Revísela usted mismo.",
                 },

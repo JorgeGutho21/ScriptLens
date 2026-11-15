@@ -256,3 +256,15 @@ def test_temp_cleanup_requires_confirmation_token(ctx):
     """Sin un token emitido por la vista de confirmación no se borra nada."""
     c, _ = ctx
     assert c.post("/api/actions/execute", json={"token": "token-inventado-0000"}).status_code in (400, 403, 404, 409, 410)
+
+
+def test_temp_cleanup_protects_redirected_known_folders(ctx, monkeypatch):
+    """Si Documentos está redirigida (OneDrive), la carpeta real también queda protegida."""
+    from backend.core.known_folders import known_folder
+
+    c, _ = ctx
+    docs = known_folder("Documents")
+    if not docs.is_dir():
+        pytest.skip("Documentos no disponible")
+    monkeypatch.setenv("TEMP", str(docs))
+    assert c.get("/api/actions/temp/preview").status_code == 409

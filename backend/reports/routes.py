@@ -9,11 +9,14 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
+from backend.core.known_folders import known_folder
+
 from . import data, html_report, pdf_report
 
 
 def reports_dir() -> Path:
-    base = Path(os.environ.get("SCRIPTLENS_REPORTS_DIR") or (Path.home() / "Documents" / "ScriptLens IA" / "Informes"))
+    # Documentos real del usuario (puede estar redirigida a OneDrive).
+    base = Path(os.environ.get("SCRIPTLENS_REPORTS_DIR") or (known_folder("Documents") / "ScriptLens IA" / "Informes"))
     base.mkdir(parents=True, exist_ok=True)
     return base
 
