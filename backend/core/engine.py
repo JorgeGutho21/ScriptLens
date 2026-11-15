@@ -12,6 +12,7 @@ from backend.monitoring.sampler import SystemSampler, system_info
 from backend.processes.analysis import PathCache
 from backend.processes.collector import ProcessMonitor
 from backend.processes.signatures import SignatureCache
+from backend.security.routes import SecurityState
 from backend.storage.db import Database
 
 from .config import Settings
@@ -25,6 +26,7 @@ class Engine:
         self.paths = PathCache()
         self.signatures = SignatureCache()
         self.db = Database(settings.data_dir / "scriptlens.db")
+        self.security = SecurityState()
         self._stop = threading.Event()
         self._threads: list[threading.Thread] = []
         self._info_cache: tuple[float, dict] | None = None
@@ -71,12 +73,12 @@ class Engine:
                 pass
             self._stop.wait(max(0.05, interval - (time.monotonic() - started)))
 
-    # Enlaces con el módulo de seguridad (fase 4). Devuelven None si aún no hay datos.
+    # Enlaces con el módulo de seguridad. Devuelven None si aún no se ha ejecutado la auditoría.
     def detections_for(self, path: str | None) -> list | None:
-        return None
+        return self.security.detections_for(path)
 
     def autostart_for(self, path: str | None) -> list | None:
-        return None
+        return self.security.autostart_for(path)
 
     def info(self) -> dict:
         # El uso de discos cambia lentamente; se cachea 30 s.
