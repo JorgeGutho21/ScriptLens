@@ -1,6 +1,7 @@
 """Configuración central de ScriptLens IA.
 
-Todas las rutas de datos son locales al usuario (%LOCALAPPDATA%\\ScriptLens).
+Todas las rutas de datos son locales al usuario. La aplicación instalada fija SCRIPTLENS_DATA_DIR en
+%LOCALAPPDATA%\\io.github.jorgegutho21.scriptlens; sin esa variable (desarrollo) se usa %LOCALAPPDATA%\\ScriptLens.
 Nada de lo que se configura aquí envía información fuera del equipo.
 """
 

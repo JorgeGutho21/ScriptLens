@@ -1,4 +1,4 @@
-"""Persistencia local en SQLite (%LOCALAPPDATA%\\ScriptLens\\scriptlens.db).
+"""Persistencia local en SQLite (scriptlens.db dentro de la carpeta de datos de la aplicación).
 
 Todo permanece en el equipo. El usuario puede desactivar el historial y borrar
 diagnósticos, conversaciones o el registro de acciones desde Ajustes.

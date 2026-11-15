@@ -1,5 +1,5 @@
 import { ExternalLink, RefreshCcw } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Lens3D } from '../components/Lens3D'
 import { api, openLink } from '../lib/api'
 import type { ReactNode } from 'react'
@@ -84,6 +84,11 @@ interface UpdateInfo {
 export function AboutPage() {
   const [upd, setUpd] = useState<UpdateInfo | null>(null)
   const [checking, setChecking] = useState(false)
+  const [paths, setPaths] = useState<{ carpeta_datos: string; carpeta_informes: string } | null>(null)
+  useEffect(() => {
+    // Rutas reales del equipo (la carpeta de datos la fija Tauri; Documentos puede estar en OneDrive).
+    api<{ carpeta_datos: string; carpeta_informes: string }>('/api/privacy/info').then(setPaths).catch(() => setPaths(null))
+  }, [])
   const check = async () => {
     setChecking(true)
     try {
@@ -143,9 +148,9 @@ export function AboutPage() {
           <dt className="text-faint">Asistente (opcional)</dt>
           <dd className="text-fg">Ollama con Qwen3 4B Instruct en este equipo; sin Ollama responde con plantillas y los mismos datos</dd>
           <dt className="text-faint">Datos guardados</dt>
-          <dd className="break-all text-fg">%LOCALAPPDATA%\ScriptLens (historial y registro de acciones)</dd>
+          <dd className="break-all text-fg">{paths?.carpeta_datos ?? '—'} (historial y registro de acciones)</dd>
           <dt className="text-faint">Informes</dt>
-          <dd className="break-all text-fg">Documentos\ScriptLens IA\Informes</dd>
+          <dd className="break-all text-fg">{paths?.carpeta_informes ?? '—'}</dd>
         </dl>
         <p className="mt-4 border-t border-line pt-4 text-xs leading-relaxed text-faint">
           Privacidad: todo el análisis se realiza en este equipo. ScriptLens no envía listas de procesos, registros ni datos personales a ningún servidor.
