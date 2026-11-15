@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { LogoMark } from './components/Logo'
 import { Onboarding } from './components/Onboarding'
-import { Footer, NAV, Sidebar, TopBar, type PageId } from './components/Shell'
+import { Footer, Sidebar, TopBar, type PageId } from './components/Shell'
 import { MetricsProvider, useMetrics } from './lib/metrics'
 import { PrefsProvider, usePrefs } from './lib/prefs'
 import { Dashboard } from './pages/Dashboard'
@@ -11,7 +11,8 @@ import { SecurityPage } from './pages/Security'
 import { ScriptsPage } from './pages/Scripts'
 import { OptimizePage } from './pages/Optimize'
 import { AssistantPage } from './pages/Assistant'
-import { AboutPage, Planned, SettingsPage } from './pages/Other'
+import { ReportsPage } from './pages/Reports'
+import { AboutPage, SettingsPage } from './pages/Other'
 
 const TITLES: Record<PageId, string> = {
   panel: 'Panel general',
@@ -24,10 +25,6 @@ const TITLES: Record<PageId, string> = {
   informes: 'Informes',
   ajustes: 'Ajustes',
   acerca: 'Acerca de ScriptLens',
-}
-
-const PLANNED: Partial<Record<PageId, string>> = {
-  informes: 'Informes PDF y HTML con métricas, hallazgos, recomendaciones y limitaciones.',
 }
 
 function Splash({ error }: { error: string | null }) {
@@ -65,7 +62,6 @@ function Main() {
 
   if (!summary) return <Splash error={error} />
 
-  const label = NAV.find((n) => n.id === page)?.label
   return (
     <div className="flex h-full">
       <Sidebar page={page} onNavigate={setPage} />
@@ -78,10 +74,10 @@ function Main() {
           {page === 'seguridad' && <SecurityPage />}
           {page === 'scripts' && <ScriptsPage />}
           {page === 'asistente' && <AssistantPage />}
+          {page === 'informes' && <ReportsPage />}
           {page === 'optimizar' && <OptimizePage goProcesses={() => setPage('procesos')} />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
-          {PLANNED[page] && <Planned title={label ?? TITLES[page]} description={PLANNED[page]!} />}
         </main>
         <Footer />
       </div>

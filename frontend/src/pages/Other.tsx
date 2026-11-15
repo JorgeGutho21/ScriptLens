@@ -1,28 +1,10 @@
-import { ExternalLink, Hammer } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { LogoMark } from '../components/Logo'
 import { Card } from '../components/ui'
 import { usePrefs } from '../lib/prefs'
 import { APP_VERSION, REPOSITORY_URL } from '../version'
 import { PrivacyCard } from './Privacy'
-
-/** Módulo aún no implementado: se indica con honestidad, sin datos simulados. */
-export function Planned({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="mx-auto max-w-2xl pt-10">
-      <Card>
-        <div className="flex flex-col items-center gap-4 py-8 text-center">
-          <div className="grid h-14 w-14 place-items-center rounded-2xl bg-accent-soft text-accent">
-            <Hammer size={26} />
-          </div>
-          <h2 className="font-display text-xl font-semibold">{title}</h2>
-          <p className="max-w-md leading-relaxed text-muted">{description}</p>
-          <p className="text-xs text-faint">Este módulo está en desarrollo. No se muestran datos de ejemplo para evitar confusiones.</p>
-        </div>
-      </Card>
-    </div>
-  )
-}
 
 function Row({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (

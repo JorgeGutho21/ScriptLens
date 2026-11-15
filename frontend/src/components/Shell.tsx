@@ -21,20 +21,20 @@ import { Logo } from './Logo'
 
 export type PageId = 'panel' | 'procesos' | 'optimizar' | 'seguridad' | 'scripts' | 'asistente' | 'comparar' | 'informes' | 'ajustes' | 'acerca'
 
-export const NAV: { id: PageId; label: string; icon: ReactNode; ready: boolean }[] = [
-  { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} />, ready: true },
-  { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} />, ready: true },
-  { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} />, ready: true },
-  { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} />, ready: true },
-  { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} />, ready: true },
-  { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} />, ready: true },
-  { id: 'comparar', label: 'Comparar mi PC', icon: <GitCompareArrows size={18} />, ready: true },
-  { id: 'informes', label: 'Informes', icon: <FileText size={18} />, ready: false },
+export const NAV: { id: PageId; label: string; icon: ReactNode}[] = [
+  { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} /> },
+  { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} /> },
+  { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} /> },
+  { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} /> },
+  { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} /> },
+  { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} /> },
+  { id: 'comparar', label: 'Comparar mi PC', icon: <GitCompareArrows size={18} /> },
+  { id: 'informes', label: 'Informes', icon: <FileText size={18} /> },
 ]
 
 const BOTTOM: typeof NAV = [
-  { id: 'ajustes', label: 'Ajustes', icon: <Settings size={18} />, ready: true },
-  { id: 'acerca', label: 'Acerca de', icon: <Info size={18} />, ready: true },
+  { id: 'ajustes', label: 'Ajustes', icon: <Settings size={18} /> },
+  { id: 'acerca', label: 'Acerca de', icon: <Info size={18} /> },
 ]
 
 export function Sidebar({ page, onNavigate }: { page: PageId; onNavigate: (p: PageId) => void }) {
@@ -53,7 +53,6 @@ export function Sidebar({ page, onNavigate }: { page: PageId; onNavigate: (p: Pa
           {active && <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-accent" />}
           <span className={active ? 'text-accent' : 'text-faint group-hover:text-muted'}>{n.icon}</span>
           <span className="hidden truncate lg:inline">{n.label}</span>
-          {!n.ready && <span className="ml-auto hidden rounded-md bg-surface-3 px-1.5 py-0.5 text-[10px] text-faint lg:inline">Próximo</span>}
         </button>
       </li>
     )
