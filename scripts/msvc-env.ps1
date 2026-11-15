@@ -17,7 +17,8 @@ $ErrorActionPreference = 'Stop'
 $vsRoots = @(
   "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\BuildTools",
   "${env:ProgramFiles}\Microsoft Visual Studio\2022\BuildTools",
-  "${env:ProgramFiles}\Microsoft Visual Studio\2022\Community"
+  "${env:ProgramFiles}\Microsoft Visual Studio\2022\Community",
+  "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise"
 )
 $msvc = $vsRoots | ForEach-Object { Join-Path $_ 'VC\Tools\MSVC' } | Where-Object { Test-Path $_ } |
   ForEach-Object { Get-ChildItem $_ -Directory } | Sort-Object Name -Descending | Select-Object -First 1

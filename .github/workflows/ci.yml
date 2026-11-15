@@ -54,5 +54,9 @@ jobs:
         working-directory: frontend
       - run: npm run build
         working-directory: frontend
+      # El motor empaquetado se genera en el flujo de instalador; aquí basta un marcador
+      # para que tauri-build valide la configuración de recursos.
+      - run: New-Item -ItemType Directory -Force build/backend/scriptlens-backend | Out-Null; Set-Content build/backend/scriptlens-backend/LEEME.txt 'marcador de CI'
+        shell: pwsh
       - run: cargo check --locked
         working-directory: src-tauri

@@ -28,7 +28,8 @@ Write-Host '1/3 Empaquetando el motor de análisis (PyInstaller)…'
 if ($LASTEXITCODE) { throw 'PyInstaller falló' }
 
 Write-Host '2/3 Compilando la aplicación y el instalador (Tauri)…'
-if (-not (Get-Command link.exe -ErrorAction SilentlyContinue)) { . (Join-Path $PSScriptRoot 'msvc-env.ps1') }
+# En GitHub Actions Rust localiza MSVC por sí mismo; en este equipo se usa msvc-env.ps1.
+if (-not $env:GITHUB_ACTIONS -and -not (Get-Command link.exe -ErrorAction SilentlyContinue)) { . (Join-Path $PSScriptRoot 'msvc-env.ps1') }
 npm run build
 if ($LASTEXITCODE) { throw 'tauri build falló' }
 
