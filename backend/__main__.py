@@ -36,6 +36,29 @@ def _watch_parent(parent_pid: int, on_exit) -> None:
     threading.Thread(target=loop, daemon=True, name="sl-parent-watch").start()
 
 
+def _announce(line: str) -> None:
+    """Escribe la línea de arranque en la salida estándar heredada de Tauri.
+
+    El ejecutable se empaqueta en modo consola (la ventana la oculta Tauri con
+    ``CREATE_NO_WINDOW``). Si alguna vez se empaquetara en modo ventana,
+    ``sys.stdout`` sería ``None``; en ese caso se abre directamente el
+    descriptor que Windows entregó al proceso para no romper la conexión.
+    """
+    stream = sys.stdout
+    if stream is None and sys.platform == "win32":
+        import ctypes
+        import msvcrt
+
+        handle = ctypes.windll.kernel32.GetStdHandle(-11)  # STD_OUTPUT_HANDLE
+        if handle not in (0, -1, None):
+            stream = os.fdopen(msvcrt.open_osfhandle(handle, os.O_WRONLY), "w", encoding="utf-8")
+            sys.stdout = stream
+    if stream is None:
+        raise RuntimeError("No hay salida estándar para comunicar el puerto a la aplicación.")
+    stream.write(line + "\n")
+    stream.flush()
+
+
 def main() -> int:
     settings = Settings.from_env()
     engine = Engine(settings)
@@ -49,7 +72,7 @@ def main() -> int:
     port = sock.getsockname()[1]
 
     engine.start()
-    print(json.dumps({"event": "ready", "port": port, "token": app.state.token}), flush=True)
+    _announce(json.dumps({"event": "ready", "port": port, "token": app.state.token}))
 
     config = uvicorn.Config(app, log_level="warning", access_log=False, lifespan="off")
     server = uvicorn.Server(config)
