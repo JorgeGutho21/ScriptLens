@@ -96,28 +96,30 @@ export function AboutPage() {
     <div className="mx-auto flex max-w-2xl flex-col gap-5">
       <Card>
         <div className="flex items-center gap-4">
-          <div className="relative">
-            <LogoMark size={64} />
-          </div>
-          <div className="ml-auto order-last hidden sm:block">
-            <Lens3D size={120} />
-          </div>
-          <div>
+          <LogoMark size={64} />
+          <div className="min-w-0">
             <h2 className="font-display text-2xl font-semibold">
               ScriptLens <span className="text-accent">IA</span>
             </h2>
-            <p className="text-sm text-muted">Versión {APP_VERSION}</p>
+            <p className="text-sm text-muted">Versión {APP_VERSION} · Windows 10 y 11 de 64 bits</p>
+          </div>
+          <div className="ml-auto hidden sm:block" aria-hidden="true">
+            <Lens3D size={110} />
           </div>
         </div>
         <p className="mt-5 leading-relaxed text-muted">
-          Sistema inteligente de diagnóstico, seguridad, auditoría y optimización del sistema operativo Windows. Proyecto académico del programa de
-          Ingeniería de Sistemas de la Universidad Popular del Cesar, presentado en ExpoSoftware 2026-II.
+          Sistema inteligente de diagnóstico, seguridad, auditoría y optimización del sistema operativo Windows. Explica en lenguaje sencillo qué
+          consume recursos, qué se inicia con el equipo y qué hace un script antes de ejecutarlo.
         </p>
         <dl className="mt-5 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
           <dt className="text-faint">Desarrollado por</dt>
           <dd className="text-fg">Jorge Gutiérrez</dd>
           <dt className="text-faint">GitHub</dt>
           <dd className="text-fg">@JorgeGutho21</dd>
+          <dt className="text-faint">Institución</dt>
+          <dd className="text-fg">Universidad Popular del Cesar · Ingeniería de Sistemas</dd>
+          <dt className="text-faint">Evento</dt>
+          <dd className="text-fg">ExpoSoftware 2026-II</dd>
           <dt className="text-faint">Repositorio</dt>
           <dd>
             <button onClick={() => openLink(REPOSITORY_URL)} className="inline-flex items-center gap-1 text-accent hover:underline">
@@ -125,10 +127,29 @@ export function AboutPage() {
             </button>
           </dd>
           <dt className="text-faint">Licencia</dt>
-          <dd className="text-fg">MIT. Componentes de terceros: ver THIRD_PARTY_NOTICES.md</dd>
+          <dd className="text-fg">MIT. Los componentes de terceros conservan sus licencias (THIRD_PARTY_NOTICES.md).</dd>
         </dl>
-        <p className="mt-5 border-t border-line pt-4 text-xs leading-relaxed text-faint">
+      </Card>
+      <Card title="Información técnica">
+        <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+          <dt className="text-faint">Aplicación</dt>
+          <dd className="text-fg">Tauri 2 (Rust) con interfaz React y TypeScript</dd>
+          <dt className="text-faint">Motor de análisis</dt>
+          <dd className="text-fg">Python 3.12, FastAPI y psutil, solo en 127.0.0.1 con token por sesión</dd>
+          <dt className="text-faint">Clasificador de scripts</dt>
+          <dd className="text-fg">24 reglas, TF-IDF de n-gramas de caracteres y regresión logística balanceada (scikit-learn)</dd>
+          <dt className="text-faint">Referencia de técnicas</dt>
+          <dd className="text-fg">MITRE ATT&amp;CK® Enterprise 20.1</dd>
+          <dt className="text-faint">Asistente (opcional)</dt>
+          <dd className="text-fg">Ollama con Qwen3 4B Instruct en este equipo; sin Ollama responde con plantillas y los mismos datos</dd>
+          <dt className="text-faint">Datos guardados</dt>
+          <dd className="break-all text-fg">%LOCALAPPDATA%\ScriptLens (historial y registro de acciones)</dd>
+          <dt className="text-faint">Informes</dt>
+          <dd className="break-all text-fg">Documentos\ScriptLens IA\Informes</dd>
+        </dl>
+        <p className="mt-4 border-t border-line pt-4 text-xs leading-relaxed text-faint">
           Privacidad: todo el análisis se realiza en este equipo. ScriptLens no envía listas de procesos, registros ni datos personales a ningún servidor.
+          No es un antivirus: la detección de amenazas corresponde a Microsoft Defender.
         </p>
       </Card>
       <Card title="Actualizaciones">

@@ -135,7 +135,7 @@ function Th({ children, k, sort, onSort, className = '' }: { children: ReactNode
   return (
     <th scope="col" className={`sticky top-0 z-10 bg-surface px-3 py-2.5 text-left text-[11.5px] font-medium uppercase tracking-wide text-faint ${className}`} aria-sort={active ? (sort!.dir === 1 ? 'ascending' : 'descending') : undefined}>
       {k ? (
-        <button onClick={() => onSort?.(k)} className={`inline-flex items-center gap-1 hover:text-fg ${active ? 'text-fg' : ''}`}>
+        <button onClick={() => onSort?.(k)} className={`inline-flex items-center gap-1 uppercase tracking-wide hover:text-fg ${active ? 'text-fg' : ''}`}>
           {children}
           {active && (sort!.dir === 1 ? '↑' : '↓')}
         </button>
@@ -167,11 +167,11 @@ function ProcessTable({
         <thead>
           <tr className="border-b border-line">
             <Th k="name" sort={sort} onSort={onSort}>Nombre</Th>
-            {advanced && <Th k="pid" sort={sort} onSort={onSort}>PID</Th>}
+            {advanced && <Th k="pid" sort={sort} onSort={onSort} className="hidden xl:table-cell">PID</Th>}
             <Th>Tipo</Th>
             <Th k="cpu" sort={sort} onSort={onSort} className="text-right"><Term id="cpu">CPU</Term></Th>
             <Th k="memory" sort={sort} onSort={onSort} className="text-right"><Term id="ram">RAM</Term></Th>
-            <Th>Editor</Th>
+            <Th className="hidden xl:table-cell">Editor</Th>
             {advanced && <Th>Firma</Th>}
             <Th>Estado</Th>
           </tr>
@@ -185,15 +185,15 @@ function ProcessTable({
               tabIndex={0}
               className={`cursor-pointer border-b border-line/60 transition-colors hover:bg-surface-2 focus-visible:bg-surface-2 ${selectedPid === p.pid ? 'bg-accent-soft' : ''}`}
             >
-              <td className="max-w-[280px] px-3 py-2">
+              <td className="max-w-[260px] px-3 py-2">
                 <div className="truncate font-medium text-fg">{p.name}</div>
                 {p.description && p.description.toLowerCase() !== p.name.toLowerCase() && <div className="truncate text-xs text-faint">{p.description}</div>}
               </td>
-              {advanced && <td className="px-3 py-2 tabular text-muted">{p.pid}</td>}
-              <td className="whitespace-nowrap px-3 py-2 text-xs text-muted">{p.category_label}</td>
+              {advanced && <td className="hidden px-3 py-2 tabular text-muted xl:table-cell">{p.pid}</td>}
+              <td className="min-w-[110px] max-w-[170px] px-3 py-2 text-xs leading-snug text-muted">{p.category_label}</td>
               <td className="whitespace-nowrap px-3 py-2 text-right tabular">{pct(p.cpu_percent, 1)}</td>
               <td className="whitespace-nowrap px-3 py-2 text-right tabular">{bytes(p.memory_rss)}</td>
-              <td className="max-w-[200px] truncate px-3 py-2 text-xs text-muted">{p.publisher ?? '—'}</td>
+              <td className="hidden max-w-[200px] truncate px-3 py-2 text-xs text-muted xl:table-cell">{p.publisher ?? '—'}</td>
               {advanced && (
                 <td className="px-3 py-2">
                   <FirmaTag estado={p.signature} />
