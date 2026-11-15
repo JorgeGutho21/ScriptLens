@@ -35,6 +35,14 @@ TOKEN_TTL = 60.0
 TEMP_MIN_AGE_DAYS = 7
 
 
+def human(n: int) -> str:
+    for unit in ("B", "KB", "MB", "GB"):
+        if n < 1024 or unit == "GB":
+            return f"{n:.1f} {unit}".replace(".0 B", " B")
+        n /= 1024
+    return f"{n:.1f} GB"
+
+
 class ActionError(Exception):
     pass
 
@@ -232,7 +240,7 @@ class ActionManager:
                     "archivos": len(old_files),
                     "bytes": old_bytes,
                     "limpiable": True,
-                    "nota": f"La carpeta contiene en total {total_files} archivos ({total_bytes} bytes). Solo se borran los que llevan más de {TEMP_MIN_AGE_DAYS} días sin cambios; los que estén en uso se omiten.",
+                    "nota": f"La carpeta contiene en total {total_files} archivos ({human(total_bytes)}). Solo se borran los que llevan más de {TEMP_MIN_AGE_DAYS} días sin cambios; los que estén en uso se omiten.",
                     "muestra": [os.path.basename(p) for p, _ in old_files[:12]],
                 },
                 {
@@ -256,7 +264,7 @@ class ActionManager:
 
     def prepare_temp(self) -> dict:
         prev = self.temp_preview()["categorias"][0]
-        resumen = f"Se borrarán {prev['archivos']} archivos temporales de su usuario con más de {TEMP_MIN_AGE_DAYS} días ({prev['bytes']} bytes). No se tocan documentos ni carpetas del sistema."
+        resumen = f"Se borrarán {prev['archivos']} archivos temporales de su usuario con más de {TEMP_MIN_AGE_DAYS} días ({human(prev['bytes'])}). No se tocan documentos ni carpetas del sistema."
         token = self._issue("temporales", {}, resumen)
         return {"token": token, "resumen": resumen, "advertencias": ["La eliminación es permanente (no pasa por la Papelera).", "Algunos programas podrían tener que volver a descargar datos de caché."], "expira_en": TOKEN_TTL}
 
@@ -279,7 +287,7 @@ class ActionManager:
                     freed += st.st_size
                 except OSError:
                     skipped += 1  # en uso o sin permiso
-        detail = f"{deleted} archivos eliminados ({freed} bytes liberados); {skipped} omitidos por estar en uso o protegidos."
+        detail = f"{deleted} archivos eliminados ({human(freed)} liberados); {skipped} omitidos por estar en uso o protegidos."
         aid = self.engine.db.log_action("limpiar_temporales", str(user_temp), "completada", detail, self._metrics(), {"eliminados": deleted, "bytes": freed, "omitidos": skipped})
         return {"resultado": "completada", "detalle": detail, "accion_id": aid, "eliminados": deleted, "bytes": freed}
 

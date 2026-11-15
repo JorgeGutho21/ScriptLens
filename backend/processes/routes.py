@@ -45,7 +45,7 @@ def router(engine) -> APIRouter:
         mem_total = engine.sampler.latest().mem_total if engine.sampler.latest() else None
         stats_cache = {(s.pid, s.create_time): engine.processes.stats(s.pid, s.create_time, 60) for s in snaps}
         rows = [_row(engine, s, windows, mem_total, stats_cache) for s in snaps]
-        engine.signatures.request(r_["path"] for r_ in rows if r_["path"])
+        engine.signatures.request(r_["path"] for r_ in sorted(rows, key=lambda x: x["memory_rss"] or 0, reverse=True) if r_["path"])
         return {"measured_at": ts, "count": len(rows), "processes": rows}
 
     @r.get("/{pid}")

@@ -23,7 +23,9 @@ export function Confirm({
   onCancel: () => void
 }) {
   const cancelRef = useRef<HTMLButtonElement>(null)
-  useEffect(() => cancelRef.current?.focus(), [])
+  useEffect(() => {
+    cancelRef.current?.focus()
+  }, [])
   return (
     <div className="fixed inset-0 z-[90] grid place-items-center bg-black/55 p-6 backdrop-blur-sm" onKeyDown={(e) => e.key === 'Escape' && !busy && onCancel()}>
       <div role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" className="card animate-rise w-full max-w-md p-6">

@@ -21,7 +21,9 @@ export function Onboarding() {
   const last = step === STEPS.length - 1
   const s = STEPS[step]
 
-  useEffect(() => dialog.current?.focus(), [step])
+  useEffect(() => {
+    dialog.current?.focus()
+  }, [step])
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-black/55 p-6 backdrop-blur-sm">

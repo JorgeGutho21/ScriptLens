@@ -113,7 +113,7 @@ def verify_batch(paths: list[str]) -> list[SignatureInfo]:
 class SignatureCache:
     """Caché de firmas con verificación en segundo plano."""
 
-    BATCH = 40
+    BATCH = 80
 
     def __init__(self) -> None:
         self._lock = threading.Lock()

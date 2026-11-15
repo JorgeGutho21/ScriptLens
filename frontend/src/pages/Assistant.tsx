@@ -72,7 +72,10 @@ export function AssistantPage() {
     loadStatus()
     loadHistory()
   }, [])
-  useEffect(() => end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }), [msgs])
+  useEffect(() => {
+    // scrollIntoView puede devolver una Promise en Chromium reciente: no se devuelve al efecto.
+    end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }, [msgs])
 
   const ready = !!status?.instalado_o_activo && status.modelos.includes(model)
 

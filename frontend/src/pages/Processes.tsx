@@ -191,8 +191,8 @@ function ProcessTable({
               </td>
               {advanced && <td className="px-3 py-2 tabular text-muted">{p.pid}</td>}
               <td className="whitespace-nowrap px-3 py-2 text-xs text-muted">{p.category_label}</td>
-              <td className="px-3 py-2 text-right tabular">{pct(p.cpu_percent, 1)}</td>
-              <td className="px-3 py-2 text-right tabular">{bytes(p.memory_rss)}</td>
+              <td className="whitespace-nowrap px-3 py-2 text-right tabular">{pct(p.cpu_percent, 1)}</td>
+              <td className="whitespace-nowrap px-3 py-2 text-right tabular">{bytes(p.memory_rss)}</td>
               <td className="max-w-[200px] truncate px-3 py-2 text-xs text-muted">{p.publisher ?? '—'}</td>
               {advanced && (
                 <td className="px-3 py-2">

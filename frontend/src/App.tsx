@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { Lens3D } from './components/Lens3D'
 import { LogoMark } from './components/Logo'
 import { Onboarding } from './components/Onboarding'
@@ -70,6 +71,7 @@ function Main() {
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar title={TITLES[page]} />
         <main className="flex-1 overflow-y-auto px-6 py-6" key={page}>
+          <ErrorBoundary resetKey={page}>
           {page === 'panel' && <Dashboard />}
           {page === 'procesos' && <ProcessesPage />}
           {page === 'comparar' && <ComparePage />}
@@ -80,6 +82,7 @@ function Main() {
           {page === 'optimizar' && <OptimizePage goProcesses={() => setPage('procesos')} />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
+          </ErrorBoundary>
         </main>
         <Footer />
       </div>
