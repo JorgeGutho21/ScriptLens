@@ -20,14 +20,15 @@ Todo el análisis ocurre en su propio computador. ScriptLens no envía sus datos
 
 1. Abra el navegador y entre a **github.com/JorgeGutho21/ScriptLens**.
 2. En la parte derecha, pulse **Releases**.
-3. Descargue el archivo `ScriptLens IA_0.1.0_x64-setup.exe` y, si quiere comprobar que el archivo es original, también el archivo `.sha256`.
+3. En la versión marcada **Latest**, abra **Assets** y descargue `ScriptLens-IA_0.1.0_x64-setup.exe` y su huella `ScriptLens-IA_0.1.0_x64-setup.exe.sha256`.
+4. Compruebe que la huella coincide siguiendo la *Guía de instalación de ScriptLens IA* (apartado 2.4).
 
 Descargue ScriptLens solo desde esa dirección.
 
 # 4. Cómo instalarlo
 
 1. Abra la carpeta Descargas y haga doble clic en el instalador.
-2. Si Windows muestra «Windows protegió su PC», pulse **Más información** y luego **Ejecutar de todos modos**. Este aviso aparece porque el programa no tiene una firma comercial, no porque sea peligroso.
+2. Windows puede mostrar «Windows protegió su PC» porque el instalador no tiene una firma de código comercial. Ese aviso es una protección útil: continúe solo si descargó el archivo de la página oficial y la huella coincide. En ese caso pulse **Más información** y luego **Ejecutar de todas formas**. Si tiene dudas, no continúe.
 3. Siga los pasos del asistente de instalación: **Siguiente**, acepte la licencia e **Instalar**.
 
 Figura: docs/capturas/00_instalador_bienvenida.png | Primera pantalla del instalador | No necesita ser administrador del equipo para instalar ScriptLens.

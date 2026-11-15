@@ -37,5 +37,13 @@ Write-Host '3/3 Calculando SHA-256…'
 $nsis = Get-ChildItem src-tauri\target\release\bundle\nsis\*.exe | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $hash = (Get-FileHash $nsis.FullName -Algorithm SHA256).Hash
 "$hash  $($nsis.Name)" | Set-Content "$($nsis.FullName).sha256" -Encoding ascii
+# Copia con nombre sin espacios para GitHub Releases (GitHub cambia los espacios por puntos).
+$version = (Get-Content src-tauri\tauri.conf.json -Raw | ConvertFrom-Json).version
+$rel = Join-Path $root 'build\release'
+New-Item -ItemType Directory -Force $rel | Out-Null
+$pub = Join-Path $rel "ScriptLens-IA_${version}_x64-setup.exe"
+Copy-Item $nsis.FullName $pub -Force
+"$hash  $(Split-Path $pub -Leaf)" | Set-Content "$pub.sha256" -Encoding ascii
 Write-Host "Instalador: $($nsis.FullName)"
+Write-Host "Para Releases: $pub (+ .sha256)"
 Write-Host "SHA-256:    $hash"

@@ -17,7 +17,7 @@ Esta guía distingue siempre **dónde** se realiza cada paso: navegador, Explora
 ## Método A — Instalación gráfica (para principiantes)
 
 1. **Navegador:** entre a <https://github.com/JorgeGutho21/ScriptLens> y pulse **Releases** en la columna derecha. Si aún no hay una versión estable publicada, deténgase aquí: todavía no hay instalador público validado.
-2. **Navegador:** en la versión más reciente, en «Assets», descargue `ScriptLens IA_0.1.0_x64-setup.exe` y `ScriptLens IA_0.1.0_x64-setup.exe.sha256`.
+2. **Navegador:** en la versión más reciente, en «Assets», descargue `ScriptLens-IA_0.1.0_x64-setup.exe` y `ScriptLens-IA_0.1.0_x64-setup.exe.sha256`.
 3. **Verifique la procedencia:** la página debe pertenecer a `github.com/JorgeGutho21/ScriptLens`. Para comprobar que el archivo no fue alterado, siga el Método B (pasos 1–3).
 4. **Explorador de archivos:** haga doble clic en el instalador. Se abrirá el asistente de instalación (Figura 1).
 
@@ -36,13 +36,13 @@ Todos los comandos se ejecutan en **Windows PowerShell** o **PowerShell 7**, sin
 2. Calcule el hash del instalador:
 
    ```powershell
-   Get-FileHash ".\ScriptLens IA_0.1.0_x64-setup.exe" -Algorithm SHA256
+   Get-FileHash ".\ScriptLens-IA_0.1.0_x64-setup.exe" -Algorithm SHA256
    ```
 
 3. Compárelo con el valor publicado y ejecute el instalador solo si coincide:
 
    ```powershell
-   $archivo  = "ScriptLens IA_0.1.0_x64-setup.exe"
+   $archivo  = "ScriptLens-IA_0.1.0_x64-setup.exe"
    $esperado = (Get-Content "$archivo.sha256").Split(" ")[0]
    $real     = (Get-FileHash $archivo -Algorithm SHA256).Hash
    if ($real -eq $esperado) { Start-Process ".\$archivo" } else { Write-Error "El hash no coincide: no instale este archivo." }
