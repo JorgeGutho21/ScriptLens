@@ -139,3 +139,25 @@ def test_real_local_model_answers_with_verified_figures(client):
     _, done = _ask(c, pregunta="¿Qué programa consume más RAM?")
     assert done["modo"] == "ia" and len(done["answer"]) > 20
     print("\nRESPUESTA IA:", done["answer"], "\nVERIFICACION:", done["verificacion"], "\nSEGUNDOS:", done["segundos"])
+
+
+@pytest.mark.parametrize(
+    ("question", "expected_tool"),
+    [
+        ("¿Qué proceso consume más CPU?", "procesos_top_cpu"),
+        ("¿Qué aplicación consume más RAM?", "procesos_top_memoria"),
+        ("¿Por qué está lento el computador?", "resumen_rendimiento"),
+        ("¿Qué tareas se ejecutan en segundo plano?", "segundo_plano"),
+        ("¿Qué programas puedo cerrar?", "cerrables"),
+        ("¿Qué proceso requiere investigación?", "en_revision"),
+        ("¿Qué significa esta alerta?", "en_revision"),
+        ("¿Tengo amenazas registradas?", "seguridad"),
+        ("¿Qué programas se inician con Windows?", "inicio_automatico"),
+        ("¿Qué cambió desde el último diagnóstico?", "cambios"),
+    ],
+)
+def test_reference_questions_use_real_data_tools(question, expected_tool):
+    """Las diez preguntas de referencia se responden con herramientas de datos medidos."""
+    r = route(question)
+    assert expected_tool in r["herramientas"]
+    assert r["proceso"] is None  # «esta», «el», etc. no se confunden con procesos

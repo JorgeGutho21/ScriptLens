@@ -95,9 +95,19 @@ def procesos_top(engine, by: str = "memory", n: int = 8) -> dict:
         raise ValueError("by inválido")
     n = max(1, min(int(n), 10))
     rows = _grouped(engine)
-    key = "ram_mb" if by == "memory" else "cpu_prom_1min_pct"
-    rows.sort(key=lambda r: r[key], reverse=True)
-    return {"criterio": "memoria RAM" if by == "memory" else "CPU promedio del último minuto", "programas": rows[:n]}
+    if by == "memory":
+        rows.sort(key=lambda r: r["ram_mb"], reverse=True)
+        return {"criterio": "memoria RAM", "programas": rows[:n]}
+    measured = int(time.time() - getattr(engine.processes, "created", 0))
+    out = {"criterio": "CPU promedio del último minuto", "segundos_medidos": min(measured, 60)}
+    if measured < 60:
+        # Recién iniciado: el promedio aún no cubre un minuto; se ordena también por el valor actual.
+        rows.sort(key=lambda r: max(r["cpu_prom_1min_pct"], r["cpu_ahora_pct"]), reverse=True)
+        out["nota"] = f"ScriptLens empezó a medir hace {measured} s: el promedio todavía no cubre un minuto completo y puede ser bajo. Use también cpu_ahora_pct."
+    else:
+        rows.sort(key=lambda r: r["cpu_prom_1min_pct"], reverse=True)
+    out["programas"] = rows[:n]
+    return out
 
 
 def segundo_plano(engine) -> dict:
@@ -188,11 +198,15 @@ def inicio_automatico(engine) -> dict:
     r = engine.security.result
     if r is None:
         return {"disponible": False}
+    entries = r["startup"]
     return {
+        # Resumen explícito: todos los «habilitados» se inician con Windows, tengan o no advertencias.
+        "se_inician_con_windows": [clean(e["nombre"], 80) for e in entries if e["habilitado"]],
+        "deshabilitados": [clean(e["nombre"], 80) for e in entries if not e["habilitado"]],
         "entradas": [
             {"nombre": clean(e["nombre"], 80), "habilitado": e["habilitado"], "origen": e["origen"], "firma": (e.get("firma") or {}).get("descripcion_estado"), "estado": e["estado"], "motivos": e["motivos"]}
-            for e in r["startup"]
-        ]
+            for e in entries
+        ],
     }
 
 

@@ -124,6 +124,7 @@ class ProcessMonitor:
         self._self_pid = os.getpid()
         self._prev_cpu: dict[tuple[int, float | None], int] = {}
         self._prev_cpu_ts: float = 0.0
+        self.created = time.time()  # inicio de las mediciones (para saber si ya hay un minuto)
 
     def _sample_native(self) -> list[ProcessSnapshot]:
         """Ruta rápida en Windows: una llamada al sistema para todos los procesos."""
