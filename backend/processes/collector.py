@@ -47,6 +47,9 @@ class ProcessSnapshot:
     cpu_percent: float | None
     memory_rss: int | None
     acceso_limitado: bool = False
+    session_id: int | None = None
+    private_bytes: int | None = None
+    handles: int | None = None
 
     def to_dict(self) -> dict:
         return {
@@ -59,6 +62,9 @@ class ProcessSnapshot:
             "cpu_percent": self.cpu_percent,
             "memory_rss": self.memory_rss,
             "acceso_limitado": self.acceso_limitado,
+            "session_id": self.session_id,
+            "private_bytes": self.private_bytes,
+            "handles": self.handles,
         }
 
 
@@ -145,6 +151,9 @@ class ProcessMonitor:
                     cpu_percent=cpu,
                     memory_rss=r.working_set,
                     acceso_limitado=False,
+                    session_id=r.session_id,
+                    private_bytes=r.private_bytes,
+                    handles=r.handles,
                 )
             )
         self._prev_cpu, self._prev_cpu_ts = current, now
@@ -218,6 +227,29 @@ class ProcessMonitor:
                 )
         results.sort(key=lambda r: r["cpu_avg"], reverse=True)
         return results[:limit]
+
+    def find(self, pid: int) -> ProcessSnapshot | None:
+        _, snaps = self.latest()
+        return next((s for s in snaps if s.pid == pid), None)
+
+    def stats(self, pid: int, create_time: float | None, seconds: int = 60) -> dict | None:
+        """Promedio y máximo de CPU/RAM de un proceso concreto en la ventana indicada."""
+        cutoff = time.time() - seconds
+        with self._lock:
+            series = self._series.get((pid, create_time))
+            pts = [p for p in series.points if p[0] >= cutoff] if series else []
+        cpus = [p[1] for p in pts if p[1] is not None]
+        mems = [p[2] for p in pts if p[2] is not None]
+        if not cpus and not mems:
+            return None
+        return {
+            "seconds": seconds,
+            "samples": len(pts),
+            "cpu_avg": round(sum(cpus) / len(cpus), 2) if cpus else None,
+            "cpu_max": round(max(cpus), 2) if cpus else None,
+            "memory_avg": int(sum(mems) / len(mems)) if mems else None,
+            "memory_max": max(mems) if mems else None,
+        }
 
     def self_usage(self) -> dict:
         """Consumo del propio backend de ScriptLens (transparencia de recursos)."""
