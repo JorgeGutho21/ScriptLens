@@ -87,7 +87,7 @@ Tras abrir una terminal nueva después de instalar herramientas, `python`, `node
 ## Desinstalación
 
 - **Configuración → Aplicaciones → Aplicaciones instaladas → ScriptLens IA → Desinstalar**, o en PowerShell: `& "$env:LOCALAPPDATA\ScriptLens IA\uninstall.exe"`.
-- La desinstalación elimina el programa, los accesos directos y la entrada del registro; conserva sus diagnósticos e informes. Para borrarlos, elimine `%LOCALAPPDATA%\io.github.jorgegutho21.scriptlens` y `Documentos\ScriptLens IA`.
+- La desinstalación elimina el programa, los accesos directos y la entrada del registro; conserva sus diagnósticos e informes, salvo que marque en el desinstalador la casilla para borrar los datos de la aplicación (borra el historial, no los informes). Para borrarlos, elimine `%LOCALAPPDATA%\io.github.jorgegutho21.scriptlens` y `Documentos\ScriptLens IA`.
 
 ## Actualizaciones
 

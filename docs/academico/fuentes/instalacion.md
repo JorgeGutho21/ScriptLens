@@ -220,6 +220,6 @@ Tabla: Problemas y soluciones
 
 **Actualizar:** en **Acerca de**, pulse **Buscar actualizaciones**. Si hay una versión nueva, descárguela como en el apartado 2, compruebe su huella e instálela encima de la anterior: su historial se conserva.
 
-**Desinstalar:** abra **Configuración → Aplicaciones → Aplicaciones instaladas**, busque **ScriptLens IA**, pulse los tres puntos y elija **Desinstalar**. El historial se conserva por si vuelve a instalar; puede borrarlo antes desde **Ajustes → Privacidad**. Ollama se desinstala aparte.
+**Desinstalar:** abra **Configuración → Aplicaciones → Aplicaciones instaladas**, busque **ScriptLens IA**, pulse los tres puntos y elija **Desinstalar**. El historial se conserva por si vuelve a instalar, salvo que marque en el desinstalador la casilla para borrar los datos de la aplicación; también puede borrarlo antes desde **Ajustes → Privacidad**. Los informes de la carpeta Documentos no se borran. Ollama se desinstala aparte.
 
 Para aprender a usar cada sección después de instalar, consulte el *Manual de usuario de ScriptLens IA*.

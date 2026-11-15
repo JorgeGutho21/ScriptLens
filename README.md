@@ -219,7 +219,7 @@ Más casos en [docs/instalacion/INSTALACION.md](docs/instalacion/INSTALACION.md)
 
 ## Desinstalación
 
-**Configuración → Aplicaciones → Aplicaciones instaladas → ScriptLens IA → Desinstalar.** El historial (`%LOCALAPPDATA%\io.github.jorgegutho21.scriptlens`) se conserva por si reinstala; puede borrarlo antes desde **Ajustes → Privacidad** (botones «Borrar diagnósticos», «Borrar conversaciones» y «Borrar registro de acciones»). Los informes en `Documentos\ScriptLens IA` también se conservan. Ollama y sus modelos se desinstalan aparte.
+**Configuración → Aplicaciones → Aplicaciones instaladas → ScriptLens IA → Desinstalar.** El historial (`%LOCALAPPDATA%\io.github.jorgegutho21.scriptlens`) se conserva por si reinstala, salvo que marque en el desinstalador la casilla para borrar los datos de la aplicación; puede borrarlo antes desde **Ajustes → Privacidad** (botones «Borrar diagnósticos», «Borrar conversaciones» y «Borrar registro de acciones»). Los informes en `Documentos\ScriptLens IA` también se conservan. Ollama y sus modelos se desinstalan aparte.
 
 ## Privacidad
 
