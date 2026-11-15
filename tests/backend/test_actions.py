@@ -201,3 +201,58 @@ def test_temp_cleanup_revalidates_path_on_execution(ctx, tmp_path, monkeypatch):
         assert outside.read_text(encoding="utf-8") == "NO BORRAR"
     finally:
         os.chdir(previous)
+
+
+@pytest.mark.parametrize("target", ["home", "home_parent", "documents", "windows", "drive_root"])
+def test_temp_cleanup_rejects_personal_or_system_folders(ctx, monkeypatch, target):
+    """TEMP nunca puede apuntar al perfil, a una carpeta que lo contiene, a Documentos o a Windows."""
+    from pathlib import Path
+
+    c, _ = ctx
+    home = Path.home()
+    paths = {
+        "home": home,
+        "home_parent": home.parent,
+        "documents": home / "Documents",
+        "windows": Path(os.environ.get("SystemRoot", r"C:\Windows")),
+        "drive_root": Path(home.anchor),
+    }
+    if not paths[target].is_dir():
+        pytest.skip("carpeta no disponible en este equipo")
+    monkeypatch.setenv("TEMP", str(paths[target]))
+    assert c.get("/api/actions/temp/preview").status_code == 409
+    assert c.post("/api/actions/temp/prepare").status_code == 409
+
+
+def test_temp_cleanup_does_not_follow_junctions(ctx, tmp_path, monkeypatch):
+    """Una unión NTFS dentro de TEMP hacia otra carpeta no se recorre ni se vacía."""
+    c, _ = ctx
+    temp = tmp_path / "temp"
+    temp.mkdir()
+    outside = tmp_path / "externo"
+    outside.mkdir()
+    victim = outside / "documento_antiguo.txt"
+    victim.write_text("NO BORRAR", encoding="utf-8")
+    stale = temp / "residuo.tmp"
+    stale.write_text("x", encoding="utf-8")
+    old = time.time() - 30 * 86400
+    os.utime(victim, (old, old))
+    os.utime(stale, (old, old))
+    link = temp / "union"
+    subprocess.run(["cmd", "/c", "mklink", "/J", str(link), str(outside)], check=True, capture_output=True)
+    assert link.is_junction()
+    monkeypatch.setenv("TEMP", str(temp))
+
+    preview = c.get("/api/actions/temp/preview").json()["categorias"][0]
+    assert preview["archivos"] == 1 and "documento_antiguo.txt" not in preview["muestra"]
+    prep = c.post("/api/actions/temp/prepare").json()
+    res = c.post("/api/actions/execute", json={"token": prep["token"]}).json()
+    assert res["eliminados"] == 1
+    assert not stale.exists()
+    assert victim.read_text(encoding="utf-8") == "NO BORRAR"
+
+
+def test_temp_cleanup_requires_confirmation_token(ctx):
+    """Sin un token emitido por la vista de confirmación no se borra nada."""
+    c, _ = ctx
+    assert c.post("/api/actions/execute", json={"token": "token-inventado-0000"}).status_code in (400, 403, 404, 409, 410)

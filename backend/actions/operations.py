@@ -35,6 +35,14 @@ TOKEN_TTL = 60.0
 TEMP_MIN_AGE_DAYS = 7
 
 
+def _is_link(path: Path) -> bool:
+    """Enlace simbólico o unión de NTFS (os.walk sí entraría en una unión)."""
+    try:
+        return path.is_symlink() or path.is_junction()
+    except OSError:
+        return True
+
+
 def human(n: int) -> str:
     for unit in ("B", "KB", "MB", "GB"):
         if n < 1024 or unit == "GB":
@@ -198,37 +206,55 @@ class ActionManager:
     # --- Archivos temporales -------------------------------------------------
     @staticmethod
     def _safe_temp_dir() -> Path:
-        """Exige una ruta temporal absoluta del usuario, nunca el directorio actual."""
-        raw = os.environ.get("TEMP", "").strip()
+        """Devuelve la carpeta temporal del usuario solo si es segura.
+
+        Se rechaza (``ActionError``, HTTP 409) cuando TEMP falta, está vacía, es
+        relativa, no existe, es un enlace o unión, o apunta a la raíz de una
+        unidad, al perfil del usuario, a una carpeta que lo contiene, a una
+        carpeta personal conocida o a Windows. Nunca se usa el directorio actual.
+        """
+        raw = os.environ.get("TEMP", "").strip().strip('"')
         if not raw:
-            raise ActionError("TEMP no está configurada. Se cancela la limpieza por seguridad.")
+            raise ActionError("La variable TEMP no está configurada. Se cancela la limpieza por seguridad.")
         candidate = Path(raw)
-        if not candidate.is_absolute() or not candidate.is_dir() or candidate.is_symlink():
-            raise ActionError("TEMP no identifica una carpeta temporal absoluta y válida.")
+        if not candidate.is_absolute() or not candidate.is_dir() or _is_link(candidate):
+            raise ActionError("La variable TEMP no identifica una carpeta temporal absoluta y válida.")
         resolved = candidate.resolve()
-        # No aceptar raíz de unidad ni carpetas personales genéricas.
-        if resolved == Path(resolved.anchor) or resolved == Path.home().resolve():
-            raise ActionError("TEMP apunta a una ubicación insegura.")
+        home = Path.home().resolve()
+        protected = [home / n for n in ("Documents", "Desktop", "Downloads", "Pictures", "Music", "Videos", "OneDrive")]
+        windir = Path(os.environ.get("SystemRoot", r"C:\Windows")).resolve()
+        if (
+            resolved == Path(resolved.anchor)
+            or home.is_relative_to(resolved)  # el perfil o una carpeta que lo contiene
+            or any(resolved.is_relative_to(d) for d in protected)
+            or resolved.is_relative_to(windir)
+        ):
+            raise ActionError(f"La variable TEMP apunta a una ubicación que no es temporal ({resolved}). Se cancela la limpieza.")
         return resolved
+
+    @staticmethod
+    def _temp_files(user_temp: Path):
+        """Recorre la carpeta temporal sin entrar en enlaces simbólicos ni uniones."""
+        for root, dirs, files in os.walk(user_temp, followlinks=False):
+            dirs[:] = [d for d in dirs if not _is_link(Path(root) / d)]
+            for f in files:
+                yield Path(root) / f
 
     @staticmethod
     def temp_preview() -> dict:
         user_temp = ActionManager._safe_temp_dir()
         cutoff = time.time() - TEMP_MIN_AGE_DAYS * 86400
         old_files, old_bytes, total_bytes, total_files = [], 0, 0, 0
-        if user_temp.is_dir():
-            for root, _dirs, files in os.walk(user_temp):
-                for f in files:
-                    fp = Path(root) / f
-                    try:
-                        st = fp.stat()
-                    except OSError:
-                        continue
-                    total_files += 1
-                    total_bytes += st.st_size
-                    if st.st_mtime < cutoff:
-                        old_bytes += st.st_size
-                        old_files.append((str(fp), st.st_size))
+        for fp in ActionManager._temp_files(user_temp):
+            try:
+                st = fp.stat(follow_symlinks=False)
+            except OSError:
+                continue
+            total_files += 1
+            total_bytes += st.st_size
+            if st.st_mtime < cutoff:
+                old_bytes += st.st_size
+                old_files.append((str(fp), st.st_size))
         old_files.sort(key=lambda x: x[1], reverse=True)
 
         def size_of(path: Path) -> int | None:
@@ -287,21 +313,19 @@ class ActionManager:
         user_temp = self._safe_temp_dir()
         cutoff = time.time() - TEMP_MIN_AGE_DAYS * 86400
         deleted = skipped = freed = 0
-        for root, _dirs, files in os.walk(user_temp):
-            for f in files:
-                fp = Path(root) / f
-                try:
-                    if not fp.resolve().is_relative_to(user_temp):  # nunca fuera de %TEMP%
-                        skipped += 1
-                        continue
-                    st = fp.stat()
-                    if st.st_mtime >= cutoff:
-                        continue
-                    fp.unlink()
-                    deleted += 1
-                    freed += st.st_size
-                except OSError:
-                    skipped += 1  # en uso o sin permiso
+        for fp in self._temp_files(user_temp):
+            try:
+                if _is_link(fp) or not fp.resolve().is_relative_to(user_temp):  # nunca fuera de %TEMP%
+                    skipped += 1
+                    continue
+                st = fp.stat(follow_symlinks=False)
+                if st.st_mtime >= cutoff:
+                    continue
+                fp.unlink()
+                deleted += 1
+                freed += st.st_size
+            except OSError:
+                skipped += 1  # en uso o sin permiso
         detail = f"{deleted} archivos eliminados ({human(freed)} liberados); {skipped} omitidos por estar en uso o protegidos."
         aid = self.engine.db.log_action("limpiar_temporales", str(user_temp), "completada", detail, self._metrics(), {"eliminados": deleted, "bytes": freed, "omitidos": skipped})
         return {"resultado": "completada", "detalle": detail, "accion_id": aid, "eliminados": deleted, "bytes": freed}
