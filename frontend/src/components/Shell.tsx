@@ -10,6 +10,7 @@ import {
   Settings,
   ShieldCheck,
   Sun,
+  Wrench,
 } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { pct } from '../lib/format'
@@ -18,11 +19,12 @@ import { usePrefs } from '../lib/prefs'
 import { APP_VERSION } from '../version'
 import { Logo } from './Logo'
 
-export type PageId = 'panel' | 'procesos' | 'seguridad' | 'scripts' | 'asistente' | 'comparar' | 'informes' | 'ajustes' | 'acerca'
+export type PageId = 'panel' | 'procesos' | 'optimizar' | 'seguridad' | 'scripts' | 'asistente' | 'comparar' | 'informes' | 'ajustes' | 'acerca'
 
 export const NAV: { id: PageId; label: string; icon: ReactNode; ready: boolean }[] = [
   { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} />, ready: true },
   { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} />, ready: true },
+  { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} />, ready: true },
   { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} />, ready: true },
   { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} />, ready: true },
   { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} />, ready: false },

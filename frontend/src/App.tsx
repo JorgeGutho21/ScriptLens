@@ -9,11 +9,13 @@ import { ProcessesPage } from './pages/Processes'
 import { ComparePage } from './pages/Compare'
 import { SecurityPage } from './pages/Security'
 import { ScriptsPage } from './pages/Scripts'
+import { OptimizePage } from './pages/Optimize'
 import { AboutPage, Planned, SettingsPage } from './pages/Other'
 
 const TITLES: Record<PageId, string> = {
   panel: 'Panel general',
   procesos: 'Procesos',
+  optimizar: 'Optimizar con supervisión',
   seguridad: 'Centro de seguridad',
   scripts: 'Analizador de scripts',
   asistente: 'Asistente inteligente',
@@ -75,6 +77,7 @@ function Main() {
           {page === 'comparar' && <ComparePage />}
           {page === 'seguridad' && <SecurityPage />}
           {page === 'scripts' && <ScriptsPage />}
+          {page === 'optimizar' && <OptimizePage goProcesses={() => setPage('procesos')} />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
           {PLANNED[page] && <Planned title={label ?? TITLES[page]} description={PLANNED[page]!} />}
