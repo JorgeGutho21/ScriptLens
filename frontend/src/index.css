@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+
+/*
+ * Sistema de diseño de ScriptLens IA — ver docs/arquitectura/sistema_diseno.md
+ * Paleta: azul tecnológico, grafito, negro y blanco. Los colores de estado
+ * se reservan para comunicar significado (normal, atención, revisión).
+ */
+
+:root {
+  color-scheme: dark;
+  --bg: #080b10;
+  --bg-grad: #0c1320;
+  --surface: #0f141c;
+  --surface-2: #151c27;
+  --surface-3: #1c2533;
+  --border: #222c3b;
+  --border-strong: #2e3a4d;
+  --text: #e8eef7;
+  --text-muted: #93a1b5;
+  --text-faint: #64718a;
+  --accent: #3b8cff;
+  --accent-strong: #1f6feb;
+  --accent-soft: rgba(59, 140, 255, 0.14);
+  --accent-glow: rgba(59, 140, 255, 0.35);
+  --ok: #3fb950;
+  --ok-soft: rgba(63, 185, 80, 0.14);
+  --warn: #d6a43a;
+  --warn-soft: rgba(214, 164, 58, 0.15);
+  --danger: #f2655a;
+  --danger-soft: rgba(242, 101, 90, 0.15);
+  --info: #79b8ff;
+  --chart-cpu: #3b8cff;
+  --chart-ram: #9d7bff;
+  --chart-grid: rgba(147, 161, 181, 0.12);
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.35);
+  --font-scale: 1;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f3f5f9;
+  --bg-grad: #e8eef8;
+  --surface: #ffffff;
+  --surface-2: #f6f8fb;
+  --surface-3: #edf1f7;
+  --border: #dde3ec;
+  --border-strong: #c9d2df;
+  --text: #0e1621;
+  --text-muted: #4b5a70;
+  --text-faint: #75839a;
+  --accent: #1f6feb;
+  --accent-strong: #1558c9;
+  --accent-soft: rgba(31, 111, 235, 0.1);
+  --accent-glow: rgba(31, 111, 235, 0.25);
+  --ok: #1a7f37;
+  --ok-soft: rgba(26, 127, 55, 0.1);
+  --warn: #9a6700;
+  --warn-soft: rgba(154, 103, 0, 0.1);
+  --danger: #cf222e;
+  --danger-soft: rgba(207, 34, 46, 0.09);
+  --info: #0969da;
+  --chart-cpu: #1f6feb;
+  --chart-ram: #7c4dff;
+  --chart-grid: rgba(75, 90, 112, 0.12);
+  --shadow: 0 1px 2px rgba(14, 22, 33, 0.06), 0 6px 18px rgba(14, 22, 33, 0.06);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --font-sans: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Cascadia Mono', 'Cascadia Code', Consolas, monospace;
+}
+
+html {
+  font-size: calc(15px * var(--font-scale));
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 85% -10%, var(--bg-grad), transparent 60%), var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+#root {
+  height: 100vh;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.focus-ring:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-glow);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-rise {
+  animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* Reducir animaciones: preferencia del sistema o ajuste de la aplicación */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+:root[data-motion='reduced'] *,
+:root[data-motion='reduced'] *::before,
+:root[data-motion='reduced'] *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
