@@ -198,6 +198,40 @@ async function request<T>(method: string, path: string, params?: Record<string, 
   return (await res.json()) as T
 }
 
+/** POST con respuesta NDJSON (una línea JSON por evento), para respuestas en streaming. */
+export async function* apiStream<T>(path: string, body: unknown): AsyncGenerator<T> {
+  connection ??= resolveConnection().catch((e) => {
+    connection = null
+    throw e
+  })
+  const { baseUrl, token } = await connection
+  const res = await fetch(new URL(path, baseUrl), { method: 'POST', headers: { 'X-ScriptLens-Token': token, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  if (!res.ok || !res.body) {
+    let detail = `Error ${res.status}`
+    try {
+      detail = (await res.json()).detail ?? detail
+    } catch {
+      /* sin JSON */
+    }
+    throw new ApiError(res.status, detail)
+  }
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  let buf = ''
+  for (;;) {
+    const { value, done } = await reader.read()
+    if (done) break
+    buf += decoder.decode(value, { stream: true })
+    let nl: number
+    while ((nl = buf.indexOf('\n')) >= 0) {
+      const line = buf.slice(0, nl).trim()
+      buf = buf.slice(nl + 1)
+      if (line) yield JSON.parse(line) as T
+    }
+  }
+  if (buf.trim()) yield JSON.parse(buf) as T
+}
+
 export const api = <T,>(path: string, params?: Record<string, string | number>) => request<T>('GET', path, params)
 export const apiPost = <T,>(path: string, body?: unknown, params?: Record<string, string | number>) => request<T>('POST', path, params, body ?? {})
 export const apiDelete = <T,>(path: string) => request<T>('DELETE', path)

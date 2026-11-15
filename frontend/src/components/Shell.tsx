@@ -27,7 +27,7 @@ export const NAV: { id: PageId; label: string; icon: ReactNode; ready: boolean }
   { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} />, ready: true },
   { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} />, ready: true },
   { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} />, ready: true },
-  { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} />, ready: false },
+  { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} />, ready: true },
   { id: 'comparar', label: 'Comparar mi PC', icon: <GitCompareArrows size={18} />, ready: true },
   { id: 'informes', label: 'Informes', icon: <FileText size={18} />, ready: false },
 ]

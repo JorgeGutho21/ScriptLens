@@ -10,6 +10,7 @@ import { ComparePage } from './pages/Compare'
 import { SecurityPage } from './pages/Security'
 import { ScriptsPage } from './pages/Scripts'
 import { OptimizePage } from './pages/Optimize'
+import { AssistantPage } from './pages/Assistant'
 import { AboutPage, Planned, SettingsPage } from './pages/Other'
 
 const TITLES: Record<PageId, string> = {
@@ -26,7 +27,6 @@ const TITLES: Record<PageId, string> = {
 }
 
 const PLANNED: Partial<Record<PageId, string>> = {
-  asistente: 'Asistente local con Ollama y Qwen3 que responde con base en las mediciones reales de este equipo.',
   informes: 'Informes PDF y HTML con métricas, hallazgos, recomendaciones y limitaciones.',
 }
 
@@ -77,6 +77,7 @@ function Main() {
           {page === 'comparar' && <ComparePage />}
           {page === 'seguridad' && <SecurityPage />}
           {page === 'scripts' && <ScriptsPage />}
+          {page === 'asistente' && <AssistantPage />}
           {page === 'optimizar' && <OptimizePage goProcesses={() => setPage('procesos')} />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
