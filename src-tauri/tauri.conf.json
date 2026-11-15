@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "ScriptLens IA",
+  "version": "0.1.0",
+  "identifier": "io.github.jorgegutho21.scriptlens",
+  "build": {
+    "frontendDist": "../frontend/dist",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeDevCommand": "npm --prefix frontend run dev",
+    "beforeBuildCommand": "npm --prefix frontend run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "ScriptLens IA",
+        "width": 1360,
+        "height": 860,
+        "minWidth": 980,
+        "minHeight": 640,
+        "center": true,
+        "backgroundColor": "#080b10"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:*; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "publisher": "Jorge Gutiérrez (@JorgeGutho21)",
+    "copyright": "© 2026 Jorge Gutiérrez. Licencia MIT.",
+    "category": "Utility",
+    "shortDescription": "Diagnóstico, seguridad y auditoría de Windows",
+    "longDescription": "ScriptLens IA: sistema inteligente de diagnóstico, seguridad, auditoría y optimización supervisada de Windows. Desarrollado por Jorge Gutiérrez (@JorgeGutho21).",
+    "homepage": "https://github.com/JorgeGutho21/ScriptLens",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.ico"],
+    "resources": {
+      "../build/backend/scriptlens-backend/": "backend/",
+      "../LICENSE": "LICENSE.txt",
+      "../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md"
+    },
+    "licenseFile": "../LICENSE",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["Spanish"],
+        "displayLanguageSelector": false,
+        "installerIcon": "icons/icon.ico",
+        "sidebarImage": "installer/sidebar.bmp",
+        "headerImage": "installer/header.bmp"
+      }
+    }
+  }
+}

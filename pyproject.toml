@@ -1,0 +1,15 @@
+[project]
+name = "scriptlens-backend"
+version = "0.1.0"
+description = "Backend local de ScriptLens IA: monitoreo, diagnóstico y auditoría de Windows."
+authors = [{ name = "Jorge Gutiérrez" }]
+license = "MIT"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/backend"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 130

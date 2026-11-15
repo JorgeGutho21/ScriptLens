@@ -1,0 +1,4 @@
+@echo off
+xcopy "C:\Proyectos\EcoAccess" "E:\USB\EcoAccess" /E /I /Y
+copy /Y "C:\Proyectos\notas.txt" "E:\USB\"
+echo Copia lista

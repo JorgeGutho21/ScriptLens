@@ -1,0 +1,5 @@
+$ruta = 'HKCU:\Software\MiAplicacion'
+if (-not (Test-Path $ruta)) { New-Item -Path $ruta -Force | Out-Null }
+Set-ItemProperty -Path $ruta -Name Tema -Value 'oscuro'
+Set-ItemProperty -Path $ruta -Name Idioma -Value 'es-CO'
+Write-Host 'Preferencias guardadas'
