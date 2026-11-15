@@ -9,12 +9,19 @@
 
   Ejecutar en PowerShell desde la raíz del repositorio:
       .\scripts\construir_instalador.ps1
+
+  Con -OmitirMotor se reutiliza el motor ya empaquetado en build\backend
+  (útil si solo cambió la interfaz o el contenedor).
 #>
+param([switch]$OmitirMotor)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
 Set-Location $root
 $py = Join-Path $root '.venv\Scripts\python.exe'
 
+if ($OmitirMotor -and (Test-Path 'build\backend\scriptlens-backend\scriptlens-backend.exe')) {
+  Write-Host '1/3 Se reutiliza el motor empaquetado en build\backend.'
+} else {
 Write-Host '1/3 Empaquetando el motor de análisis (PyInstaller)…'
 & $py -m PyInstaller --noconfirm --clean --log-level WARN `
   --name scriptlens-backend --onedir --console `
@@ -26,6 +33,7 @@ Write-Host '1/3 Empaquetando el motor de análisis (PyInstaller)…'
   --exclude-module tkinter --exclude-module matplotlib --exclude-module IPython --exclude-module pytest `
   scripts\scriptlens_backend.py
 if ($LASTEXITCODE) { throw 'PyInstaller falló' }
+}
 
 Write-Host '2/3 Compilando la aplicación y el instalador (Tauri)…'
 # En GitHub Actions Rust localiza MSVC por sí mismo; en este equipo se usa msvc-env.ps1.

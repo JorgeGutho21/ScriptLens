@@ -9,7 +9,8 @@ $root = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 $docs = @(
   "$root\docs\desarrollo\Documentacion_Tecnica_ScriptLens_IA.docx",
   "$root\docs\expo_software\ExpoSoftware_2026_II_ScriptLens_IA.docx",
-  "$root\docs\manual_usuario\Manual_Usuario_ScriptLens_IA.docx"
+  "$root\docs\manual_usuario\Manual_Usuario_ScriptLens_IA.docx",
+  "$root\docs\instalacion\Guia_Instalacion_ScriptLens_IA.docx"
 )
 $word = New-Object -ComObject Word.Application
 $word.Visible = $false

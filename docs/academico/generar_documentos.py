@@ -58,6 +58,13 @@ DOCUMENTOS = [
         "subtitulo": "Guía paso a paso para personas sin conocimientos técnicos",
         "interlineado": 1.5,
     },
+    {
+        "fuente": "instalacion.md",
+        "salida": ROOT / "docs" / "instalacion" / "Guia_Instalacion_ScriptLens_IA.docx",
+        "titulo": "Guía de Instalación de ScriptLens IA",
+        "subtitulo": "Descarga, verificación e instalación paso a paso para principiantes",
+        "interlineado": 1.5,
+    },
 ]
 
 PORTADA = [
