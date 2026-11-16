@@ -42,7 +42,7 @@ Desarrollar una aplicación de escritorio para Windows que diagnostique el rendi
 
 # Alcance
 
-La versión 0.1.0 funciona en Windows 10 (1809 o posterior) y Windows 11 de 64 bits. Incluye monitoreo, procesos, optimización supervisada, seguridad, análisis de scripts, asistente local, comparación, informes y ajustes de accesibilidad. Quedan fuera del alcance: la detección de malware por firmas o comportamiento (función que se delega en Microsoft Defender), la vigilancia permanente en segundo plano, la modificación de configuraciones de seguridad y la firma de código comercial del instalador.
+La versión 0.1.1 funciona en Windows 10 (1809 o posterior) y Windows 11 de 64 bits. Incluye monitoreo, procesos, optimización supervisada, seguridad, análisis de scripts, asistente local, comparación, informes y ajustes de accesibilidad. Quedan fuera del alcance: la detección de malware por firmas o comportamiento (función que se delega en Microsoft Defender), la vigilancia permanente en segundo plano, la modificación de configuraciones de seguridad y la firma de código comercial del instalador.
 
 # Antecedentes
 
@@ -402,7 +402,7 @@ La interfaz se compila con `npm --prefix frontend run build`, que ejecuta la com
 
 # Instalador
 
-Tauri genera un instalador NSIS en español, de instalación por usuario, que copia la aplicación, el motor como recurso, la licencia y los avisos de terceros en `%LOCALAPPDATA%\ScriptLens IA` y crea los accesos directos. El historial se guarda aparte, en `%LOCALAPPDATA%\io.github.jorgegutho21.scriptlens`, carpeta que Tauri asigna a la aplicación y que el motor recibe en la variable `SCRIPTLENS_DATA_DIR`. El asistente de instalación muestra una barra lateral y un encabezado con la identidad del proyecto, generados a partir del icono con `scripts/generar_imagenes_instalador.py`. El instalador final pesa 49,3 MB (51 678 985 bytes) y su SHA-256 es `111397CF7D8164943D79F99488F3B868603A4CA32053D116D8B522AC37B6D13A`.
+Tauri genera un instalador NSIS en español, de instalación por usuario, que copia la aplicación, el motor como recurso, la licencia y los avisos de terceros en `%LOCALAPPDATA%\ScriptLens IA` y crea los accesos directos. El historial se guarda aparte, en `%LOCALAPPDATA%\io.github.jorgegutho21.scriptlens`, carpeta que Tauri asigna a la aplicación y que el motor recibe en la variable `SCRIPTLENS_DATA_DIR`. El asistente de instalación muestra una barra lateral y un encabezado con la identidad del proyecto, generados a partir del icono con `scripts/generar_imagenes_instalador.py`. El instalador de la versión 0.1.1 pesa 49,3 MB (51 701 506 bytes) y su SHA-256 es `8006D5301CE4868B038BC3E2E83A0448A12C53F19C56579947EF9C9E6E795ABF`.
 
 Con ese mismo archivo se comprobó en Windows 11, desde una sesión sin privilegios de administrador, que la instalación silenciosa termina en 11,8–18,3 s (también sobre una versión ya instalada), que el acceso del menú Inicio abre la aplicación y que el motor empaquetado escucha solo en 127.0.0.1 entre 6,5 y 12,2 s después, que la interfaz recibe sus datos en vivo, que una segunda apertura deja una sola aplicación y un solo motor, que al forzar el cierre de la aplicación el motor termina en 1–1,6 s y que la desinstalación elimina la carpeta, la entrada del registro y los accesos directos conservando el historial y los informes. Los detalles y los entornos que no pudieron probarse están en `docs/pruebas/compatibilidad.md`.
 

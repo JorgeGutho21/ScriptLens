@@ -2,6 +2,8 @@
 
 Fecha: 2026-11-15. Este documento registra solo lo que se probó de verdad. Las casillas «No probado» indican que el entorno no estaba disponible; no deben interpretarse como compatibles ni como incompatibles.
 
+La versión 0.1.1 solo cambia la identidad gráfica del instalador y el número de versión; el código del motor y de la interfaz es el mismo que se probó en 0.1.0. Sobre 0.1.1 se repitieron la actualización desde 0.1.0, el arranque del motor y las pruebas automatizadas.
+
 ## Entorno disponible
 
 | Dato | Valor |

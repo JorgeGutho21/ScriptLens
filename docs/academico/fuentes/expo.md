@@ -87,7 +87,7 @@ Tabla: Fases del desarrollo y criterios de aceptación
 | 7 | Asistente local | Respuestas con cifras verificadas | Herramientas de solo lectura; modo sin IA |
 | 8 | Informes | PDF y HTML | Documento válido con identidad y marca de agua |
 | 9 | Distribución | Instalador NSIS | Instalación sin administrador en Windows 11 |
-| 10–13 | Documentación, revisión y publicación | Documentos, correcciones y versión v0.1.0 | Defectos críticos corregidos; descarga pública verificada |
+| 10–13 | Documentación, revisión y publicación | Documentos, correcciones y versiones v0.1.0 y v0.1.1 | Defectos críticos corregidos; descarga pública verificada |
 
 ## Diseño del sistema
 
@@ -152,7 +152,7 @@ Las acciones usan confirmación en dos pasos con un token de un solo uso, revali
 
 ## Distribución
 
-El motor se empaqueta con PyInstaller y la aplicación se distribuye en un instalador NSIS por usuario, en español, con la identidad del proyecto. La versión v0.1.0 se publicó en GitHub Releases junto con su huella SHA-256.
+El motor se empaqueta con PyInstaller y la aplicación se distribuye en un instalador NSIS por usuario, en español, con la identidad del proyecto. La versión v0.1.0 se publicó en GitHub Releases junto con su huella SHA-256; la v0.1.1 rediseñó la identidad gráfica del instalador.
 
 # Resultados
 
@@ -312,4 +312,4 @@ Figura: docs/capturas/13_comparar.png | Comparación de diagnósticos | Diferenc
 
 ## Anexo B. Repositorio y evidencias
 
-El código fuente, la bitácora con los hashes de los commits, el informe de evaluación del clasificador, la matriz de compatibilidad y las capturas están en https://github.com/JorgeGutho21/ScriptLens. El instalador y su huella SHA-256 se publicaron en https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0.
+El código fuente, la bitácora con los hashes de los commits, el informe de evaluación del clasificador, la matriz de compatibilidad y las capturas están en https://github.com/JorgeGutho21/ScriptLens. El instalador y su huella SHA-256 se publican en https://github.com/JorgeGutho21/ScriptLens/releases (versión vigente: v0.1.1).

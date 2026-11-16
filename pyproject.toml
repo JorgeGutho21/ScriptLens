@@ -1,6 +1,6 @@
 [project]
 name = "scriptlens-backend"
-version = "0.1.0"
+version = "0.1.1"
 description = "Backend local de ScriptLens IA: monitoreo, diagnóstico y auditoría de Windows."
 authors = [{ name = "Jorge Gutiérrez" }]
 license = "MIT"

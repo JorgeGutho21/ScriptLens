@@ -20,7 +20,7 @@ Todo el análisis ocurre en su propio computador. ScriptLens no envía sus datos
 
 1. Abra el navegador y entre a **github.com/JorgeGutho21/ScriptLens**.
 2. En la parte derecha, pulse **Releases**.
-3. En la versión marcada **Latest**, abra **Assets** y descargue `ScriptLens-IA_0.1.0_x64-setup.exe` y su huella `ScriptLens-IA_0.1.0_x64-setup.exe.sha256`.
+3. En la versión marcada **Latest**, abra **Assets** y descargue `ScriptLens-IA_0.1.1_x64-setup.exe` y su huella `ScriptLens-IA_0.1.1_x64-setup.exe.sha256`.
 4. Compruebe que la huella coincide siguiendo la *Guía de instalación de ScriptLens IA* (apartado 2.4).
 
 Descargue ScriptLens solo desde esa dirección.
