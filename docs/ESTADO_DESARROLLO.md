@@ -46,14 +46,15 @@
 - El autor fusionó el PR #1 en `main` (`d376dbb`); el árbol de `main` es idéntico al del commit desde el que se construyó el instalador (`fdd63c5`).
 - Release `v0.1.0` publicada sobre `d376dbb`, marcada como *Latest*, con `ScriptLens-IA_0.1.0_x64-setup.exe` y su `.sha256`. Se descargaron ambos archivos desde la URL pública y la huella coincide (`111397CF…B6D13A`, 51 678 985 bytes).
 - La guía de instalación incluye las capturas reales de la página del repositorio, de la versión y de sus archivos (Assets).
+- El autor fusionó el PR #5 en `main` (`6a3120e`), con el mismo árbol desde el que se construyó el instalador de 0.1.1. Release `v0.1.1` publicada sobre `6a3120e` como *Latest*; v0.1.0 sigue disponible. Se descargaron ambos archivos desde la URL pública y la huella coincide (`8006D530…795ABF`, 51 701 506 bytes). Las capturas de GitHub de la guía muestran ya v0.1.1.
 
 ## Estado en GitHub (2026-11-15)
 
 | Elemento | Estado |
 |---|---|
-| Rama `main` | Contiene todo el desarrollo (PR #1, #2 y #3 fusionados); CI en verde en cada commit |
-| Release | [v0.1.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0), *Latest*, instalador y `.sha256` verificados por descarga pública |
-| Actualizaciones | «Buscar actualizaciones» (API `releases/latest`) responde «Tiene la versión más reciente» |
+| Rama `main` | Contiene todo el desarrollo (PR #1 a #5 fusionados); CI en verde en cada commit |
+| Release | [v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1), *Latest*, instalador y `.sha256` verificados por descarga pública; [v0.1.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0) conservada |
+| Actualizaciones | La API `releases/latest`, que consulta «Buscar actualizaciones», devuelve `v0.1.1` |
 | Flujo «Instalador de Windows» | Ejecutado sobre `main` (`1d7bfd6`) en un equipo limpio de GitHub: pruebas, compilación e instalador generados con éxito; el artefacto contiene `ScriptLens-IA_0.1.0_x64-setup.exe` (51 522 853 bytes) y su `.sha256` coherente. El tamaño difiere del instalador publicado porque la compilación no es reproducible bit a bit; el publicado es el verificado en el equipo de pruebas |
 | Apartado *About* | Descripción, enlace a la última versión y temas configurados |
 | Issues | Habilitados para errores y sugerencias |
