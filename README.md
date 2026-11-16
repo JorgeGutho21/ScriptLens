@@ -7,15 +7,17 @@
 <p align="center">
   Sistema inteligente de diagnóstico, seguridad, auditoría y optimización supervisada de Windows.<br>
   <strong>Desarrollado por Jorge Gutiérrez</strong> · GitHub: <a href="https://github.com/JorgeGutho21">@JorgeGutho21</a><br>
+  Docente: Oswaldo Rueda Carreño<br>
   Universidad Popular del Cesar · Ingeniería de Sistemas · ExpoSoftware 2026-II
 </p>
 
 <p align="center">
-  <a href="https://jorgegutho21.github.io/ScriptLens/">Página del proyecto</a> ·
-  <a href="https://github.com/JorgeGutho21/ScriptLens/releases">Descargas (Releases)</a> ·
-  <a href="docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf">Guía de instalación (PDF)</a> ·
-  <a href="docs/manual_usuario/Manual_Usuario_ScriptLens_IA.pdf">Manual de usuario (PDF)</a> ·
-  <a href="docs/PRIVACIDAD.md">Privacidad</a>
+  <a href="https://jorgegutho21.github.io/ScriptLens/"><img src="https://img.shields.io/badge/Abrir%20la%20página%20oficial-1765CC?style=for-the-badge" alt="Abrir la página oficial de ScriptLens IA" height="36"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar para Windows</a> ·
+  <a href="https://jorgegutho21.github.io/ScriptLens/#guia">Guía de instalación</a>
 </p>
 
 ![Panel general de ScriptLens IA](docs/capturas/02_panel_general.png)
@@ -79,7 +81,7 @@ Todas las capturas de [docs/capturas](docs/capturas) son de la aplicación insta
 
 ## Descarga e instalación
 
-La guía paso a paso para principiantes, con capturas numeradas, está en [Guia_Instalacion_ScriptLens_IA.pdf](docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf) (versión editable: [.docx](docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx); versión web: [INSTALACION.md](docs/instalacion/INSTALACION.md)).
+Sigue la [guía de instalación en la página oficial](https://jorgegutho21.github.io/ScriptLens/#guia). La guía también está disponible en [Guia_Instalacion_ScriptLens_IA.pdf](docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf) (versión editable: [.docx](docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx); versión Markdown: [INSTALACION.md](docs/instalacion/INSTALACION.md)).
 
 Archivos de cada versión publicada en [Releases](https://github.com/JorgeGutho21/ScriptLens/releases):
 
@@ -90,7 +92,7 @@ Archivos de cada versión publicada en [Releases](https://github.com/JorgeGutho2
 
 ### Método A — Instalador gráfico (recomendado)
 
-1. Abra [github.com/JorgeGutho21/ScriptLens/releases](https://github.com/JorgeGutho21/ScriptLens/releases), elija la versión más reciente marcada como **Latest** y, en **Assets**, descargue los dos archivos de la tabla anterior.
+1. Abra la [guía de instalación](https://jorgegutho21.github.io/ScriptLens/#guia) o la [release v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1) y descargue los dos archivos de la tabla anterior.
 2. Compruebe la huella SHA-256 (Método B, paso 2). Si no coincide, **no abra el archivo**.
 3. Haga doble clic en el instalador. El instalador no tiene firma de código comercial, por lo que Windows SmartScreen puede mostrar «Windows protegió su PC». Continúe solo si descargó el archivo de la página oficial y la huella coincide: pulse **Más información** → **Ejecutar de todas formas**. Si tiene dudas, no continúe.
 4. Siga el asistente (**Siguiente** → **Instalar** → **Finalizar**). La instalación es solo para su usuario y no pide permisos de administrador.

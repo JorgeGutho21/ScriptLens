@@ -16,8 +16,8 @@ Esta guía distingue siempre **dónde** se realiza cada paso: navegador, Explora
 
 ## Método A — Instalación gráfica (para principiantes)
 
-1. **Navegador:** entre a <https://github.com/JorgeGutho21/ScriptLens> y pulse **Releases** en la columna derecha. Abra la versión marcada como **Latest**.
-2. **Navegador:** en la versión más reciente, en «Assets», descargue `ScriptLens-IA_0.1.1_x64-setup.exe` y `ScriptLens-IA_0.1.1_x64-setup.exe.sha256`.
+1. **Navegador:** abra la [página oficial](https://jorgegutho21.github.io/ScriptLens/) y elija **Guía de instalación**. Los dos archivos también están en la [release v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1).
+2. **Navegador:** use los botones de descarga de la guía o el apartado **Assets** de la release v0.1.1 para descargar `ScriptLens-IA_0.1.1_x64-setup.exe` y `ScriptLens-IA_0.1.1_x64-setup.exe.sha256`.
 3. **Verifique la procedencia:** la página debe pertenecer a `github.com/JorgeGutho21/ScriptLens`. Para comprobar que el archivo no fue alterado, siga el Método B (pasos 1–3).
 4. **Explorador de archivos:** haga doble clic en el instalador. Se abrirá el asistente de instalación (Figura 1).
 
