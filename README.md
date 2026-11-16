@@ -11,6 +11,7 @@
 </p>
 
 <p align="center">
+  <a href="https://jorgegutho21.github.io/ScriptLens/">Página del proyecto</a> ·
   <a href="https://github.com/JorgeGutho21/ScriptLens/releases">Descargas (Releases)</a> ·
   <a href="docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf">Guía de instalación (PDF)</a> ·
   <a href="docs/manual_usuario/Manual_Usuario_ScriptLens_IA.pdf">Manual de usuario (PDF)</a> ·

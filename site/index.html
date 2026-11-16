@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScriptLens IA — Diagnóstico y seguridad de Windows</title>
+  <meta name="description" content="ScriptLens IA: diagnóstico, seguridad y auditoría de Windows con análisis de scripts sin ejecutarlos e IA local verificada. Desarrollado por Jorge Gutiérrez, Universidad Popular del Cesar, ExpoSoftware 2026-II.">
+  <meta name="author" content="Jorge Gutiérrez">
+  <meta property="og:title" content="ScriptLens IA">
+  <meta property="og:description" content="Diagnóstico, seguridad y auditoría de Windows con IA local verificada.">
+  <meta property="og:image" content="capturas/02_panel_general.png">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="contenedor barra-interior">
+      <a class="marca" href="#inicio">
+        <img src="logo.svg" alt="" width="32" height="32">
+        <span>ScriptLens IA</span>
+      </a>
+      <nav aria-label="Secciones">
+        <a href="#funciones">Funciones</a>
+        <a href="#capturas">Capturas</a>
+        <a href="#requisitos">Requisitos</a>
+        <a href="#descarga">Descarga</a>
+        <a href="#documentos">Documentos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="portada">
+      <div class="contenedor portada-rejilla">
+        <div>
+          <img class="portada-logo" src="logo.svg" alt="Logotipo de ScriptLens IA" width="88" height="88">
+          <h1>ScriptLens IA</h1>
+          <p class="lema">Sistema inteligente de diagnóstico, seguridad, auditoría y optimización supervisada de Windows.</p>
+          <p class="autor">Desarrollado por <strong>Jorge Gutiérrez</strong> · GitHub <a href="https://github.com/JorgeGutho21">@JorgeGutho21</a><br>
+            Universidad Popular del Cesar · Ingeniería de Sistemas · ExpoSoftware 2026-II</p>
+          <div class="acciones">
+            <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar para Windows</a>
+            <a class="boton" href="docs/Guia_Instalacion_ScriptLens_IA.pdf">Guía de instalación</a>
+          </div>
+          <p class="nota">Versión 0.1.1 · Windows 10 y 11 de 64 bits · 49,3 MB · Gratuito y de código abierto (MIT)</p>
+        </div>
+        <figure class="portada-imagen">
+          <img src="capturas/02_panel_general.png" alt="Panel general de ScriptLens IA con CPU, memoria, disco y red medidos en tiempo real" loading="eager">
+        </figure>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor angosto">
+        <h2>Qué es</h2>
+        <p>ScriptLens IA explica, en lenguaje sencillo, por qué un computador va lento, qué programas están funcionando, qué arranca con el sistema y si algo merece revisión. Analiza scripts BAT, CMD y PowerShell <strong>sin ejecutarlos</strong> y responde preguntas con un asistente de inteligencia artificial que funciona <strong>dentro del propio equipo</strong>. Ninguna acción que modifique el sistema se realiza sin la confirmación del usuario, y la IA no puede ejecutar acciones.</p>
+      </div>
+    </section>
+
+    <section class="seccion alterna" id="funciones">
+      <div class="contenedor">
+        <h2>Funcionalidades</h2>
+        <div class="tarjetas">
+          <article><h3>Panel general</h3><p>CPU, memoria, disco, red y tiempo encendido medidos en tiempo real. Diagnostica el consumo sostenido (promedio de un minuto), no los picos.</p></article>
+          <article><h3>Procesos</h3><p>Búsqueda, filtros, árbol padre-hijo, ruta, firma digital y respuestas a «¿qué hace?», «¿puedo cerrarlo?» y «¿es sospechoso?».</p></article>
+          <article><h3>Seguridad</h3><p>Revisión de solo lectura de Microsoft Defender, firewall, inicio automático, tareas programadas, servicios y eventos.</p></article>
+          <article><h3>Análisis de scripts</h3><p>43 reglas asociadas a MITRE ATT&amp;CK, desofuscación estática, explicación línea por línea y un clasificador evaluado con datos no vistos.</p></article>
+          <article><h3>Asistente con IA local</h3><p>Modelo de lenguaje en el propio equipo mediante Ollama. Cada cifra de la respuesta se comprueba contra los datos medidos.</p></article>
+          <article><h3>Optimización supervisada</h3><p>Recomendaciones basadas en mediciones, acciones reversibles o confirmadas y registro con mediciones antes y después.</p></article>
+          <article><h3>Comparar mi PC</h3><p>Guarda diagnósticos en una base local y compara dos momentos sin atribuir causas sin evidencia.</p></article>
+          <article><h3>Informes</h3><p>Exporta informes PDF y HTML con métricas, evidencias, recomendaciones y limitaciones.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion" id="capturas">
+      <div class="contenedor">
+        <h2>Capturas reales</h2>
+        <p class="subtitulo">Tomadas de la aplicación instalada con el instalador publicado, con datos reales del equipo de pruebas.</p>
+        <div class="galeria">
+          <figure><img src="capturas/05_detalle_proceso.png" alt="Detalle de un proceso" loading="lazy"><figcaption>Detalle de un proceso</figcaption></figure>
+          <figure><img src="capturas/09_seguridad.png" alt="Centro de seguridad" loading="lazy"><figcaption>Centro de seguridad</figcaption></figure>
+          <figure><img src="capturas/11_script_lineas_attack.png" alt="Análisis de un script línea por línea con técnicas MITRE ATT&amp;CK" loading="lazy"><figcaption>Análisis de scripts con MITRE ATT&amp;CK</figcaption></figure>
+          <figure><img src="capturas/12_asistente_ia.png" alt="Asistente con IA local" loading="lazy"><figcaption>Asistente con IA local</figcaption></figure>
+          <figure><img src="capturas/07_optimizar.png" alt="Optimización supervisada" loading="lazy"><figcaption>Optimización supervisada</figcaption></figure>
+          <figure><img src="capturas/16_modo_claro.png" alt="Interfaz en modo claro" loading="lazy"><figcaption>Modo claro</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion alterna" id="requisitos">
+      <div class="contenedor angosto">
+        <h2>Requisitos de Windows</h2>
+        <div class="tabla-envoltura">
+          <table>
+            <thead><tr><th></th><th>Mínimo</th><th>Recomendado para la IA local</th></tr></thead>
+            <tbody>
+              <tr><th>Sistema operativo</th><td>Windows 10 (1809 o posterior) u 11, 64 bits</td><td>Windows 11 de 64 bits actualizado</td></tr>
+              <tr><th>Memoria RAM</th><td>4 GB</td><td>8 GB o más</td></tr>
+              <tr><th>Disco libre</th><td>200 MB</td><td>3 GB (incluye el modelo de IA)</td></tr>
+              <tr><th>Componentes</th><td>Microsoft Edge WebView2 (incluido en Windows 11)</td><td>Ollama</td></tr>
+              <tr><th>Permisos</th><td>Cuenta de usuario estándar; no requiere administrador</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="nota">No compatible con Windows de 32 bits, Windows 7/8, macOS ni Linux. Los entornos realmente probados figuran en la <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/pruebas/compatibilidad.md">matriz de compatibilidad</a>.</p>
+      </div>
+    </section>
+
+    <section class="seccion" id="descarga">
+      <div class="contenedor angosto">
+        <h2>Descarga</h2>
+        <div class="descarga">
+          <div>
+            <p class="descarga-nombre">ScriptLens-IA_0.1.1_x64-setup.exe</p>
+            <p class="nota">49,3 MB (51 701 506 bytes) · SHA-256:</p>
+            <code class="huella">8006D5301CE4868B038BC3E2E83A0448A12C53F19C56579947EF9C9E6E795ABF</code>
+          </div>
+          <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar instalador</a>
+        </div>
+        <ol class="pasos">
+          <li>Descarga el instalador desde este enlace o desde la <a href="https://github.com/JorgeGutho21/ScriptLens/releases/latest">página de la versión</a>.</li>
+          <li>Comprueba la huella en PowerShell: <code>Get-FileHash .\ScriptLens-IA_0.1.1_x64-setup.exe</code></li>
+          <li>Ábrelo y sigue el asistente: Siguiente → Acepto → Siguiente → Terminar.</li>
+        </ol>
+        <p class="nota">El instalador aún no tiene firma de código, por lo que Windows SmartScreen puede mostrar un aviso. Antes de continuar, comprueba que el archivo proviene de este repositorio y que la huella coincide. La <a href="docs/Guia_Instalacion_ScriptLens_IA.pdf">guía de instalación</a> explica cada pantalla.</p>
+      </div>
+    </section>
+
+    <section class="seccion alterna" id="documentos">
+      <div class="contenedor">
+        <h2>Documentos</h2>
+        <div class="tarjetas documentos">
+          <a href="docs/Guia_Instalacion_ScriptLens_IA.pdf"><h3>Guía de instalación</h3><p>Paso a paso para principiantes, con capturas reales del instalador. PDF.</p></a>
+          <a href="docs/Manual_Usuario_ScriptLens_IA.pdf"><h3>Manual de usuario</h3><p>Uso de cada módulo, preguntas frecuentes y solución de errores. PDF.</p></a>
+          <a href="docs/ExpoSoftware_2026_II_ScriptLens_IA.pdf"><h3>Informe ExpoSoftware 2026-II</h3><p>Problema, objetivos, metodología, resultados y conclusiones en normas APA. PDF.</p></a>
+          <a href="docs/Documentacion_Tecnica_ScriptLens_IA.pdf"><h3>Documentación técnica</h3><p>Arquitectura, motor de análisis, clasificador, seguridad y pruebas. PDF.</p></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor pie-interior">
+      <div>
+        <p><strong>ScriptLens IA</strong> · Desarrollado por Jorge Gutiérrez (<a href="https://github.com/JorgeGutho21">@JorgeGutho21</a>)</p>
+        <p>Universidad Popular del Cesar · ExpoSoftware 2026-II</p>
+      </div>
+      <nav aria-label="Avisos legales">
+        <a href="https://github.com/JorgeGutho21/ScriptLens">Código fuente</a>
+        <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/LICENSE">Licencia MIT</a>
+        <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/THIRD_PARTY_NOTICES.md">Avisos de terceros</a>
+        <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/PRIVACIDAD.md">Privacidad</a>
+        <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/SECURITY.md">Seguridad</a>
+      </nav>
+    </div>
+    <p class="contenedor legal">Windows, Microsoft Defender y WebView2 son marcas de Microsoft Corporation. MITRE ATT&amp;CK es una marca de The MITRE Corporation. Su mención es solo descriptiva.</p>
+  </footer>
+</body>
+</html>
