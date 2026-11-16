@@ -2,7 +2,15 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado semántico.
 
-## [0.1.0] — 2026-11-15 (sin publicar)
+## [0.1.1] — 2026-11-15
+
+### Cambiado
+- **Instalador:** barra lateral y encabezado rediseñados a partir del logotipo vectorial, con los créditos del autor, dibujados al tamaño exacto que el asistente usa a escala 125 % para que el texto se vea nítido.
+- **Documentación:** informe ExpoSoftware reorganizado en orden APA; guía de instalación con las siete pantallas reales del asistente; instrucciones corregidas según los botones reales («Siguiente» en la carpeta de instalación).
+
+El motor y la interfaz no cambian respecto a 0.1.0, salvo el número de versión.
+
+## [0.1.0] — 2026-11-15
 
 ### Añadido
 - **Monitoreo:** CPU total y por núcleo, RAM, paginación, disco, red y tiempo encendido con psutil; diagnóstico de consumo sostenido.

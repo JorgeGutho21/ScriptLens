@@ -29,7 +29,7 @@ ScriptLens **no** funciona en Windows de 32 bits, Windows 7 u 8, macOS ni Linux.
 2. En la barra de direcciones (la parte superior, donde se escriben las páginas) escriba `github.com/JorgeGutho21/ScriptLens` y pulse **Enter**.
 3. Compruebe que arriba a la izquierda aparece **JorgeGutho21 / ScriptLens**. Si el nombre es distinto, cierre la página: no es la oficial.
 
-Figura: docs/instalacion/capturas/01_repositorio.png | Página oficial del repositorio en GitHub | Arriba a la izquierda se lee JorgeGutho21 / ScriptLens. En la columna derecha, el apartado Releases muestra «ScriptLens IA v0.1.0» con la etiqueta Latest.
+Figura: docs/instalacion/capturas/01_repositorio.png | Página oficial del repositorio en GitHub | Arriba a la izquierda se lee JorgeGutho21 / ScriptLens. En la columna derecha, el apartado Releases muestra «ScriptLens IA v0.1.1» con la etiqueta Latest.
 
 
 ## 2.2 Encontrar la versión publicada
@@ -38,7 +38,7 @@ Figura: docs/instalacion/capturas/01_repositorio.png | Página oficial del repos
 2. Se abre la página de versiones. Use la más reciente que tenga la etiqueta verde **Latest**: es la versión estable.
 3. Baje hasta el apartado **Assets** (archivos). Si está cerrado, pulse la palabra **Assets** para desplegarlo.
 
-Figura: docs/instalacion/capturas/02_releases.png | Página de la versión v0.1.0 | La etiqueta verde Latest indica la versión estable. Más abajo están las notas de la versión y el apartado Assets.
+Figura: docs/instalacion/capturas/02_releases.png | Página de la versión v0.1.1 | La etiqueta verde Latest indica la versión estable. Más abajo están las notas de la versión y el apartado Assets.
 
 
 ## 2.3 Descargar el instalador correcto
@@ -49,12 +49,12 @@ Tabla: Archivos que debe descargar
 
 | Archivo | Qué es |
 |---|---|
-| `ScriptLens-IA_0.1.0_x64-setup.exe` | El instalador para Windows de 64 bits |
-| `ScriptLens-IA_0.1.0_x64-setup.exe.sha256` | La huella digital del instalador, para comprobar que no fue alterado |
+| `ScriptLens-IA_0.1.1_x64-setup.exe` | El instalador para Windows de 64 bits |
+| `ScriptLens-IA_0.1.1_x64-setup.exe.sha256` | La huella digital del instalador, para comprobar que no fue alterado |
 
 Los archivos «Source code (zip)» y «Source code (tar.gz)» son el código fuente para programadores: **no** los necesita.
 
-Figura: docs/instalacion/capturas/03_assets.png | Apartado Assets de la versión v0.1.0 | Los dos primeros archivos son los que debe descargar. Junto a cada uno, GitHub muestra el comienzo de su huella SHA-256 (sha256:111397cf…).
+Figura: docs/instalacion/capturas/03_assets.png | Apartado Assets de la versión v0.1.1 | Los dos primeros archivos son los que debe descargar. Junto a cada uno, GitHub muestra el comienzo de su huella SHA-256 (sha256:8006d530…).
 
 Pulse el nombre de cada archivo. El navegador lo guarda en la carpeta **Descargas**. Si el navegador pregunta si desea conservar el archivo, elija **Conservar**.
 
@@ -72,7 +72,7 @@ Para comprobar la huella:
 3. Copie y pegue este comando y pulse **Enter**:
 
 ```
-Get-FileHash .\ScriptLens-IA_0.1.0_x64-setup.exe -Algorithm SHA256
+Get-FileHash .\ScriptLens-IA_0.1.1_x64-setup.exe -Algorithm SHA256
 ```
 
 4. Abra el archivo `.sha256` con el Bloc de notas (clic derecho → **Abrir con** → **Bloc de notas**).
@@ -82,26 +82,41 @@ Si no coinciden, **no abra el instalador**: bórrelo y descárguelo de nuevo des
 
 ## 2.5 Abrir el instalador
 
-Haga doble clic en `ScriptLens-IA_0.1.0_x64-setup.exe`.
+Haga doble clic en `ScriptLens-IA_0.1.1_x64-setup.exe`.
 
 Como el instalador no tiene una firma de código comercial (un certificado de pago), Windows SmartScreen puede mostrar el aviso «Windows protegió su PC». Ese aviso es una protección útil y no debe ignorarse de forma automática. Continúe **solo si** se cumplen las dos condiciones del apartado 2.4: lo descargó de la página oficial y la huella coincide. En ese caso pulse **Más información** y después **Ejecutar de todas formas**. Si tiene cualquier duda, no continúe y consulte a alguien de confianza.
 
 ## 2.6 Seguir el asistente de instalación
 
-El instalador tiene la identidad de ScriptLens IA y está en español. Sus pantallas aparecen en este orden:
+El instalador tiene la identidad de ScriptLens IA y está en español. Sus pantallas aparecen en el orden siguiente; todas las capturas se tomaron del instalador real, con la identidad gráfica de la versión 0.1.1, en Windows 11 a escala 125 %. La pantalla «Ya está instalado» muestra el número de la versión que ya tenga en su equipo (en la captura, 0.1.0).
 
-Figura: docs/capturas/00_instalador_bienvenida.png | Pantalla 1 del instalador: bienvenida | Captura real del instalador de la versión 0.1.0. Pulse **Siguiente**.
+**Paso 1. Bienvenida.** Recomienda cerrar las demás aplicaciones. Pulse **Siguiente**.
 
-1. **Bienvenida.** Recomienda cerrar otras aplicaciones. Pulse **Siguiente**.
-2. **Acuerdo de licencia.** Muestra la licencia MIT de ScriptLens IA. Léala y pulse **Acepto**.
-3. **Ya está instalado** (solo si había una versión anterior). Elija desinstalar antes de instalar o instalar encima, y pulse **Siguiente**. Su historial se conserva en ambos casos.
-4. **Carpeta de instalación.** Propone `C:\Users\<su usuario>\AppData\Local\ScriptLens IA`. No hace falta cambiarla: es una carpeta de su usuario y por eso no se piden permisos de administrador. Pulse **Instalar**.
-5. **Instalando.** Copia los archivos (entre 10 y 20 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Pulse **Siguiente** cuando termine.
-6. **Finalización.** Dos casillas: «Crear acceso directo en el escritorio» y «Ejecutar ScriptLens IA». Márquelas si lo desea y pulse **Terminar**.
+Figura: docs/instalacion/capturas/10_instalador_bienvenida.png | Pantalla de bienvenida del instalador | A la izquierda, la identidad del programa y del autor; a la derecha, las instrucciones. El botón Siguiente avanza.
+
+**Paso 2. Acuerdo de licencia.** Muestra la licencia MIT de ScriptLens IA. Léala y pulse **Acepto**.
+
+Figura: docs/instalacion/capturas/11_instalador_licencia.png | Pantalla del acuerdo de licencia | El texto completo de la licencia MIT se puede desplazar. Al pie se lee el aviso de derechos de autor.
+
+**Paso 3. Ya está instalado** (solo aparece si ScriptLens IA ya estaba en el equipo). Con la misma versión ofrece «Añadir o reinstalar componentes» o «Desinstalar ScriptLens IA»; con una versión anterior ofrece desinstalarla antes o instalar encima. Deje la opción marcada y pulse **Siguiente**. Su historial y sus informes se conservan.
+
+Figura: docs/instalacion/capturas/12_instalador_ya_instalado.png | Pantalla de mantenimiento cuando el programa ya está instalado | La primera opción, marcada por defecto, reinstala el programa sin borrar los datos.
+
+**Paso 4. Elegir lugar de instalación.** Propone `C:\Users\<su usuario>\AppData\Local\ScriptLens IA` y muestra el espacio requerido (unos 162 MB). No hace falta cambiarla: es una carpeta de su usuario y por eso Windows no pide permisos de administrador. Pulse **Siguiente**; la instalación empieza de inmediato.
+
+Figura: docs/instalacion/capturas/13_instalador_carpeta.png | Pantalla de elección de la carpeta de instalación | En la captura, la parte «Usuario» de la ruta es el nombre de la cuenta del equipo de pruebas; en su equipo aparecerá el suyo.
+
+**Paso 5. Instalando.** Copia los archivos (entre 10 y 20 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Cuando la barra se completa aparece «Instalación Completada»; pulse **Siguiente**.
+
+Figura: docs/instalacion/capturas/14_instalador_instalando.png | Pantalla de progreso durante la copia de archivos | La línea superior indica el archivo que se está copiando. «Ver detalles» muestra la lista completa.
+
+Figura: docs/instalacion/capturas/15_instalador_completado.png | Pantalla de instalación completada | La barra llena y la palabra Completado indican que la copia terminó sin errores.
+
+**Paso 6. Finalización.** Dos casillas marcadas por defecto: «Ejecutar ScriptLens IA» y «Crear acceso directo en el escritorio». Desmarque la que no desee y pulse **Terminar**.
+
+Figura: docs/instalacion/capturas/16_instalador_finalizar.png | Pantalla final del asistente | Si deja marcada la primera casilla, ScriptLens IA se abre al pulsar Terminar.
 
 El instalador no instala servicios, no cambia la configuración de seguridad de Windows y no se ejecuta en segundo plano después de terminar.
-
-Nota sobre las capturas: esta guía incluye la captura real de la primera pantalla. Las demás pantallas se describen a partir del script del instalador generado por Tauri (`installer.nsi`), sin imágenes inventadas. Para capturarlas todas, el autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador <ruta del instalador>` y recorrer el instalador: el script guarda una imagen de cada pantalla.
 
 ## 2.7 Localizar y abrir ScriptLens
 
@@ -145,10 +160,10 @@ ScriptLens no es un antivirus: explica lo que mide y nunca califica un programa 
 Para usuarios que prefieren escribir comandos. Abra **PowerShell** desde el menú Inicio (no hace falta «Ejecutar como administrador»). Copie cada bloque, péguelo con clic derecho y pulse **Enter**. Las líneas que empiezan con `#` son comentarios: no hacen nada.
 
 ```
-# 1. Ir a la carpeta Descargas y descargar los dos archivos de la versión v0.1.0
+# 1. Ir a la carpeta Descargas y descargar los dos archivos de la versión v0.1.1
 cd $HOME\Downloads
-$base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0"
-$f = "ScriptLens-IA_0.1.0_x64-setup.exe"
+$base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1"
+$f = "ScriptLens-IA_0.1.1_x64-setup.exe"
 Invoke-WebRequest "$base/$f" -OutFile $f
 Invoke-WebRequest "$base/$f.sha256" -OutFile "$f.sha256"
 ```
@@ -157,7 +172,7 @@ Resultado esperado: no aparece ningún mensaje; los dos archivos quedan en Desca
 
 ```
 # 2. Comparar la huella
-$f = "ScriptLens-IA_0.1.0_x64-setup.exe"
+$f = "ScriptLens-IA_0.1.1_x64-setup.exe"
 $esperado = (Get-Content "$f.sha256").Split(" ")[0]
 $real = (Get-FileHash $f -Algorithm SHA256).Hash
 if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale" }
@@ -167,10 +182,10 @@ Resultado esperado: la palabra `Coincide`.
 
 ```
 # 3. Abrir el instalador gráfico
-Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe"
+Start-Process ".\ScriptLens-IA_0.1.1_x64-setup.exe"
 ```
 
-Si prefiere instalar sin ventanas, use `Start-Process ".\ScriptLens-IA_0.1.0_x64-setup.exe" -ArgumentList "/S" -Wait`. La instalación tarda entre 10 y 20 segundos y crea el acceso directo en el menú Inicio.
+Si prefiere instalar sin ventanas, use `Start-Process ".\ScriptLens-IA_0.1.1_x64-setup.exe" -ArgumentList "/S" -Wait`. La instalación tarda entre 10 y 20 segundos y crea el acceso directo en el menú Inicio.
 
 Esta guía nunca le pedirá ejecutar un script descargado directamente de Internet (por ejemplo, comandos con `iex` o `Invoke-Expression`). Si encuentra instrucciones así en otra página, no las use.
 
@@ -184,15 +199,15 @@ En **Símbolo del sistema** (menú Inicio → escriba `cmd`):
 
 ```
 cd %USERPROFILE%\Downloads
-set BASE=https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.0
-set F=ScriptLens-IA_0.1.0_x64-setup.exe
+set BASE=https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1
+set F=ScriptLens-IA_0.1.1_x64-setup.exe
 curl -L -O %BASE%/%F%
 curl -L -O %BASE%/%F%.sha256
 certutil -hashfile %F% SHA256
 type %F%.sha256
 ```
 
-Compare la huella que muestra `certutil` con la del archivo `.sha256`. Si coinciden: `start ScriptLens-IA_0.1.0_x64-setup.exe`.
+Compare la huella que muestra `certutil` con la del archivo `.sha256`. Si coinciden: `start ScriptLens-IA_0.1.1_x64-setup.exe`.
 
 ## 4.2 Compilar desde el código fuente
 
