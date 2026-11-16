@@ -1,6 +1,6 @@
 # Estado del desarrollo — ScriptLens IA
 
-Última actualización: 2026-11-15 · Rama: `feat/desarrollo-integral` · PR [#1](https://github.com/JorgeGutho21/ScriptLens/pull/1) fusionado en `main` (`d376dbb`) · Release vigente [v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1) · Último commit: ver `git log -1`.
+Última actualización: 2026-11-15 · Rama de trabajo: `main` (las ramas de cada cambio se fusionan mediante pull request) · Release vigente [v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1) · Último commit: ver `git log -1`.
 
 ## Fases
 
@@ -19,6 +19,7 @@
 | 11 | Revisión de cierre: defectos P1, OneDrive, asistente, diálogos, identidad del instalador, guía de instalación, compatibilidad | ✅ |
 | 12 | Publicación de v0.1.0 y capturas reales de GitHub en la guía | ✅ |
 | 13 | Informe ExpoSoftware en APA, identidad gráfica del instalador, capturas del asistente y versión v0.1.1 | ✅ |
+| 14 | Página de presentación en GitHub Pages y auditoría de identidad pública | ✅ |
 
 ## Verificación final (2026-11-15)
 
@@ -48,11 +49,17 @@
 - La guía de instalación incluye las capturas reales de la página del repositorio, de la versión y de sus archivos (Assets).
 - El autor fusionó el PR #5 en `main` (`6a3120e`), con el mismo árbol desde el que se construyó el instalador de 0.1.1. Release `v0.1.1` publicada sobre `6a3120e` como *Latest*; v0.1.0 sigue disponible. Se descargaron ambos archivos desde la URL pública y la huella coincide (`8006D530…795ABF`, 51 701 506 bytes). Las capturas de GitHub de la guía muestran ya v0.1.1.
 
+## Identidad pública (2026-11-15)
+
+- Se revisaron el código, la configuración, los metadatos del instalador, los documentos DOCX y PPTX, las notas de las releases y la descripción del repositorio: no contienen marcas ni firmas promocionales de herramientas de desarrollo. Las menciones a IA corresponden a la función de IA local de ScriptLens (Ollama), que se conserva.
+- Los commits nuevos usan la identidad Git del autor (`Jorge Gutiérrez`, correo `noreply` de GitHub) sin firmas automáticas. El historial de commits y sus coautorías no se modifican.
+
 ## Estado en GitHub (2026-11-15)
 
 | Elemento | Estado |
 |---|---|
-| Rama `main` | Contiene todo el desarrollo (PR #1 a #5 fusionados); CI en verde en cada commit |
+| Rama `main` | Contiene todo el desarrollo (PR #1 a #6 fusionados); CI en verde en cada commit |
+| Página de presentación | [jorgegutho21.github.io/ScriptLens](https://jorgegutho21.github.io/ScriptLens/), publicada por el flujo «Página de presentación» (`.github/workflows/pages.yml`) a partir de `site/`, las capturas y los PDF |
 | Release | [v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1), *Latest*, instalador y `.sha256` verificados por descarga pública; [v0.1.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0) conservada |
 | Actualizaciones | La API `releases/latest`, que consulta «Buscar actualizaciones», devuelve `v0.1.1` |
 | Flujo «Instalador de Windows» | Ejecutado sobre `main` (`1d7bfd6`) en un equipo limpio de GitHub: pruebas, compilación e instalador generados con éxito; el artefacto contiene `ScriptLens-IA_0.1.0_x64-setup.exe` (51 522 853 bytes) y su `.sha256` coherente. El tamaño difiere del instalador publicado porque la compilación no es reproducible bit a bit; el publicado es el verificado en el equipo de pruebas |
@@ -66,7 +73,7 @@
 ## Reanudar (PowerShell, en `C:\Users\Usuario\Documents\ScriptLens`)
 
 ```powershell
-git switch feat/desarrollo-integral
+git switch main; git pull
 .\.venv\Scripts\python -m pytest -p no:warnings -q
 .\.venv\Scripts\python docs\academico\generar_documentos.py; .\docs\academico\exportar_pdf.ps1
 .\scripts\construir_instalador.ps1            # o -OmitirMotor si solo cambió la interfaz
