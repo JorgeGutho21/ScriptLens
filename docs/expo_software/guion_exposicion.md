@@ -1,6 +1,6 @@
 # ScriptLens IA — Material para ExpoSoftware 2026-II
 
-Autor: Jorge Gutiérrez (@JorgeGutho21) · Universidad Popular del Cesar · Docente: Oswaldo Rueda Carreño (confirmar grafía oficial)
+Autor: Jorge Gutiérrez (@JorgeGutho21) · Universidad Popular del Cesar · Docente: Oswaldo Rueda Carreño
 
 ## 1. Resumen ejecutivo
 

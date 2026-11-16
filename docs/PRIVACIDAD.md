@@ -1,6 +1,6 @@
 # Política de privacidad de ScriptLens IA
 
-Versión 0.1.0 · 15 de noviembre de 2026
+Versión 0.1.1 · 15 de noviembre de 2026
 
 ## Principio
 

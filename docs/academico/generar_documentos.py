@@ -253,12 +253,20 @@ class Builder:
         cols = max(len(r) for r in rows)
         t = d.add_table(rows=len(rows), cols=cols)
         t.alignment = WD_TABLE_ALIGNMENT.CENTER
+        for i, row in enumerate(t.rows):
+            tr_pr = row._tr.get_or_add_trPr()
+            cant = OxmlElement("w:cantSplit")
+            tr_pr.append(cant)
+            if i == 0:  # el encabezado se repite si la tabla continúa en otra página
+                hdr = OxmlElement("w:tblHeader")
+                tr_pr.append(hdr)
         for i, r in enumerate(rows):
             for j in range(cols):
                 c = t.cell(i, j)
                 c.text = ""
                 cp = c.paragraphs[0]
-                fmt(cp, 1.0, indent=False, before=2, after=2)
+                # Mantener la tabla unida a su título y sin filas partidas entre páginas.
+                fmt(cp, 1.0, indent=False, before=2, after=2, keep=(i < len(rows) - 1 and len(rows) <= 18))
                 add_inline(cp, r[j] if j < len(r) else "", size=10.5, base_bold=(i == 0))
                 edges = {}
                 if i == 0:
@@ -281,7 +289,12 @@ class Builder:
         p = d.add_paragraph()
         fmt(p, 1.0, indent=False, align=WD_ALIGN_PARAGRAPH.CENTER, keep=bool(note))
         img = ROOT / path
-        p.add_run().add_picture(str(img), width=Cm(15.5))
+        # Las ventanas pequeñas (p. ej. el instalador) se imprimen a 11 cm: legibles y dos por página
+        from PIL import Image
+
+        with Image.open(img) as im:
+            ancho = Cm(11) if im.width < 800 else Cm(15.5)
+        p.add_run().add_picture(str(img), width=ancho)
         if note:
             p = d.add_paragraph()
             fmt(p, self.sp, indent=False)

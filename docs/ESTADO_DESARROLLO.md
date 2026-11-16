@@ -1,6 +1,6 @@
 # Estado del desarrollo — ScriptLens IA
 
-Última actualización: 2026-11-15 · Rama: `feat/desarrollo-integral` · PR [#1](https://github.com/JorgeGutho21/ScriptLens/pull/1) fusionado en `main` (`d376dbb`) · Release [v0.1.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.0) publicada · Último commit: ver `git log -1`.
+Última actualización: 2026-11-15 · Rama: `feat/desarrollo-integral` · PR [#1](https://github.com/JorgeGutho21/ScriptLens/pull/1) fusionado en `main` (`d376dbb`) · Release vigente [v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1) · Último commit: ver `git log -1`.
 
 ## Fases
 
@@ -18,12 +18,14 @@
 | 10 | Documentación APA 7, manual, material de exposición, pull request | ✅ |
 | 11 | Revisión de cierre: defectos P1, OneDrive, asistente, diálogos, identidad del instalador, guía de instalación, compatibilidad | ✅ |
 | 12 | Publicación de v0.1.0 y capturas reales de GitHub en la guía | ✅ |
+| 13 | Informe ExpoSoftware en APA, identidad gráfica del instalador, capturas del asistente y versión v0.1.1 | ✅ |
 
 ## Verificación final (2026-11-15)
 
 - 135 pruebas de pytest aprobadas (14 archivos); compilación de la interfaz con tipos y `cargo check` correctos.
 - Los dos defectos P1 del PR están corregidos, con pruebas de regresión, y verificados en la aplicación instalada.
-- Instalador final: `build\release\ScriptLens-IA_0.1.0_x64-setup.exe` (51 678 985 bytes), SHA-256 `111397CF7D8164943D79F99488F3B868603A4CA32053D116D8B522AC37B6D13A`. No se versiona en Git; se regenera con `scripts\construir_instalador.ps1`.
+- Instalador vigente: `build\release\ScriptLens-IA_0.1.1_x64-setup.exe` (51 701 506 bytes), SHA-256 `8006D5301CE4868B038BC3E2E83A0448A12C53F19C56579947EF9C9E6E795ABF`. No se versiona en Git; se regenera con `scripts\construir_instalador.ps1`. El de v0.1.0 (51 678 985 bytes, `111397CF…B6D13A`) sigue publicado en su versión.
+- v0.1.1 (2026-11-15): 135 pruebas aprobadas; actualización silenciosa desde 0.1.0 correcta (versión instalada y entrada de desinstalación 0.1.1, datos conservados); la aplicación abre, el pie muestra v0.1.1 y el motor escucha solo en 127.0.0.1.
 - Ciclo del instalador final en Windows 11 (sesión sin elevación): instalación y actualización silenciosas, apertura desde el menú Inicio, motor solo en 127.0.0.1, instancia única, cierre normal y forzado sin huérfanos, desinstalación conservando historial e informes, reinstalación. Detalle en `docs/pruebas/compatibilidad.md`.
 
 ## Entregables
@@ -31,13 +33,13 @@
 | Documento | Ruta |
 |---|---|
 | README (página de instalación) | `README.md` |
-| Guía de instalación para principiantes (13 págs.) | `docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx/.pdf` |
+| Guía de instalación para principiantes (19 págs.) | `docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx/.pdf` |
 | Manual de usuario (20 págs.) | `docs/manual_usuario/Manual_Usuario_ScriptLens_IA.docx/.pdf` |
 | Documentación técnica (50 págs.) | `docs/desarrollo/Documentacion_Tecnica_ScriptLens_IA.docx/.pdf` |
-| Informe ExpoSoftware (20 págs.) | `docs/expo_software/ExpoSoftware_2026_II_ScriptLens_IA.docx/.pdf` |
+| Informe ExpoSoftware (28 págs.) | `docs/expo_software/ExpoSoftware_2026_II_ScriptLens_IA.docx/.pdf` |
 | Presentación (12 diapositivas) y guion | `docs/expo_software/ScriptLens_IA_ExpoSoftware.pptx/.pdf`, `guion_exposicion.md` |
 | Matriz de compatibilidad | `docs/pruebas/compatibilidad.md` |
-| Notas de la versión | `docs/release/v0.1.0.md` |
+| Notas de la versión | `docs/release/v0.1.1.md` (vigente), `docs/release/v0.1.0.md` |
 
 ## Publicación (2026-11-15)
 
@@ -58,9 +60,7 @@
 
 ## Pendientes
 
-1. **Capturas de las pantallas 2–6 del instalador:** no se autorizó controlarlo. El autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.1.0_x64-setup.exe` y recorrerlo; el script guarda cada pantalla.
-2. **Confirmar la grafía oficial del docente:** los documentos originales dicen «Oswaldo Rueda Carreño»; no se encontró una fuente institucional pública que lo confirme.
-3. Opcionales: firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
+1. Opcionales: firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
 
 ## Reanudar (PowerShell, en `C:\Users\Usuario\Documents\ScriptLens`)
 

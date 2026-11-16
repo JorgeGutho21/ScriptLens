@@ -2,7 +2,7 @@
 
 Esta guía distingue siempre **dónde** se realiza cada paso: navegador, Explorador de archivos, PowerShell o terminal del editor.
 
-> **Estado de publicación:** hasta que se vuelvan a ejecutar las pruebas y se reconstruya el instalador tras las correcciones de seguridad, esta guía describe el procedimiento previsto. No interprete la existencia de un instalador anterior como una versión segura o definitivamente aprobada.
+> La guía completa para principiantes, con todas las capturas, está en [Guia_Instalacion_ScriptLens_IA.pdf](Guia_Instalacion_ScriptLens_IA.pdf).
 
 ## Requisitos mínimos
 
@@ -16,15 +16,21 @@ Esta guía distingue siempre **dónde** se realiza cada paso: navegador, Explora
 
 ## Método A — Instalación gráfica (para principiantes)
 
-1. **Navegador:** entre a <https://github.com/JorgeGutho21/ScriptLens> y pulse **Releases** en la columna derecha. Si aún no hay una versión estable publicada, deténgase aquí: todavía no hay instalador público validado.
-2. **Navegador:** en la versión más reciente, en «Assets», descargue `ScriptLens-IA_0.1.0_x64-setup.exe` y `ScriptLens-IA_0.1.0_x64-setup.exe.sha256`.
+1. **Navegador:** entre a <https://github.com/JorgeGutho21/ScriptLens> y pulse **Releases** en la columna derecha. Abra la versión marcada como **Latest**.
+2. **Navegador:** en la versión más reciente, en «Assets», descargue `ScriptLens-IA_0.1.1_x64-setup.exe` y `ScriptLens-IA_0.1.1_x64-setup.exe.sha256`.
 3. **Verifique la procedencia:** la página debe pertenecer a `github.com/JorgeGutho21/ScriptLens`. Para comprobar que el archivo no fue alterado, siga el Método B (pasos 1–3).
 4. **Explorador de archivos:** haga doble clic en el instalador. Se abrirá el asistente de instalación (Figura 1).
 
-   ![Figura 1. Primera pantalla del instalador de ScriptLens IA](../capturas/00_instalador_bienvenida.png)
+   ![Figura 1. Pantalla de bienvenida del instalador de ScriptLens IA](capturas/10_instalador_bienvenida.png)
 
 5. Si aparece **«Windows protegió su PC»** (SmartScreen), no omita automáticamente la advertencia. Compruebe el origen, la versión, el hash y las notas de seguridad. Un archivo sin firma puede generar avisos, pero también es necesario investigar cualquier alerta de seguridad real.
-6. Pulse **Siguiente**, acepte la licencia MIT y pulse **Instalar**. La instalación se realiza en `%LOCALAPPDATA%\ScriptLens IA` y crea accesos en el menú Inicio y el escritorio.
+6. Pulse **Siguiente**, lea la licencia MIT y pulse **Acepto** (Figura 2). Si el programa ya estaba instalado, deje marcada «Añadir o reinstalar componentes» y pulse **Siguiente**. En la carpeta propuesta, `%LOCALAPPDATA%\ScriptLens IA`, pulse **Siguiente** (Figura 3): la instalación empieza y, al terminar, pulse **Siguiente** y después **Terminar** (Figura 4). Se crea un acceso en el menú Inicio y, si deja marcada la casilla, otro en el escritorio.
+
+   ![Figura 2. Acuerdo de licencia](capturas/11_instalador_licencia.png)
+
+   ![Figura 3. Elección de la carpeta de instalación](capturas/13_instalador_carpeta.png)
+
+   ![Figura 4. Pantalla final del asistente](capturas/16_instalador_finalizar.png)
 7. Abra **ScriptLens IA** desde el menú Inicio. La primera vez el motor puede tardar hasta 30 segundos en iniciar mientras Microsoft Defender examina los archivos nuevos; las siguientes veces tarda unos 10 segundos.
 8. Se mostrará el asistente de primera ejecución (ocho pasos) que explica qué analiza la aplicación y qué datos permanecen en el equipo.
 
@@ -36,13 +42,13 @@ Todos los comandos se ejecutan en **Windows PowerShell** o **PowerShell 7**, sin
 2. Calcule el hash del instalador:
 
    ```powershell
-   Get-FileHash ".\ScriptLens-IA_0.1.0_x64-setup.exe" -Algorithm SHA256
+   Get-FileHash ".\ScriptLens-IA_0.1.1_x64-setup.exe" -Algorithm SHA256
    ```
 
 3. Compárelo con el valor publicado y ejecute el instalador solo si coincide:
 
    ```powershell
-   $archivo  = "ScriptLens-IA_0.1.0_x64-setup.exe"
+   $archivo  = "ScriptLens-IA_0.1.1_x64-setup.exe"
    $esperado = (Get-Content "$archivo.sha256").Split(" ")[0]
    $real     = (Get-FileHash $archivo -Algorithm SHA256).Hash
    if ($real -eq $esperado) { Start-Process ".\$archivo" } else { Write-Error "El hash no coincide: no instale este archivo." }
