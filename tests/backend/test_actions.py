@@ -98,7 +98,7 @@ def test_expired_token(ctx, monkeypatch):
     child, ident = spawn()
     try:
         prep = c.post("/api/actions/process/prepare", json={"accion": "finalizar", **ident}).json()
-        monkeypatch.setattr(operations, "TOKEN_TTL", 0.0)
+        monkeypatch.setattr(operations, "TOKEN_TTL", -1.0)  # siempre caducado, aunque el reloj no avance
         assert c.post("/api/actions/execute", json={"token": prep["token"]}).status_code == 409
         assert child.poll() is None
     finally:
