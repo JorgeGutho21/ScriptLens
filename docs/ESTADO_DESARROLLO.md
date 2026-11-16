@@ -58,9 +58,7 @@
 
 ## Pendientes
 
-1. **Capturas de las pantallas 2–6 del instalador:** no se autorizó controlarlo. El autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.1.0_x64-setup.exe` y recorrerlo; el script guarda cada pantalla.
-2. **Confirmar la grafía oficial del docente:** los documentos originales dicen «Oswaldo Rueda Carreño»; no se encontró una fuente institucional pública que lo confirme.
-3. Opcionales: firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
+1. Opcionales: firma de código del instalador, pruebas en Windows 10 y en equipos con 4 GB de RAM, segundo etiquetador para el kappa de Cohen, pruebas de usabilidad con principiantes.
 
 ## Reanudar (PowerShell, en `C:\Users\Usuario\Documents\ScriptLens`)
 

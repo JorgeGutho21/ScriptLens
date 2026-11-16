@@ -503,7 +503,3 @@ Figura: docs/capturas/18_inicio_automatico.png | Inicio automático | Interrupto
 Figura: docs/capturas/10_analisis_script.png | Resultados independientes del análisis de un script | Clasificación estadística, reglas y severidad contextual.
 
 Figura: docs/capturas/20_ajustes_privacidad.png | Ajustes de accesibilidad y privacidad | Muestra las rutas reales de datos e informes.
-
-## Anexo C. Observación sobre la portada
-
-En los documentos de la entrega académica original el docente figura como «Oswaldo Rueda Carreño». Se recomienda confirmar la grafía oficial con la universidad antes de la publicación definitiva.

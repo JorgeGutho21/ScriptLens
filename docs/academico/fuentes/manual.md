@@ -29,7 +29,7 @@ Descargue ScriptLens solo desde esa dirección.
 
 1. Abra la carpeta Descargas y haga doble clic en el instalador.
 2. Windows puede mostrar «Windows protegió su PC» porque el instalador no tiene una firma de código comercial. Ese aviso es una protección útil: continúe solo si descargó el archivo de la página oficial y la huella coincide. En ese caso pulse **Más información** y luego **Ejecutar de todas formas**. Si tiene dudas, no continúe.
-3. Siga los pasos del asistente de instalación: **Siguiente**, acepte la licencia e **Instalar**.
+3. Siga los pasos del asistente de instalación: **Siguiente**, **Acepto** (licencia), **Siguiente** en la carpeta propuesta y, al final, **Terminar**. La guía de instalación muestra cada pantalla.
 
 Figura: docs/capturas/00_instalador_bienvenida.png | Primera pantalla del instalador | No necesita ser administrador del equipo para instalar ScriptLens.
 

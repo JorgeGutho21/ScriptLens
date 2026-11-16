@@ -88,20 +88,35 @@ Como el instalador no tiene una firma de código comercial (un certificado de pa
 
 ## 2.6 Seguir el asistente de instalación
 
-El instalador tiene la identidad de ScriptLens IA y está en español. Sus pantallas aparecen en este orden:
+El instalador tiene la identidad de ScriptLens IA y está en español. Sus pantallas aparecen en el orden siguiente; todas las capturas se tomaron del instalador real de la versión 0.1.0 en Windows 11 a escala 125 %.
 
-Figura: docs/capturas/00_instalador_bienvenida.png | Pantalla 1 del instalador: bienvenida | Captura real del instalador de la versión 0.1.0. Pulse **Siguiente**.
+**Paso 1. Bienvenida.** Recomienda cerrar las demás aplicaciones. Pulse **Siguiente**.
 
-1. **Bienvenida.** Recomienda cerrar otras aplicaciones. Pulse **Siguiente**.
-2. **Acuerdo de licencia.** Muestra la licencia MIT de ScriptLens IA. Léala y pulse **Acepto**.
-3. **Ya está instalado** (solo si había una versión anterior). Elija desinstalar antes de instalar o instalar encima, y pulse **Siguiente**. Su historial se conserva en ambos casos.
-4. **Carpeta de instalación.** Propone `C:\Users\<su usuario>\AppData\Local\ScriptLens IA`. No hace falta cambiarla: es una carpeta de su usuario y por eso no se piden permisos de administrador. Pulse **Instalar**.
-5. **Instalando.** Copia los archivos (entre 10 y 20 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Pulse **Siguiente** cuando termine.
-6. **Finalización.** Dos casillas: «Crear acceso directo en el escritorio» y «Ejecutar ScriptLens IA». Márquelas si lo desea y pulse **Terminar**.
+Figura: docs/instalacion/capturas/10_instalador_bienvenida.png | Pantalla de bienvenida del instalador | A la izquierda, la identidad del programa y del autor; a la derecha, las instrucciones. El botón Siguiente avanza.
+
+**Paso 2. Acuerdo de licencia.** Muestra la licencia MIT de ScriptLens IA. Léala y pulse **Acepto**.
+
+Figura: docs/instalacion/capturas/11_instalador_licencia.png | Pantalla del acuerdo de licencia | El texto completo de la licencia MIT se puede desplazar. Al pie se lee el aviso de derechos de autor.
+
+**Paso 3. Ya está instalado** (solo aparece si ScriptLens IA ya estaba en el equipo). Con la misma versión ofrece «Añadir o reinstalar componentes» o «Desinstalar ScriptLens IA»; con una versión anterior ofrece desinstalarla antes o instalar encima. Deje la opción marcada y pulse **Siguiente**. Su historial y sus informes se conservan.
+
+Figura: docs/instalacion/capturas/12_instalador_ya_instalado.png | Pantalla de mantenimiento cuando el programa ya está instalado | La primera opción, marcada por defecto, reinstala el programa sin borrar los datos.
+
+**Paso 4. Elegir lugar de instalación.** Propone `C:\Users\<su usuario>\AppData\Local\ScriptLens IA` y muestra el espacio requerido (unos 162 MB). No hace falta cambiarla: es una carpeta de su usuario y por eso Windows no pide permisos de administrador. Pulse **Siguiente**; la instalación empieza de inmediato.
+
+Figura: docs/instalacion/capturas/13_instalador_carpeta.png | Pantalla de elección de la carpeta de instalación | En la captura, la parte «Usuario» de la ruta es el nombre de la cuenta del equipo de pruebas; en su equipo aparecerá el suyo.
+
+**Paso 5. Instalando.** Copia los archivos (entre 10 y 20 segundos). Si su Windows no tiene Microsoft Edge WebView2, el instalador lo descarga e instala en este paso; para eso necesita conexión a Internet. Cuando la barra se completa aparece «Instalación Completada»; pulse **Siguiente**.
+
+Figura: docs/instalacion/capturas/14_instalador_instalando.png | Pantalla de progreso durante la copia de archivos | La línea superior indica el archivo que se está copiando. «Ver detalles» muestra la lista completa.
+
+Figura: docs/instalacion/capturas/15_instalador_completado.png | Pantalla de instalación completada | La barra llena y la palabra Completado indican que la copia terminó sin errores.
+
+**Paso 6. Finalización.** Dos casillas marcadas por defecto: «Ejecutar ScriptLens IA» y «Crear acceso directo en el escritorio». Desmarque la que no desee y pulse **Terminar**.
+
+Figura: docs/instalacion/capturas/16_instalador_finalizar.png | Pantalla final del asistente | Si deja marcada la primera casilla, ScriptLens IA se abre al pulsar Terminar.
 
 El instalador no instala servicios, no cambia la configuración de seguridad de Windows y no se ejecuta en segundo plano después de terminar.
-
-Nota sobre las capturas: esta guía incluye la captura real de la primera pantalla. Las demás pantallas se describen a partir del script del instalador generado por Tauri (`installer.nsi`), sin imágenes inventadas. Para capturarlas todas, el autor puede ejecutar `.\scripts\capturar-instalador.ps1 -Instalador <ruta del instalador>` y recorrer el instalador: el script guarda una imagen de cada pantalla.
 
 ## 2.7 Localizar y abrir ScriptLens
 
