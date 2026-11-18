@@ -126,9 +126,9 @@ Kubernetes no aporta valor a una aplicación de escritorio en LAN; no se usa ni 
 | 18 | Con y sin Ollama; 10 preguntas; cancelación | ✅ | `test_works_without_ollama`, benchmark de 10 preguntas, `test_cancellation_stops_generation` |
 | 19 | Interfaz móvil/escritorio sin recortes, onboarding | ⚠️ PARCIAL | Escritorio revisado; vista del celular verificada solo por código (CSS adaptable), sin captura en un teléfono |
 | 20 | CI de Python, React/TS, Rust y seguridad remota | ✅ | GitHub Actions en verde en cada fase |
-| 21 | Instalador actualizado, sin administrador, datos conservados | ver §7 | |
-| 22 | Versión, SHA-256 y release solo si aprobada | ver §7 | |
-| 23 | README/Pages enlazan a la versión publicada | ver §7 | |
+| 21 | Instalador actualizado, sin administrador, datos conservados | ✅ | Instalación silenciosa por usuario en 9 s sobre la 0.1.1; base migrada al esquema 2 con los datos previos; motor solo en 127.0.0.1 |
+| 22 | Versión, SHA-256 y release solo si aprobada | ✅ | Release v0.2.0 publicada tras CI en verde; SHA-256 verificado en la descarga pública |
+| 23 | README/Pages enlazan a la versión publicada | ✅ | PR #10 |
 | 24 | Windows 10 y equipos de 4 GB | ❌ NO PROBADOS | Solo hay un equipo Windows 11 de 31,8 GB |
 | 25 | Demostración real con 2 PC y celular | ❌ SIMULADA | Procedimiento en `docs/guias/Conectar_y_supervisar_computadoras.md` |
 | 26 | Licencias y atribuciones, sin secretos en Git | ✅ | Licencias de referencias verificadas en GitHub; BAT del taller no se subieron |
@@ -142,3 +142,13 @@ Kubernetes no aporta valor a una aplicación de escritorio en LAN; no se usa ni 
 - Las rutas de la auditoría no se registraron en el commit de la fase 4 (la orden falló antes de ejecutarse) → corregido
   y cubierto con una prueba de rutas.
 - La pantalla de auditoría dejaba de consultar rápido justo después de pulsar el botón → espera un resultado posterior al clic.
+## 7. Publicación
+
+| Elemento | Resultado |
+| --- | --- |
+| PR #9 | Fusionado en `main` como `35055c0` con 7 comprobaciones en verde; árbol idéntico a la rama probada |
+| Release | `v0.2.0` (*Latest*) sobre `35055c0`; se conservan v0.1.0 y v0.1.1 |
+| Instalador | `ScriptLens-IA_0.2.0_x64-setup.exe`, 54 531 345 bytes |
+| SHA-256 | `FAE79D9D26BDE040E14E9F2504F304554FAF6A166DDA0F0F88B2EFE099813E2C` (comprobado tras descargarlo de forma anónima desde GitHub) |
+| Motor empaquetado | Probado por la LAN: vinculación, datos en vivo, 404 en operaciones prohibidas y 401 tras revocar; auditoría de 30 controles en 17,9 s |
+| GitHub Pages | Desplegado desde `main` con las secciones de uso, acceso remoto, preguntas frecuentes y capturas de la 0.2.0 |
