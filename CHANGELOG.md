@@ -10,6 +10,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 - README con accesos directos a la página, la descarga y la guía de instalación.
 
 ### Corregido
+- Las capturas 09 (seguridad), 12 (asistente), 15 (informes), 17 (acerca de) y 19 (informe PDF) mostraban el nombre real del equipo, una carpeta de OneDrive institucional y elementos de otro proyecto del autor. Se volvieron a tomar en una instancia aislada con nombres neutros y se regeneraron la guía, el manual, la documentación técnica, el informe ExpoSoftware y la presentación.
 - La página mostraba la huella SHA-256 de una versión anterior; ahora muestra la de la v0.2.0 (`FAE79D9D…3E2C`).
 
 ## [0.2.0] — 2026-11-18

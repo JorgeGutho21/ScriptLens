@@ -234,3 +234,13 @@
 | Página | `site/index.html`, `site/estilos.css`, `site/app.js` sin dependencias; imágenes WebP de `site/optimizar_capturas.py` (2,4 MB para 36 capturas en dos tamaños) |
 | Verificación | Sin desbordamiento horizontal a 320, 375, 768, 1024 y 1440 px; enlaces y anclas con `site/verificar_enlaces.py`; menú, pestañas por teclado, filtros y visor probados en el navegador; contraste AA medido |
 | Pendiente | Prueba con un celular y dos computadoras físicas (sin cambios respecto de la v0.2.0) |
+
+## Capturas sin datos personales · 2026-11-18
+
+| Campo | Detalle |
+|---|---|
+| Revisión | Se revisaron las 23 capturas anteriores a la v0.2.0. Cinco mostraban datos personales: nombre real del equipo (19), carpeta de OneDrive institucional (15, 17) y tareas y rutas de otro proyecto del autor (09, 12) |
+| Corrección | Se volvieron a tomar con `scripts/demo_capturas.py` (instancia aislada, nombre «PC-PRINCIPAL», datos en `.dev-data`). La 09 muestra la pestaña «Servicios», porque los hallazgos reales incluyen rutas personales; la 19 es la primera página de un informe real renderizada con la API de PDF de Windows |
+| Documentos | DOCX y PDF regenerados con `docs/academico/generar_documentos.py` y `exportar_pdf.ps1` (mismas páginas: 50, 28, 20 y 19); presentación regenerada y exportada a PDF. Se comprobó que ningún documento incluye ya las imágenes anteriores |
+| Límite | Las imágenes anteriores siguen en el historial de Git y en los archivos «Source code» de las releases v0.1.0, v0.1.1 y v0.2.0; no se reescribe el historial |
+

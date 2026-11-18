@@ -85,7 +85,7 @@ Las herramientas incluidas en Windows muestran cifras (porcentajes, identificado
   <img src="docs/capturas/33_asistente_modos.png" width="49%" alt="Asistente con respuesta inmediata e IA rápida">
 </p>
 
-Todas las capturas de [docs/capturas](docs/capturas) son reales y muestran datos del equipo de pruebas. Las numeradas del 23 al 34 son de la versión 0.2.0 y se obtuvieron con [scripts/demo_capturas.py](scripts/demo_capturas.py) y [scripts/capturar_navegador.py](scripts/capturar_navegador.py), que ejecutan instancias aisladas solo en `127.0.0.1`.
+Todas las capturas de [docs/capturas](docs/capturas) son reales y muestran datos del equipo de pruebas, sin rutas ni nombres personales. Las numeradas del 23 al 34, junto con 09, 12, 15, 17 y 19, son de la versión 0.2.0 y se obtuvieron con [scripts/demo_capturas.py](scripts/demo_capturas.py) y [scripts/capturar_navegador.py](scripts/capturar_navegador.py), que ejecutan instancias aisladas solo en `127.0.0.1`.
 
 ## Requisitos mínimos y sistemas compatibles
 
