@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import os
+import platform
 import socket
 import sys
 import threading
@@ -42,6 +43,7 @@ def _patch(name: str) -> None:
     for mod in (ni, rs, rv, fs):
         mod.device_name = lambda: name
     socket.gethostname = lambda: name  # nunca mostrar el nombre real del equipo en las capturas
+    platform.node = lambda: name
     rs.local_addresses = lambda: list(DEMO_IFACE)
 
 

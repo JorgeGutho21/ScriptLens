@@ -241,9 +241,9 @@ Tabla: Reglas de diagnóstico de rendimiento
 
 La auditoría es de solo lectura y se ejecuta únicamente cuando el usuario la solicita. Una sola invocación de PowerShell consulta Microsoft Defender, el Centro de seguridad, el firewall, las tareas programadas, los eventos del registro Sistema de los últimos siete días, las cuentas locales y el plan de energía; el inicio automático se lee del Registro, incluido el estado de `StartupApproved` que usa el Administrador de tareas, y los servicios se leen con psutil. Cada hallazgo responde a ocho preguntas: qué se encontró, dónde, por qué requiere revisión, qué evidencia existe, qué información falta, qué consecuencias podría tener, qué puede hacer el usuario y qué no se recomienda. Solo Microsoft Defender puede originar el estado «amenaza detectada».
 
-Figura: docs/capturas/09_seguridad.png | Centro de seguridad con hallazgos reales | En el equipo de desarrollo, la auditoría tardó entre 3,4 y 6,4 s sin privilegios de administrador.
+Figura: docs/capturas/09_seguridad.png | Centro de seguridad: servicios de terceros con su firma | En el equipo de desarrollo, la auditoría tardó entre 3,4 y 6,4 s sin privilegios de administrador. La captura muestra la pestaña «Servicios» para no publicar rutas personales que aparecen en los hallazgos.
 
-En el equipo de desarrollo se detectaron dos elementos que requieren revisión: la entrada de inicio «SoyMicrosoft», que ejecuta `C:\taller1\gestion.bat`, un archivo que ya no existe y cuyo nombre alude a Microsoft sin estar firmado por esta empresa; y la tarea «EcoAccess P3 - vigilante del bot», que ejecuta un script. Ninguno se calificó como malicioso.
+En el equipo de desarrollo se detectaron elementos que requieren revisión, entre ellos la entrada de inicio «SoyMicrosoft», creada por el material del taller de clase: ejecuta un archivo que ya no existe y su nombre alude a Microsoft sin estar firmado por esta empresa. También se marcaron tareas programadas de otro proyecto del autor que ejecutan scripts. Ninguno se calificó como malicioso.
 
 # Clasificación de scripts
 
@@ -279,7 +279,7 @@ Al integrarlo se encontró que la etiqueta `qwen3:4b` de Ollama corresponde a un
 
 Cada respuesta se verifica cifra por cifra contra los datos entregados. En una prueba real, ante la pregunta «¿Por qué mi computador está lento?», el modelo afirmó que dos programas ocupaban «más del 70 % de la RAM», una cifra ausente de los datos; el verificador la marcó y la interfaz mostró «Cifras no verificadas: 70». Si Ollama no está instalado o falla durante la respuesta, el asistente responde con plantillas a partir de los mismos datos.
 
-Figura: docs/capturas/12_asistente_ia.png | Asistente con respuestas verificadas | La respuesta sobre programas sospechosos cita los hallazgos reales de la auditoría y aclara que Defender no registró amenazas.
+Figura: docs/capturas/12_asistente_ia.png | Asistente con respuestas verificadas | Respuesta en modo IA rápida con Qwen3 1.7B en la GPU del equipo de pruebas; bajo cada respuesta se indican el modelo, los tiempos y la evidencia usada.
 
 # Sistema de acciones supervisadas
 
@@ -301,7 +301,7 @@ Figura: docs/capturas/13_comparar.png | Comparación de dos diagnósticos | Incl
 
 Los informes reúnen el resumen del sistema, las métricas del último minuto, los programas destacados, los hallazgos de seguridad, las evidencias, las recomendaciones, las acciones realizadas, la comparación opcional y las limitaciones. El HTML es autocontenido; el PDF se genera con reportlab y la fuente Segoe UI. Ambos incluyen el nombre del proyecto, el autor, el repositorio y una marca de agua con 5 % de opacidad que no afecta la lectura.
 
-Figura: docs/capturas/19_informe_pdf.png | Primera página de un informe PDF real | Informe generado desde la aplicación instalada el 14 de noviembre de 2026.
+Figura: docs/capturas/19_informe_pdf.png | Primera página de un informe PDF real | Informe de la versión 0.2.0 generado el 18 de noviembre de 2026 en una instancia aislada con el nombre de equipo neutro «PC-PRINCIPAL».
 
 # Historial de desarrollo
 

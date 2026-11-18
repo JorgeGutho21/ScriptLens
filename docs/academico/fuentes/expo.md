@@ -302,7 +302,7 @@ Yosifovich, P., Ionescu, A., Russinovich, M. E., & Solomon, D. A. (2017). *Windo
 
 ## Anexo A. Capturas del producto
 
-Figura: docs/capturas/09_seguridad.png | Centro de seguridad | Hallazgos reales del equipo de pruebas; ninguno se calificó como malicioso.
+Figura: docs/capturas/09_seguridad.png | Centro de seguridad | Estado de Defender y del firewall y servicios de terceros con su firma, en el equipo de pruebas.
 
 Figura: docs/capturas/10_analisis_script.png | Análisis de un script de demostración | El script contiene persistencia, ocultamiento y borrado; nunca se ejecutó.
 
