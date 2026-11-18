@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   ListTree,
   MonitorSmartphone,
+  Network,
   Moon,
   Settings,
   ShieldCheck,
@@ -57,7 +58,10 @@ export const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
   },
   {
     title: 'Conectar',
-    items: [{ id: 'remoto', label: 'Acceso remoto', icon: <MonitorSmartphone size={18} /> }],
+    items: [
+      { id: 'equipos', label: 'Mis computadoras', icon: <Network size={18} /> },
+      { id: 'remoto', label: 'Acceso remoto', icon: <MonitorSmartphone size={18} /> },
+    ],
   },
   {
     title: 'Herramientas',

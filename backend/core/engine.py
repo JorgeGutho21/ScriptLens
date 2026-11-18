@@ -34,6 +34,9 @@ class Engine:
         from backend.remote.service import RemoteService
 
         self.remote = RemoteService(self)
+        from backend.fleet.service import FleetService
+
+        self.fleet = FleetService(self)
         self._stop = threading.Event()
         self._threads: list[threading.Thread] = []
         self._info_cache: tuple[float, dict] | None = None
@@ -62,6 +65,7 @@ class Engine:
         ]
         for t in self._threads:
             t.start()
+        self.fleet.start()
 
     def _sample_processes(self) -> None:
         snaps = self.processes.sample()
@@ -71,6 +75,7 @@ class Engine:
         self._stop.set()
         self.signatures.stop()
         self.remote.shutdown()
+        self.fleet.stop()
 
     def _loop(self, fn, interval: float) -> None:
         while not self._stop.is_set():
