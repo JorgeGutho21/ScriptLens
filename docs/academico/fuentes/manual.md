@@ -123,7 +123,7 @@ Un programa no es peligroso solo porque no lo conozca, no tenga firma o use much
 
 Figura: docs/capturas/18_inicio_automatico.png | Programas que inician con Windows | Las entradas de todos los usuarios requieren permisos de administrador y no se pueden cambiar desde aquí.
 
-Figura: docs/capturas/09_seguridad.png | Hallazgos de seguridad | Cada hallazgo explica qué se encontró, dónde, por qué, qué puede hacer y qué no se recomienda.
+Figura: docs/capturas/09_seguridad.png | Centro de seguridad | Resumen de Defender y del firewall, y servicios de terceros con su firma. En la pestaña «Hallazgos», cada uno explica qué se encontró, dónde, por qué, qué puede hacer y qué no se recomienda.
 
 # 13. Cómo realizar acciones supervisadas
 
@@ -175,7 +175,7 @@ Puede borrar diagnósticos con el icono de papelera, o todos a la vez en **Ajust
 
 Abra **Acerca de** y pulse **Buscar actualizaciones**. ScriptLens consulta GitHub solo cuando usted lo pide, no envía datos de su equipo y nunca instala nada por sí mismo. Si hay una versión nueva, descárguela desde la página oficial e instálela encima de la actual.
 
-Figura: docs/capturas/17_acerca_de.png | Pantalla Acerca de en modo claro | Muestra la versión, el autor y el repositorio oficial.
+Figura: docs/capturas/17_acerca_de.png | Pantalla Acerca de | Muestra la información técnica y las carpetas donde se guardan los datos y los informes.
 
 # 18. Cómo solucionar errores
 
