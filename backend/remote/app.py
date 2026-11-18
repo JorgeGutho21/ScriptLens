@@ -35,6 +35,7 @@ ALLOWED_ROUTES = {
     ("GET", "/remote.css"),
     ("GET", "/icon.svg"),
     ("POST", "/remote/api/pair/request"),
+    ("POST", "/remote/api/invite/accept"),
     ("GET", "/remote/api/pair/status"),
     ("POST", "/remote/api/logout"),
     ("GET", "/remote/api/whoami"),
@@ -53,6 +54,11 @@ SECURITY_HEADERS = {
     "Cache-Control": "no-store",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
 }
+
+
+class InviteBody(BaseModel):
+    token: str = Field(min_length=20, max_length=100)
+    correo: str = Field(min_length=3, max_length=254)
 
 
 class PairBody(BaseModel):
@@ -128,6 +134,18 @@ def create_remote_app(service) -> FastAPI:
         resp.set_cookie(COOKIE, token, max_age=12 * 3600, httponly=True, secure=True, samesite="strict", path="/")
         return resp
 
+    @app.post("/remote/api/invite/accept")
+    def invite_accept(body: InviteBody, request: Request):
+        if not service.serving:
+            raise HTTPException(503, "El acceso remoto de la PC está apagado.")
+        try:
+            token, s = service.invites.accept(body.token, body.correo, request.client.host)
+        except PairingError as e:
+            raise HTTPException(e.status, e.message) from e
+        resp = JSONResponse({"estado": "autorizada", "equipo": views.device_name(), "horas": s["horas"]})
+        resp.set_cookie(COOKIE, token, max_age=s["horas"] * 3600, httponly=True, secure=True, samesite="strict", path="/")
+        return resp
+
     @app.post("/remote/api/logout")
     def logout(s: dict = Depends(session)):
         auth.revoke(s["id"])
@@ -138,7 +156,7 @@ def create_remote_app(service) -> FastAPI:
     # --- Consulta de datos ----------------------------------------------
     @app.get("/remote/api/whoami")
     def whoami(s: dict = Depends(session)):
-        return {"equipo": views.device_name(), "device_id": service.device_id, "sesion": {"nombre": s["nombre"], "tipo": s["tipo"], "caduca": s["expires_at"]}, "comparte": service.sharing(), "solo_lectura": True}
+        return {"equipo": views.device_name(), "device_id": service.device_id, "sesion": {"nombre": s["nombre"], "tipo": s["tipo"], "caduca": s["expires_at"], "invitacion": bool(s.get("correo"))}, "comparte": service.permissions(s), "solo_lectura": True}
 
     @app.get("/remote/api/overview")
     def overview(_: dict = Depends(session)):
@@ -149,18 +167,18 @@ def create_remote_app(service) -> FastAPI:
         return views.history(engine, seconds)
 
     @app.get("/remote/api/processes")
-    def processes(by: str = Query("cpu", pattern="^(cpu|memory)$"), limit: int = Query(8, ge=1, le=10), _: dict = Depends(session)):
-        if not service.sharing()["procesos"]:
+    def processes(by: str = Query("cpu", pattern="^(cpu|memory)$"), limit: int = Query(8, ge=1, le=10), s: dict = Depends(session)):
+        if not service.permissions(s)["procesos"]:
             raise HTTPException(403, "El propietario de la PC no comparte la lista de procesos.")
         return views.processes(engine, by, limit)
 
     @app.get("/remote/api/findings")
-    def findings(_: dict = Depends(session)):
-        return views.findings(engine, service.sharing()["seguridad"])
+    def findings(s: dict = Depends(session)):
+        return views.findings(engine, service.permissions(s)["seguridad"])
 
     @app.get("/remote/api/stats")
-    def stats(period: str = Query("dia", pattern="^(dia|semana)$"), _: dict = Depends(session)):
-        if not service.sharing()["estadisticas"]:
+    def stats(period: str = Query("dia", pattern="^(dia|semana)$"), s: dict = Depends(session)):
+        if not service.permissions(s)["estadisticas"]:
             raise HTTPException(403, "El propietario de la PC no comparte las estadísticas.")
         st = getattr(engine, "stats", None)
         if st is None:

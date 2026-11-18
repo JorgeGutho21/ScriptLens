@@ -12,7 +12,7 @@ import threading
 import time
 from pathlib import Path
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 _MIGRATIONS = {
     1: """
@@ -133,6 +133,25 @@ _MIGRATIONS = {
     );
     CREATE INDEX IF NOT EXISTS idx_fleet_samples_ts ON fleet_samples(ts);
     CREATE INDEX IF NOT EXISTS idx_app_usage_ts ON app_usage(ts);
+    """,
+    # v0.3: invitaciones por correo con enlace de un solo uso y permisos por sesión.
+    3: """
+    ALTER TABLE remote_sessions ADD COLUMN permisos TEXT;
+    ALTER TABLE remote_sessions ADD COLUMN correo TEXT;
+    CREATE TABLE IF NOT EXISTS remote_invites (
+        id TEXT PRIMARY KEY,
+        correo TEXT NOT NULL,
+        token_hash TEXT NOT NULL UNIQUE,
+        permisos TEXT NOT NULL,
+        horas INTEGER NOT NULL,
+        created_at REAL NOT NULL,
+        expires_at REAL NOT NULL,
+        used_at REAL,
+        used_ip TEXT,
+        session_id TEXT,
+        revoked_at REAL,
+        fails INTEGER NOT NULL DEFAULT 0
+    );
     """,
 }
 

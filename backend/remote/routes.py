@@ -21,6 +21,15 @@ class DecideReq(BaseModel):
     autorizar: bool
 
 
+class InviteReq(BaseModel):
+    correo: str = Field(min_length=3, max_length=254)
+    procesos: bool = True
+    seguridad: bool = False
+    estadisticas: bool = True
+    validez_min: int = Field(default=60, ge=5, le=1440)
+    horas: int = Field(default=2, ge=1, le=12)
+
+
 class SharingReq(BaseModel):
     procesos: bool
     seguridad: bool
@@ -68,6 +77,21 @@ def router(engine) -> APIRouter:
         if not svc.auth.revoke(sid):
             raise HTTPException(404, "Dispositivo no encontrado")
         return {"revocada": sid}
+
+    @r.post("/invites")
+    def invite(req: InviteReq):
+        perms = {"procesos": req.procesos, "seguridad": req.seguridad, "estadisticas": req.estadisticas}
+        return guarded(svc.invite, req.correo, perms, req.validez_min, req.horas)
+
+    @r.delete("/invites/{iid}")
+    def revoke_invite(iid: str):
+        if not svc.invites.revoke(iid):
+            raise HTTPException(404, "Invitación no encontrada")
+        return {"revocada": iid}
+
+    @r.get("/outbox")
+    def outbox():
+        return {"modo": svc.mailer.mode, "correos": svc.mailer.list()}
 
     @r.post("/sharing")
     def sharing(req: SharingReq):

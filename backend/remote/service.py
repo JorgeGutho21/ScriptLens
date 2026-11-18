@@ -17,6 +17,8 @@ import uuid
 
 from . import tls
 from .auth import RemoteAuth
+from .invites import Invites, effective_permissions
+from .mailer import build_message, create_mailer
 from .netinfo import device_name, local_addresses
 
 
@@ -29,8 +31,16 @@ class RemoteService:
         self.engine = engine
         self.db = engine.db
         self.auth = RemoteAuth(engine.db)
+        self.invites = Invites(engine.db, self.auth)
         self.allow_loopback = allow_loopback  # solo pruebas automáticas
         self.folder = engine.settings.data_dir / "remote"
+        try:
+            self.mailer = create_mailer(self.folder / "correo_salida")
+        except ValueError as e:  # SMTP mal configurado: se cae al modo local y se informa
+            self.mailer = create_mailer(self.folder / "correo_salida", env={})
+            self.mail_error = str(e)
+        else:
+            self.mail_error = None
         self.device_id = self._device_id()
         self.fingerprint: str | None = None
         self.state = "apagado"
@@ -92,7 +102,31 @@ class RemoteService:
             "sesiones": self.auth.sessions(),
             "comparte": self.sharing(),
             "activo_desde": self.started_at,
+            "invitaciones": self.invites.list(),
+            "correo": {"modo": self.mailer.mode, "error": self.mail_error, "salida": str(self.mailer.folder) if self.mailer.mode == "local" else None},
         }
+
+    def permissions(self, session: dict) -> dict:
+        return effective_permissions(self.sharing(), session)
+
+    # --- Invitaciones por correo -----------------------------------------------
+    def invite(self, correo: str, permisos: dict, validez_min: int, horas: int) -> dict:
+        if not self.serving or not self.addresses:
+            raise RemoteError("Active el acceso remoto antes de invitar: el enlace apunta a la dirección local de esta PC.")
+        inv, token = self.invites.create(correo, permisos, validez_min, horas)
+        enlace = f"https://{self.addresses[0]}:{self.port}/#invitacion={token}"
+        msg = build_message(to=inv["correo"], sender=self.mailer.sender, equipo=device_name(), enlace=enlace,
+                            huella=self.fingerprint or "", caduca=inv["caduca"], horas=inv["horas"], permisos=inv["permisos"])
+        try:
+            envio = self.mailer.send(msg, inv["id"])
+        except Exception as e:  # noqa: BLE001 — el envío falló: la invitación no debe quedar utilizable
+            self.invites.revoke(inv["id"])
+            raise RemoteError(f"No se pudo enviar el correo ({type(e).__name__}). La invitación se anuló.") from e
+        out = {"invitacion": self.invites.get(inv["id"]), "envio": envio}
+        if envio["modo"] == "local":
+            # Solo en modo de prueba: el propietario necesita el enlace para entregarlo él mismo.
+            out["enlace"] = enlace
+        return out
 
     # --- Transiciones ---------------------------------------------------------
     def enable(self, port: int | None = None, addresses: list[str] | None = None) -> dict:
@@ -127,6 +161,7 @@ class RemoteService:
         with self._lock:
             self._stop()
             revoked = self.auth.revoke_all()
+            self.invites.revoke_all()
             self.state, self.started_at = "apagado", None
         st = self.status()
         st["sesiones_revocadas"] = revoked
