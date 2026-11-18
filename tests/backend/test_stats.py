@@ -45,8 +45,11 @@ def test_minute_and_hour_aggregation(env):
     assert s["tiempos"]["registrado_s"] == 180
 
 
-def test_active_time_and_session_are_distinct(env):
+def test_active_time_and_session_are_distinct(env, monkeypatch):
     e, st, now, state = env
+    # El reloj de la prueba es fijo; el arranque se fija relativo a él para no depender de cuándo arrancó la máquina.
+    info = {**e.info(), "boot_time": now[0] - 3600}
+    monkeypatch.setattr(e, "info", lambda: info)
     m = int(now[0] // 60 * 60)
     for _ in range(3):  # 30 s activos en este minuto
         st.tick()
@@ -58,7 +61,7 @@ def test_active_time_and_session_are_distinct(env):
     minute(st, m)
     t = st.summary("dia")["tiempos"]
     assert t["activo_s"] == 30 and t["sesion_s"] == 60 and t["inactivo_s"] == 30
-    assert t["desde_ultimo_arranque_s"] > 0  # lo informa Windows, independiente de los anteriores
+    assert t["desde_ultimo_arranque_s"] == 3600 + 60  # lo informa Windows, independiente de los anteriores
 
 
 def test_app_tracking_requires_consent_and_stores_only_names(env):
