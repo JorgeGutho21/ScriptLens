@@ -12,19 +12,33 @@
 </p>
 
 <p align="center">
-  <a href="https://jorgegutho21.github.io/ScriptLens/"><img src="https://img.shields.io/badge/Abrir%20la%20página%20oficial-1765CC?style=for-the-badge" alt="Abrir la página oficial de ScriptLens IA" height="36"></a>
+  <a href="https://jorgegutho21.github.io/ScriptLens/"><img src="https://img.shields.io/badge/Entrar%20a%20la%20página%20oficial-1765CC?style=for-the-badge" alt="Entrar a la página oficial" height="34"></a>
+  <a href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe"><img src="https://img.shields.io/badge/Descargar%20ScriptLens%20IA%20v0.2.0-2B68D8?style=for-the-badge&logo=windows&logoColor=white" alt="Descargar ScriptLens IA v0.2.0 para Windows" height="34"></a>
+  <a href="https://jorgegutho21.github.io/ScriptLens/#instalacion"><img src="https://img.shields.io/badge/Guía%20de%20instalación-102036?style=for-the-badge" alt="Guía de instalación" height="34"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe">Descargar para Windows</a> ·
-  <a href="https://jorgegutho21.github.io/ScriptLens/#guia">Guía de instalación</a>
+<p align="center">Windows 10 y 11 de 64 bits · 52 MB · sin permisos de administrador · SHA-256 <code>FAE79D9D…813E2C</code></p>
+
+![Panel general de ScriptLens IA v0.2.0](docs/capturas/34_panel_general.png)
+
+## Novedades de la versión 0.2.0
+
+- **Acceso remoto de solo lectura:** mira tu PC desde el celular u otra laptop de la misma red, con código temporal, aprobación en la PC y revocación.
+- **Mis computadoras:** una PC con ScriptLens supervisa a otras que la autorizaron: estado, CPU, RAM, disco, historial de 24 horas y comparación.
+- **Estadísticas de mi PC:** tiempo encendido, sesión y uso activo; consumo por hora, día y semana; informes HTML y CSV.
+- **Auditoría de 30 controles:** revisión de solo lectura de la configuración de seguridad de Windows, con evidencia y recomendación.
+- **Asistente más rápido:** respuestas inmediatas con los datos medidos y modos de IA rápida y detallada ([mediciones](docs/pruebas/asistente/RESULTADOS.md)).
+
+<p>
+  <img src="docs/capturas/27_celular_en_vivo.png" width="24%" alt="Vista remota en el celular con CPU, RAM y tiempo encendido">
+  <img src="docs/capturas/30_mis_computadoras.png" width="74%" alt="Consola Mis computadoras con tres equipos y su comparación">
 </p>
 
-![Panel general de ScriptLens IA](docs/capturas/02_panel_general.png)
+Las capturas de acceso remoto y de varias computadoras se tomaron en un solo equipo (dirección `127.0.0.1`, instancias aisladas de ScriptLens y vista del celular en un navegador con tamaño de teléfono). La prueba con un celular y dos computadoras físicas está pendiente; ver [ESTADO_v0.2.md](docs/desarrollo/ESTADO_v0.2.md).
 
 ## Contenido
 
-[Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Acceso remoto y varias PC](#ver-la-pc-desde-el-celular-y-supervisar-varias-computadoras) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Licencias](#licencias) · [Soporte](#soporte)
+[Novedades](#novedades-de-la-versión-020) · [Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Acceso remoto y varias PC](#ver-la-pc-desde-el-celular-y-supervisar-varias-computadoras) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Licencias](#licencias) · [Soporte](#soporte)
 
 ## Qué es
 
@@ -68,10 +82,10 @@ Las herramientas incluidas en Windows muestran cifras (porcentajes, identificado
   <img src="docs/capturas/05_detalle_proceso.png" width="49%" alt="Detalle de un proceso">
   <img src="docs/capturas/09_seguridad.png" width="49%" alt="Centro de seguridad">
   <img src="docs/capturas/10_analisis_script.png" width="49%" alt="Análisis de un script">
-  <img src="docs/capturas/12_asistente_ia.png" width="49%" alt="Asistente con IA local">
+  <img src="docs/capturas/33_asistente_modos.png" width="49%" alt="Asistente con respuesta inmediata e IA rápida">
 </p>
 
-Todas las capturas de [docs/capturas](docs/capturas) son de la aplicación instalada con el instalador de este repositorio, con datos reales del equipo de pruebas.
+Todas las capturas de [docs/capturas](docs/capturas) son reales y muestran datos del equipo de pruebas. Las numeradas del 23 al 34 son de la versión 0.2.0 y se obtuvieron con [scripts/demo_capturas.py](scripts/demo_capturas.py) y [scripts/capturar_navegador.py](scripts/capturar_navegador.py), que ejecutan instancias aisladas solo en `127.0.0.1`.
 
 ## Requisitos mínimos y sistemas compatibles
 
@@ -87,7 +101,7 @@ Todas las capturas de [docs/capturas](docs/capturas) son de la aplicación insta
 
 ## Descarga e instalación
 
-Sigue la [guía de instalación en la página oficial](https://jorgegutho21.github.io/ScriptLens/#guia). La guía también está disponible en [Guia_Instalacion_ScriptLens_IA.pdf](docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf) (versión editable: [.docx](docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx); versión Markdown: [INSTALACION.md](docs/instalacion/INSTALACION.md)).
+Sigue la [guía de instalación en la página oficial](https://jorgegutho21.github.io/ScriptLens/#instalacion). La guía también está disponible en [Guia_Instalacion_ScriptLens_IA.pdf](docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf) (versión editable: [.docx](docs/instalacion/Guia_Instalacion_ScriptLens_IA.docx); versión Markdown: [INSTALACION.md](docs/instalacion/INSTALACION.md)).
 
 Archivos de cada versión publicada en [Releases](https://github.com/JorgeGutho21/ScriptLens/releases):
 
@@ -98,7 +112,7 @@ Archivos de cada versión publicada en [Releases](https://github.com/JorgeGutho2
 
 ### Método A — Instalador gráfico (recomendado)
 
-1. Abra la [guía de instalación](https://jorgegutho21.github.io/ScriptLens/#guia) o la [release v0.2.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.2.0) y descargue los dos archivos de la tabla anterior.
+1. Abra la [guía de instalación](https://jorgegutho21.github.io/ScriptLens/#instalacion) o la [release v0.2.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.2.0) y descargue los dos archivos de la tabla anterior.
 2. Compruebe la huella SHA-256 (Método B, paso 2). Si no coincide, **no abra el archivo**.
 3. Haga doble clic en el instalador. El instalador no tiene firma de código comercial, por lo que Windows SmartScreen puede mostrar «Windows protegió su PC». Continúe solo si descargó el archivo de la página oficial y la huella coincide: pulse **Más información** → **Ejecutar de todas formas**. Si tiene dudas, no continúe.
 4. Siga el asistente (**Siguiente** → **Instalar** → **Finalizar**). La instalación es solo para su usuario y no pide permisos de administrador.
@@ -187,11 +201,11 @@ Se usa la variante *Instruct* porque `qwen3:4b` razona antes de responder: en el
 
 Guía completa paso a paso: [Conectar y supervisar computadoras con ScriptLens IA](docs/guias/Conectar_y_supervisar_computadoras.md).
 
-1. En la PC: **Acceso remoto → Activar acceso remoto**. Aparecen la dirección (por ejemplo `https://192.168.1.25:8765/`), un código de 6 cifras y la huella del certificado.
+1. En la PC: **Conectar → Acceso remoto → Activar acceso remoto**. Aparecen la dirección (por ejemplo `https://192.168.1.25:8765/`), un código de 6 cifras y la huella del certificado.
 2. Si Windows pregunta, permita el acceso solo en **Redes privadas**.
 3. En el celular, conectado a la **misma red** (o al hotspot del celular), abra la dirección, acepte el aviso del certificado tras comparar la huella y escriba el código.
 4. En la PC pulse **Autorizar** si la frase de verificación coincide. El celular verá CPU, RAM, discos, red, procesos y hallazgos en vivo, **sin poder cambiar nada**.
-5. Para supervisar otra PC: active el acceso remoto en ella y, en la PC principal, use **Mis computadoras → Vincular computadora** con su IP y su código.
+5. Para supervisar otra PC: active el acceso remoto en ella y, en la PC principal, use **Conectar → Mis computadoras → Vincular computadora** con su IP y su código.
 6. **Desactivar y desconectar todo** revoca de inmediato a todos los dispositivos.
 
 Muchas redes universitarias aíslan a los dispositivos entre sí; en ese caso use el punto de acceso (hotspot) de un celular.

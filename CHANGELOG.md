@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado semántico.
 
+## [Sin publicar]
+
+### Documentación
+- Página oficial rediseñada: portada con la PC y el celular, explorador de los 10 módulos, recorrido del acceso remoto en 9 pasos, sección «Mis computadoras», estadísticas, auditoría y asistente, galería por categorías con visor ampliable, instalación en 10 pasos y navegación móvil. Imágenes WebP optimizadas (`site/img`).
+- 13 capturas nuevas de la versión 0.2.0 (acceso remoto, vista del celular, Mis computadoras, equipo desconectado, modos del asistente y panel general) y captura actualizada de la release v0.2.0.
+- README con accesos directos a la página, la descarga y la guía de instalación.
+
+### Corregido
+- La página mostraba la huella SHA-256 de una versión anterior; ahora muestra la de la v0.2.0 (`FAE79D9D…3E2C`).
+
 ## [0.2.0] — 2026-11-18
 
 ### Añadido

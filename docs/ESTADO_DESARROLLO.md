@@ -1,6 +1,8 @@
 # Estado del desarrollo — ScriptLens IA
 
-Última actualización: 2026-11-15 · Rama de trabajo: `main` (las ramas de cada cambio se fusionan mediante pull request) · Release vigente [v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1) · Último commit: ver `git log -1`.
+Última actualización: 2026-11-18 · Rama de trabajo: `main` (las ramas de cada cambio se fusionan mediante pull request) · Release vigente [v0.2.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.2.0) · Último commit: ver `git log -1`.
+
+El detalle de la versión 0.2.0 (acceso remoto, Mis computadoras, estadísticas, 30 controles y asistente) está en [desarrollo/ESTADO_v0.2.md](desarrollo/ESTADO_v0.2.md).
 
 ## Fases
 
@@ -20,8 +22,10 @@
 | 12 | Publicación de v0.1.0 y capturas reales de GitHub en la guía | ✅ |
 | 13 | Informe ExpoSoftware en APA, identidad gráfica del instalador, capturas del asistente y versión v0.1.1 | ✅ |
 | 14 | Página de presentación en GitHub Pages y auditoría de identidad pública | ✅ |
+| 15 | Versión 0.2.0: acceso remoto, Mis computadoras, estadísticas, 30 controles y asistente rápido | ✅ (falta la prueba con hardware físico) |
+| 16 | Rediseño de la página oficial con capturas reales de la 0.2.0 | ✅ |
 
-## Verificación final (2026-11-15)
+## Verificación de la versión 0.1.1 (2026-11-15)
 
 - 135 pruebas de pytest aprobadas (14 archivos); compilación de la interfaz con tipos y `cargo check` correctos.
 - Los dos defectos P1 del PR están corregidos, con pruebas de regresión, y verificados en la aplicación instalada.
