@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   Bot,
   FileCode2,
   FileText,
@@ -46,6 +47,7 @@ export const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
     items: [
       { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} /> },
       { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} /> },
+      { id: 'estadisticas', label: 'Estadísticas', icon: <BarChart3 size={18} /> },
       { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} /> },
     ],
   },

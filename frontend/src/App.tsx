@@ -17,6 +17,7 @@ import { ReportsPage } from './pages/Reports'
 import { AboutPage, SettingsPage } from './pages/Other'
 import { RemotePage } from './pages/Remote'
 import { FleetPage } from './pages/Fleet'
+import { StatsPage } from './pages/Stats'
 
 const TITLES: Record<PageId, string> = {
   panel: 'Panel general',
@@ -90,6 +91,7 @@ function Main() {
           {page === 'acerca' && <AboutPage />}
           {page === 'remoto' && <RemotePage />}
           {page === 'equipos' && <FleetPage />}
+          {page === 'estadisticas' && <StatsPage />}
           </ErrorBoundary>
         </main>
         <Footer />

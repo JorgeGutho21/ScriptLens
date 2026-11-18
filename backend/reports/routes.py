@@ -54,7 +54,7 @@ def router(engine) -> APIRouter:
         """Abre un informe generado por ScriptLens con el programa predeterminado."""
         folder = reports_dir().resolve()
         path = (folder / name).resolve()
-        if path.parent != folder or not path.name.startswith("ScriptLens_Informe_") or path.suffix not in (".pdf", ".html") or not path.exists():
+        if path.parent != folder or not path.name.startswith("ScriptLens_Informe_") or path.suffix not in (".pdf", ".html", ".csv") or not path.exists():
             raise HTTPException(404, "Informe no encontrado")
         os.startfile(path)  # noqa: S606 — archivo propio y validado
         return {"abierto": path.name}
