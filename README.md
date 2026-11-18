@@ -63,6 +63,8 @@ Las herramientas incluidas en Windows muestran cifras (porcentajes, identificado
 | Experiencia | Modo sencillo y avanzado, tema claro y oscuro, tamaño de texto, reducción de animaciones, glosario contextual y asistente de primera ejecución |
 
 <p>
+  <img src="docs/capturas/22_auditoria_30_controles.png" width="49%" alt="Auditoría de 30 controles">
+  <img src="docs/capturas/21_estadisticas.png" width="49%" alt="Estadísticas de mi PC">
   <img src="docs/capturas/05_detalle_proceso.png" width="49%" alt="Detalle de un proceso">
   <img src="docs/capturas/09_seguridad.png" width="49%" alt="Centro de seguridad">
   <img src="docs/capturas/10_analisis_script.png" width="49%" alt="Análisis de un script">
