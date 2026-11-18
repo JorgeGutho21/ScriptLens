@@ -1,0 +1,185 @@
+{
+ "etiqueta": "despues_auto",
+ "fecha": "2026-11-18 01:38",
+ "equipo": {
+  "so": "Windows 11 10.0.26200",
+  "procesador": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel"
+ },
+ "ollama": {
+  "instalado_o_activo": true,
+  "version": "0.40.16",
+  "modelos": [
+   "qwen3:1.7b",
+   "qwen3:4b-instruct",
+   "qwen3:4b",
+   "lfm3-vl:latest"
+  ]
+ },
+ "modelo": "",
+ "modo": "auto",
+ "memoria_ollama": [
+  {
+   "modelo": "qwen3:1.7b",
+   "ram_total_mb": 1628,
+   "vram_mb": 1628
+  }
+ ],
+ "mediana": {
+  "primer_fragmento_s": 2.01,
+  "total_s": 3.47,
+  "tokens_por_s": 51.1
+ },
+ "verificadas": 10,
+ "resultados": [
+  {
+   "pregunta": "¿Por qué mi computador está lento?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 17.55,
+   "total_s": 19.37,
+   "fragmentos": 90,
+   "tokens_generados": 91,
+   "tokens_por_s": 50.0,
+   "carga_modelo_s": 12.76,
+   "tokens_prompt": 1406,
+   "cifras": 2,
+   "no_verificadas": [],
+   "respuesta": "Tu computador está lento debido a la carga de procesos en el sistema. El promedio de CPU es del 23-32% en algunos programas como Chrome y PowerShell, lo que puede causar un retraso. También hay un uso moderado de la RAM, pero no hay señales de problemas graves. Para mejorar el rendimiento, puedes optimizar procesos o cerrar aplicaciones que no se usan."
+  },
+  {
+   "pregunta": "¿Qué programa consume más RAM?",
+   "modo": "inmediata",
+   "modelo": null,
+   "primer_fragmento_s": 0.02,
+   "total_s": 0.03,
+   "fragmentos": 1,
+   "tokens_generados": null,
+   "tokens_por_s": null,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 6,
+   "no_verificadas": [],
+   "respuesta": "La memoria RAM está al 63.8 %: 20.3 GB en uso de 31.8 GB. Los programas que más memoria usan son: chrome.exe (4486.8 MB), claude.exe (4094.2 MB), svchost.exe (1710.6 MB). Respuesta inmediata con los datos medidos ahora. Si quiere una explicación o recomendaciones, pregunte por ejemplo «¿por qué?» o «¿cómo lo mejoro?»."
+  },
+  {
+   "pregunta": "¿Qué proceso consume más CPU?",
+   "modo": "inmediata",
+   "modelo": null,
+   "primer_fragmento_s": 0.02,
+   "total_s": 0.02,
+   "fragmentos": 1,
+   "tokens_generados": null,
+   "tokens_por_s": null,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 5,
+   "no_verificadas": [],
+   "respuesta": "El procesador está ahora al 99.8 % (promedio del último minuto: 68.4 %). Los programas que más procesador usan son: chrome.exe (24.1 %), claude.exe (6.3 %), llama-server.exe (10.1 %). Respuesta inmediata con los datos medidos ahora. Si quiere una explicación o recomendaciones, pregunte por ejemplo «¿por qué?» o «¿cómo lo mejoro?»."
+  },
+  {
+   "pregunta": "¿Qué tareas se ejecutan en segundo plano?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 1.51,
+   "total_s": 2.53,
+   "fragmentos": 55,
+   "tokens_generados": 56,
+   "tokens_por_s": 54.9,
+   "carga_modelo_s": 0.02,
+   "tokens_prompt": 793,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "En segundo plano se ejecutan programas como Chrome, Claude, svchost, Edge y .NET, que son necesarios para el funcionamiento del sistema. Estos programas consumen recursos de CPU y RAM, pero no interfieren directamente con tu uso del equipo."
+  },
+  {
+   "pregunta": "¿Qué aplicaciones puedo cerrar sin afectar Windows?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.01,
+   "total_s": 3.47,
+   "fragmentos": 69,
+   "tokens_generados": 70,
+   "tokens_por_s": 51.1,
+   "carga_modelo_s": 0.04,
+   "tokens_prompt": 971,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Puedes cerrar las aplicaciones abiertas que no son componentes de Windows, como **devenv.exe**, **chrome.exe** o **Spotify.exe**, ya que no afectan a Windows. Estas aplicaciones están en modo de ventana abierta y su cierre no cambiará el funcionamiento del sistema."
+  },
+  {
+   "pregunta": "¿Qué procesos requieren revisión?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.49,
+   "total_s": 4.08,
+   "fragmentos": 80,
+   "tokens_generados": 81,
+   "tokens_por_s": 52.3,
+   "carga_modelo_s": 0.03,
+   "tokens_prompt": 959,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los procesos que requieren revisión son:  \n- \"SoyMicrosoft\" en el Registro  \n- \"EcoAccessLimpiarCarpetaVacia\" en el Registro  \n- \"EcoAccess P3 - vigilante del bot\" en el Programador de tareas  \n\nEstos procesos se encuentran marcados con \"requiere_revision\" en el diagnóstico."
+  },
+  {
+   "pregunta": "¿Hay programas sospechosos?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.63,
+   "total_s": 3.68,
+   "fragmentos": 55,
+   "tokens_generados": 56,
+   "tokens_por_s": 53.8,
+   "carga_modelo_s": 0.05,
+   "tokens_prompt": 959,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los datos muestran que no hay programas sospechosos detectados por Microsoft Defender. Sin embargo, se detecta una entrada de inicio automático que requiere revisión. Puedes analizar los scripts en \"Analizar scripts\" para verificar su seguridad."
+  },
+  {
+   "pregunta": "¿Qué programas inician con Windows?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 1.13,
+   "total_s": 2.17,
+   "fragmentos": 44,
+   "tokens_generados": 45,
+   "tokens_por_s": 44.6,
+   "carga_modelo_s": 0.06,
+   "tokens_prompt": 688,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los programas que inician con Windows son:  \n- **SoyMicrosoft**  \n- **EcoAccessLimpiarCarpetaVacia**  \n\nEstos se inician automáticamente cuando se arranca el sistema."
+  },
+  {
+   "pregunta": "¿Cómo puedo mejorar el rendimiento?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 6.76,
+   "total_s": 9.46,
+   "fragmentos": 152,
+   "tokens_generados": 153,
+   "tokens_por_s": 46.1,
+   "carga_modelo_s": 0.93,
+   "tokens_prompt": 1374,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Para mejorar el rendimiento, puedes:  \n- **Optimizar el uso de memoria**: Asegúrate de que no estén abiertas aplicaciones innecesarias.  \n- **Reducir carga en el CPU**: Cierra programas que consuman alto por CPU, como Chrome o Llama Server.  \n- **Ajustar el uso de RAM**: Si la RAM está saturada, cierra aplicaciones que no son esenciales.  \n- **Verificar procesos no esenciales**: Usa la función \"Pr"
+  },
+  {
+   "pregunta": "¿Qué está ocupando el disco?",
+   "modo": "inmediata",
+   "modelo": null,
+   "primer_fragmento_s": 0.0,
+   "total_s": 0.0,
+   "fragmentos": 1,
+   "tokens_generados": null,
+   "tokens_por_s": null,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 3,
+   "no_verificadas": [],
+   "respuesta": "Almacenamiento: unidad C:\\ con 32.2 % usado y 645.5 GB libres; unidad D:\\ con 0.0 % usado y 475.6 GB libres. Respuesta inmediata con los datos medidos ahora. Si quiere una explicación o recomendaciones, pregunte por ejemplo «¿por qué?» o «¿cómo lo mejoro?»."
+  }
+ ]
+}

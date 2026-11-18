@@ -30,6 +30,7 @@ INTENTS: list[tuple[str, list[str], list[str]]] = [
     ("ram", [r"\bram\b", r"memoria"], ["procesos_top_memoria", "resumen_rendimiento"]),
     ("cpu", [r"\bcpu\b", r"procesador"], ["procesos_top_cpu", "resumen_rendimiento"]),
     ("disco", [r"disco", r"almacenamiento", r"espacio", r"ocupando", r"lleno"], ["disco"]),
+    ("uptime", [r"(lleva|esta|estuvo) (encendid|prendid)", r"tiempo encendid", r"desde cuando", r"uptime", r"cuanto tiempo lleva"], ["resumen_rendimiento"]),
     ("lento", [r"lent", r"rendimiento", r"mejorar", r"acelerar", r"rapido", r"optimiz", r"se traba", r"congel"], ["resumen_rendimiento", "procesos_top_memoria", "procesos_top_cpu", "disco"]),
 ]
 

@@ -21,7 +21,12 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements-dev.txt
       - run: pip install -r backend/requirements-dev.txt
-      - run: python -m pytest -p no:warnings
+      - name: Seguridad del acceso remoto (autenticación, solo lectura, revocación, TLS, varias PC)
+        run: python -m pytest -p no:warnings -v tests/backend/test_remote.py tests/backend/test_fleet.py
+      - name: Auditoría de 30 controles (solo lectura) y estadísticas
+        run: python -m pytest -p no:warnings tests/backend/test_audit30.py tests/backend/test_stats.py
+      - name: Suite completa del motor
+        run: python -m pytest -p no:warnings
 
   frontend:
     name: Interfaz (tipos y compilación)
@@ -35,8 +40,14 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
         working-directory: frontend
-      - run: npm run build
+      - name: Análisis estático (oxlint)
+        run: npm run lint
         working-directory: frontend
+      - name: Tipos de TypeScript y compilación
+        run: npm run build
+        working-directory: frontend
+      - name: Sintaxis de la vista remota para celulares
+        run: node --check backend/remote/web/remote.js
 
   tauri:
     name: Contenedor de escritorio (cargo check)

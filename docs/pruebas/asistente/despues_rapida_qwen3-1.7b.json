@@ -1,0 +1,185 @@
+{
+ "etiqueta": "despues_rapida_qwen3-1.7b",
+ "fecha": "2026-11-18 01:45",
+ "equipo": {
+  "so": "Windows 11 10.0.26200",
+  "procesador": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel"
+ },
+ "ollama": {
+  "instalado_o_activo": true,
+  "version": "0.40.16",
+  "modelos": [
+   "qwen3:1.7b",
+   "qwen3:4b-instruct",
+   "qwen3:4b",
+   "lfm3-vl:latest"
+  ]
+ },
+ "modelo": "qwen3:1.7b",
+ "modo": "rapida",
+ "memoria_ollama": [
+  {
+   "modelo": "qwen3:1.7b",
+   "ram_total_mb": 1628,
+   "vram_mb": 1628
+  }
+ ],
+ "mediana": {
+  "primer_fragmento_s": 2.16,
+  "total_s": 4.57,
+  "tokens_por_s": 53.1
+ },
+ "verificadas": 10,
+ "resultados": [
+  {
+   "pregunta": "¿Por qué mi computador está lento?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 19.0,
+   "total_s": 20.54,
+   "fragmentos": 71,
+   "tokens_generados": 72,
+   "tokens_por_s": 49.0,
+   "carga_modelo_s": 14.21,
+   "tokens_prompt": 1412,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Tu computador está lento porque hay muchos procesos en segundo plano que consumen recursos. El navegador Chrome y otros programas están usando un alto porcentaje de CPU y RAM. También hay varios programas en ejecución que no son esenciales. Para mejorar la velocidad, puedes cerrar los procesos no esenciales o optimizar el sistema."
+  },
+  {
+   "pregunta": "¿Qué programa consume más RAM?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 4.74,
+   "total_s": 7.93,
+   "fragmentos": 51,
+   "tokens_generados": 52,
+   "tokens_por_s": 45.2,
+   "carga_modelo_s": 0.14,
+   "tokens_prompt": 943,
+   "cifras": 2,
+   "no_verificadas": [],
+   "respuesta": "El programa que consume más RAM es **Chrome.exe**, con 3989.3 MB de RAM. El procesador está muy ocupado de forma continua, con un promedio de CPU del último minuto del 80.4%."
+  },
+  {
+   "pregunta": "¿Qué proceso consume más CPU?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.07,
+   "total_s": 2.67,
+   "fragmentos": 33,
+   "tokens_generados": 34,
+   "tokens_por_s": 57.6,
+   "carga_modelo_s": 0.04,
+   "tokens_prompt": 929,
+   "cifras": 1,
+   "no_verificadas": [],
+   "respuesta": "El proceso que consume más CPU es **dotnet.exe**, con un porcentaje de CPU promedio de 27.1% en el último minuto."
+  },
+  {
+   "pregunta": "¿Qué tareas se ejecutan en segundo plano?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.16,
+   "total_s": 2.22,
+   "fragmentos": 50,
+   "tokens_generados": 51,
+   "tokens_por_s": 56.0,
+   "carga_modelo_s": 0.01,
+   "tokens_prompt": 795,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "En segundo plano se ejecutan programas como Chrome, Claude, svchost, Edge y llama-server. Estos programas son necesarios para el funcionamiento del sistema y la ejecución de aplicaciones. No se recomienda desactivarlos."
+  },
+  {
+   "pregunta": "¿Qué aplicaciones puedo cerrar sin afectar Windows?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.01,
+   "total_s": 4.57,
+   "fragmentos": 72,
+   "tokens_generados": 73,
+   "tokens_por_s": 45.3,
+   "carga_modelo_s": 0.2,
+   "tokens_prompt": 937,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Puedes cerrar aplicaciones abiertas que no son componentes de Windows, como devenv.exe, chrome.exe, WhatsApp.Root.exe y otros. Cerrarlos no afecta a Windows, pero podría perderse trabajo si no se guardan. Confirma si deseas cerrar estos programas desde \"Procesos\" en ScriptLens."
+  },
+  {
+   "pregunta": "¿Qué procesos requieren revisión?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 7.44,
+   "total_s": 8.89,
+   "fragmentos": 84,
+   "tokens_generados": 85,
+   "tokens_por_s": 56.3,
+   "carga_modelo_s": 0.11,
+   "tokens_prompt": 959,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los procesos que requieren revisión son:  \n- \"SoyMicrosoft\" en el Registro  \n- \"EcoAccessLimpiarCarpetaVacia\" en el Registro  \n- \"EcoAccess P3 - vigilante del bot\" en el Programador de tareas  \n\nEstos procesos se detectaron como entradas de inicio automático o tareas programadas que no son necesarias."
+  },
+  {
+   "pregunta": "¿Hay programas sospechosos?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 2.08,
+   "total_s": 3.39,
+   "fragmentos": 67,
+   "tokens_generados": 68,
+   "tokens_por_s": 53.1,
+   "carga_modelo_s": 0.03,
+   "tokens_prompt": 959,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los datos muestran que no hay programas sospechosos detectados por el antivirus. Sin embargo, hay entradas de inicio automático que requieren revisión, como \"SoyMicrosoft\" y \"EcoAccessLimpiarCarpetaVacia\". Es recomendable analizar estos scripts para asegurar su seguridad."
+  },
+  {
+   "pregunta": "¿Qué programas inician con Windows?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 1.36,
+   "total_s": 1.96,
+   "fragmentos": 44,
+   "tokens_generados": 45,
+   "tokens_por_s": 57.0,
+   "carga_modelo_s": 0.04,
+   "tokens_prompt": 688,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los programas que inician con Windows son:  \n- **SoyMicrosoft**  \n- **EcoAccessLimpiarCarpetaVacia**  \n\nEstos se inician automáticamente cuando se arranca el sistema."
+  },
+  {
+   "pregunta": "¿Cómo puedo mejorar el rendimiento?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 3.02,
+   "total_s": 5.59,
+   "fragmentos": 103,
+   "tokens_generados": 104,
+   "tokens_por_s": 41.3,
+   "carga_modelo_s": 0.07,
+   "tokens_prompt": 1305,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Para mejorar el rendimiento, puedes:  \n- **Reducir el uso de aplicaciones pesadas** como Chrome o la cuenta de usuario.  \n- **Optimizar el uso del disco** al mover archivos importantes a la unidad C: y eliminar archivos temporales.  \n- **Ajustar el consumo de CPU** al cerrar procesos no esenciales y evitar multitarea.  \n- **Hacer un mantenimiento del sistema** con Optimizar para mejorar la gestión"
+  },
+  {
+   "pregunta": "¿Qué está ocupando el disco?",
+   "modo": "rapida",
+   "modelo": "qwen3:1.7b",
+   "primer_fragmento_s": 0.77,
+   "total_s": 2.49,
+   "fragmentos": 80,
+   "tokens_generados": 81,
+   "tokens_por_s": 44.8,
+   "carga_modelo_s": 0.1,
+   "tokens_prompt": 516,
+   "cifras": 5,
+   "no_verificadas": [],
+   "respuesta": "El disco está ocupado con un 32.3% en la unidad C: y con 0% en la unidad D:. La unidad C: tiene 645.2 GB libres y 952.7 GB totales, mientras que la unidad D: tiene 475.6 GB libres y 475.7 GB totales."
+  }
+ ]
+}

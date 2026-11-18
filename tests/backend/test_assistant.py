@@ -92,8 +92,8 @@ def _ask(c, **body):
 
 def test_works_without_ollama(client, monkeypatch):
     c, _ = client
-    monkeypatch.setattr(llm, "status", lambda: {"instalado_o_activo": False, "version": None, "modelos": []})
-    lines, done = _ask(c, pregunta="¿Qué programa consume más RAM?")
+    monkeypatch.setattr(llm, "status", lambda **k: {"instalado_o_activo": False, "version": None, "modelos": []})
+    lines, done = _ask(c, pregunta="¿Qué programa consume más RAM?", modo="detallada")
     assert done["modo"] == "sin_ia" and "Ollama" in done["motivo"]
     assert "memoria" in done["answer"].lower()
     assert done["verificacion"]["verificada"], done["verificacion"]
@@ -105,7 +105,7 @@ def test_works_without_ollama(client, monkeypatch):
 
 def test_conversations_not_saved_when_disabled(client, monkeypatch):
     c, _ = client
-    monkeypatch.setattr(llm, "status", lambda: {"instalado_o_activo": False, "version": None, "modelos": []})
+    monkeypatch.setattr(llm, "status", lambda **k: {"instalado_o_activo": False, "version": None, "modelos": []})
     c.post("/api/settings", json={"key": "conversations_enabled", "value": False})
     before = len(c.get("/api/assistant/conversations").json()["conversaciones"])
     lines, _ = _ask(c, pregunta="¿Qué está ocupando el disco?")
@@ -122,7 +122,7 @@ def test_pull_requires_explicit_consent(client):
 
 def test_ollama_failure_mid_answer_falls_back(client, monkeypatch):
     c, _ = client
-    monkeypatch.setattr(llm, "status", lambda: {"instalado_o_activo": True, "version": "x", "modelos": [llm.DEFAULT_MODEL]})
+    monkeypatch.setattr(llm, "status", lambda **k: {"instalado_o_activo": True, "version": "x", "modelos": [llm.DEFAULT_MODEL]})
 
     def broken(*a, **k):
         yield "Parcial "
@@ -136,8 +136,10 @@ def test_ollama_failure_mid_answer_falls_back(client, monkeypatch):
 @pytest.mark.skipif(not any(m.startswith(llm.DEFAULT_MODEL) for m in llm.status()["modelos"]), reason="Modelo local no descargado")
 def test_real_local_model_answers_with_verified_figures(client):
     c, _ = client
-    _, done = _ask(c, pregunta="¿Qué programa consume más RAM?")
-    assert done["modo"] == "ia" and len(done["answer"]) > 20
+    _, done = _ask(c, pregunta="¿Por qué mi computador está lento?", modo="detallada")
+    assert done["modo"] == "detallada" and len(done["answer"]) > 20
+    st = done["estadisticas"]
+    assert st["eval_count"] > 0 and st["eval_s"] > 0 and st["procesador"]  # contadores reales de Ollama
     print("\nRESPUESTA IA:", done["answer"], "\nVERIFICACION:", done["verificacion"], "\nSEGUNDOS:", done["segundos"])
 
 
@@ -161,3 +163,101 @@ def test_reference_questions_use_real_data_tools(question, expected_tool):
     r = route(question)
     assert expected_tool in r["herramientas"]
     assert r["proceso"] is None  # «esta», «el», etc. no se confunden con procesos
+
+
+# --- Versión 0.2: modos, respuesta inmediata y cancelación ----------------------------
+@pytest.mark.parametrize(
+    ("question", "simple"),
+    [
+        ("¿Qué programa consume más RAM?", True),
+        ("¿Cuánta memoria estoy usando?", True),
+        ("¿Qué proceso consume más CPU?", True),
+        ("¿Cuánto tiempo lleva encendida mi PC?", True),
+        ("¿Cuánto espacio libre tiene el disco?", True),
+        ("¿Por qué mi computador está lento?", False),
+        ("¿Cómo puedo mejorar la RAM?", False),
+        ("¿Hay programas sospechosos?", False),
+        ("¿Qué es svchost.exe?", False),
+        ("¿Qué programas inician con Windows?", False),
+    ],
+)
+def test_instant_answer_only_for_simple_data_questions(question, simple):
+    from backend.assistant import instant
+
+    assert instant.can_answer(route(question), question) is simple
+
+
+def test_instant_answers_without_model_and_with_verified_figures(client, monkeypatch):
+    c, _ = client
+    called = []
+    monkeypatch.setattr(llm, "status", lambda **k: called.append(1) or {"instalado_o_activo": True, "version": "x", "modelos": [llm.DEFAULT_MODEL]})
+    for q in ("¿Qué programa consume más RAM?", "¿Cuánto tiempo lleva encendida mi PC?", "¿Qué proceso consume más CPU?"):
+        _, done = _ask(c, pregunta=q)
+        assert done["modo"] == "inmediata" and done["modelo"] is None
+        assert done["verificacion"]["verificada"], (q, done["answer"], done["verificacion"])
+        assert done["segundos"] < 5
+    assert called == []  # ni siquiera se consulta a Ollama
+
+
+def test_cancellation_stops_generation(client, monkeypatch):
+    _, engine = client
+    monkeypatch.setattr(llm, "status", lambda **k: {"instalado_o_activo": True, "version": "x", "modelos": [llm.DEFAULT_MODEL]})
+    produced = []
+
+    def slow(model, msgs, modo, stats, cancel, **k):
+        for i in range(200):
+            if cancel.is_set():
+                stats["cancelada"] = True
+                return
+            produced.append(i)
+            yield f"t{i} "
+
+    monkeypatch.setattr(llm, "chat_stream", slow)
+    ev = __import__("threading").Event()
+    events = []
+    for e in service.ask(engine, "¿Por qué mi computador está lento?", None, [], True, "detallada", ev):
+        events.append(e)
+        if e["type"] == "token" and len(produced) == 3:
+            ev.set()
+    assert events[-1]["modo"] == "cancelada" and len(produced) < 10
+
+
+def test_llm_stream_closes_connection_on_cancel(monkeypatch):
+    import threading
+
+    closed = []
+
+    class Resp:
+        def __iter__(self):
+            for i in range(100):
+                yield json.dumps({"message": {"content": f"x{i}"}, "done": False}).encode()
+
+        def close(self):
+            closed.append(True)
+
+    monkeypatch.setattr(llm.urllib.request, "urlopen", lambda *a, **k: Resp())
+    cancel, stats, out = threading.Event(), {}, []
+    for piece in llm.chat_stream("m", [], "rapida", stats, cancel):
+        out.append(piece)
+        if len(out) == 2:
+            cancel.set()
+    assert len(out) == 2 and stats.get("cancelada") and closed == [True]
+
+
+def test_status_is_cached(monkeypatch):
+    calls = []
+    monkeypatch.setattr(llm, "_status", lambda: calls.append(1) or {"instalado_o_activo": False, "version": None, "modelos": []})
+    llm.invalidate_status()
+    for _ in range(5):
+        llm.status()
+    assert len(calls) == 1
+    llm.status(cached=False)
+    assert len(calls) == 2
+    llm.invalidate_status()
+
+
+def test_compact_data_reduces_prompt():
+    data = {"procesos_top_memoria": {"programas": [{"nombre": f"p{i}", "ram_mb": i, "rol_conocido": None} for i in range(10)]}}
+    fast = service._messages("hola", data, [], "rapida")[-1]["content"]
+    full = service._messages("hola", data, [], "detallada")[-1]["content"]
+    assert len(fast) < len(full) and "rol_conocido" not in fast and "p5" not in fast

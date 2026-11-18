@@ -47,19 +47,20 @@ function Badge({ estado }: { estado: Estado }) {
 }
 
 export function Audit30Page() {
-  const [fast, setFast] = useState(false)
-  const q = usePolling(() => api<{ ejecutando: boolean; error: string | null; resultado: Result | null }>('/api/audit30'), fast ? 1500 : 10000, [fast])
+  // Mientras se espera un resultado posterior al clic, se consulta cada 1,5 s.
+  const [waitingSince, setWaitingSince] = useState<number | null>(null)
+  const q = usePolling(() => api<{ ejecutando: boolean; error: string | null; resultado: Result | null }>('/api/audit30'), waitingSince ? 1500 : 15000, [waitingSince])
   const [filter, setFilter] = useState<Estado | 'todos'>('todos')
   const [open, setOpen] = useState<number | null>(null)
   const [msg, setMsg] = useState<string | null>(null)
   const d = q.data
   const res = d?.resultado
-  const running = !!d?.ejecutando
-  if (fast && d && !running) setFast(false)
+  const running = !!d?.ejecutando || waitingSince !== null
+  if (waitingSince !== null && d && !d.ejecutando && (d.error || (res && res.medido_en * 1000 > waitingSince))) setWaitingSince(null)
 
   const run = async () => {
+    setWaitingSince(Date.now())
     await apiPost('/api/audit30/run')
-    setFast(true)
   }
   const exportAs = async (formato: 'pdf' | 'html') => {
     const r = await apiPost<{ archivo: string; ruta: string }>('/api/audit30/report', { formato })
