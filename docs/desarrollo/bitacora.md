@@ -216,3 +216,11 @@
 | CI | Pasos explícitos de seguridad remota, auditoría y estadísticas, oxlint y sintaxis de la vista remota |
 | Documentos | Guía «Conectar y supervisar computadoras», arquitectura v0.2, privacidad, CHANGELOG, README y GitHub Pages |
 | Kubernetes | Evaluado y descartado con justificación en `docs/arquitectura/v0.2_remoto_flota_estadisticas.md` |
+
+## Publicación de la versión 0.2.0 · 2026-11-18
+
+| Campo | Detalle |
+|---|---|
+| Fusión | PR #9 en `main` (`35055c0`) con CI y Pages en verde |
+| Release | `v0.2.0`, *Latest*; instalador de 54 531 345 bytes y `.sha256` de 101 bytes; huella `FAE79D9D…3E2C` verificada en la descarga pública |
+| Enlaces | PR #10 actualiza README y Pages a la v0.2.0 |
