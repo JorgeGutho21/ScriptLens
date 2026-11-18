@@ -1,6 +1,7 @@
 import {
   BarChart3,
   Bot,
+  ClipboardCheck,
   FileCode2,
   FileText,
   GitCompareArrows,
@@ -55,6 +56,7 @@ export const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
     title: 'Seguridad',
     items: [
       { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} /> },
+      { id: 'auditoria', label: 'Auditoría 30 controles', icon: <ClipboardCheck size={18} /> },
       { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} /> },
     ],
   },

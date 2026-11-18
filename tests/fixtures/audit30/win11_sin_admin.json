@@ -1,0 +1,91 @@
+{
+ "admin": false,
+ "os": {
+  "caption": "Microsoft Windows 11 Pro",
+  "version": "10.0.26200",
+  "build": 26200,
+  "ubr": 9974,
+  "display": "25H2",
+  "edition": "Professional"
+ },
+ "hotfix": {
+  "id": "KB5132061",
+  "fecha": "2026-11-11"
+ },
+ "firewall": [
+  {
+   "name": "Domain",
+   "enabled": true
+  },
+  {
+   "name": "Private",
+   "enabled": true
+  },
+  {
+   "name": "Public",
+   "enabled": true
+  }
+ ],
+ "defender": {
+  "av": true,
+  "rtp": true,
+  "behavior": true,
+  "mode": "Normal"
+ },
+ "pua": 2,
+ "av_products": [
+  "Windows Defender"
+ ],
+ "rdp_deny": 1,
+ "rdp_nla": 1,
+ "smb_server": {
+  "smb1": false,
+  "sign": false,
+  "origen": "Get-SmbServerConfiguration"
+ },
+ "smb_client_sign": false,
+ "winrm": {
+  "status": "Stopped",
+  "start": "Manual"
+ },
+ "uac": {
+  "lua": 1,
+  "consent": 5,
+  "secure": 1
+ },
+ "guest_enabled": false,
+ "admin_enabled": false,
+ "net_accounts": [
+  "Nunca",
+  "0",
+  "42",
+  "0",
+  "Ninguna",
+  "10",
+  "10",
+  "10",
+  "ESTACION DE TRABAJO"
+ ],
+ "bitlocker": {
+  "estado": 2,
+  "origen": "Shell (System.Volume.BitLockerProtection)"
+ },
+ "secureboot": {
+  "on": 0,
+  "origen": "registro SecureBoot\\State"
+ },
+ "tpm": {
+  "present": true,
+  "ready": null,
+  "origen": "Administrador de dispositivos"
+ },
+ "audit": [],
+ "ps_logging": 1,
+ "shares": [],
+ "remote_registry": {
+  "status": "Stopped",
+  "start": "Disabled"
+ },
+ "autorun": null,
+ "autorun_user": null
+}
