@@ -106,3 +106,32 @@ def test_live_collection_on_this_pc():
     raw = collect.collect()
     res = evaluate.evaluate(raw)
     assert len(res["controles"]) == 30 and raw.get("os")
+
+
+def test_routes_run_and_report(tmp_path, monkeypatch):
+    """La interfaz usa estas rutas: ejecutar en segundo plano, consultar y generar informes."""
+    import time as _t
+
+    from fastapi.testclient import TestClient
+
+    from backend.core.api import Engine, create_app
+    from backend.core.config import Settings
+
+    monkeypatch.setenv("SCRIPTLENS_REPORTS_DIR", str(tmp_path / "informes"))
+    monkeypatch.setattr(collect, "collect", lambda: FIX)
+    s = Settings(token="t", data_dir=tmp_path)
+    with TestClient(create_app(s, Engine(s))) as c:
+        assert c.get("/api/audit30").status_code == 401
+        c.headers["X-ScriptLens-Token"] = "t"
+        assert c.get("/api/audit30").json() == {"ejecutando": False, "error": None, "resultado": None}
+        assert c.post("/api/audit30/report", json={"formato": "pdf"}).status_code == 409
+        assert c.post("/api/audit30/run").json()["iniciada"]
+        for _ in range(50):
+            body = c.get("/api/audit30").json()
+            if body["resultado"]:
+                break
+            _t.sleep(0.1)
+        assert len(body["resultado"]["controles"]) == 30
+        for fmt in ("pdf", "html"):
+            r = c.post("/api/audit30/report", json={"formato": fmt}).json()
+            assert (tmp_path / "informes" / r["archivo"]).stat().st_size > 1000

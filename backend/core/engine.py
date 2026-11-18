@@ -40,6 +40,9 @@ class Engine:
         from backend.stats.service import StatsService
 
         self.stats = StatsService(self)
+        from backend.audit30.routes import Audit30State
+
+        self.audit30 = Audit30State()
         self._stop = threading.Event()
         self._threads: list[threading.Thread] = []
         self._info_cache: tuple[float, dict] | None = None
