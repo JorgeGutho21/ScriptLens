@@ -22,7 +22,7 @@ jobs:
           cache-dependency-path: backend/requirements-dev.txt
       - run: pip install -r backend/requirements-dev.txt
       - name: Seguridad del acceso remoto (autenticación, solo lectura, revocación, TLS, varias PC)
-        run: python -m pytest -p no:warnings -v tests/backend/test_remote.py tests/backend/test_fleet.py
+        run: python -m pytest -p no:warnings -v tests/backend/test_remote.py tests/backend/test_invites.py tests/backend/test_fleet.py
       - name: Auditoría de 30 controles (solo lectura) y estadísticas
         run: python -m pytest -p no:warnings tests/backend/test_audit30.py tests/backend/test_stats.py
       - name: Suite completa del motor

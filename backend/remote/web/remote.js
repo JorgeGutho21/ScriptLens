@@ -42,7 +42,7 @@ async function get(path) {
 }
 
 function show(id) {
-  for (const s of ['pair', 'wait', 'dash']) $(s).hidden = s !== id
+  for (const s of ['pair', 'wait', 'invite', 'dash']) $(s).hidden = s !== id
 }
 
 function setConn(kind, text) {
@@ -95,6 +95,38 @@ async function waitApproval() {
     } catch { /* la PC puede no responder un momento; se reintenta */ }
   }
 }
+
+// --- Invitación por correo ------------------------------------------------
+// El token llega en el fragmento (#invitacion=…): el navegador no lo envía al servidor. Se lee una vez
+// y se borra de la barra de direcciones y del historial antes de hacer nada más.
+function takeInvite() {
+  const m = /^#invitacion=([A-Za-z0-9_-]{20,100})$/.exec(location.hash)
+  if (location.hash) history.replaceState(null, '', location.pathname)
+  return m ? m[1] : null
+}
+
+$('invite-form').addEventListener('submit', async (ev) => {
+  ev.preventDefault()
+  $('invite-msg').textContent = ''
+  if (!state.invite) { $('invite-msg').textContent = 'Este enlace ya se usó en esta página. Pida una invitación nueva.'; return }
+  $('invite-btn').disabled = true
+  try {
+    const r = await fetch('/remote/api/invite/accept', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: state.invite, correo: $('invite-email').value.trim() }),
+    })
+    const j = await r.json().catch(() => ({}))
+    if (!r.ok) throw new Error(typeof j.detail === 'string' ? j.detail : 'No se pudo comprobar la invitación.')
+    state.invite = null
+    start()
+  } catch (e) {
+    $('invite-msg').textContent = e.message
+  } finally {
+    $('invite-btn').disabled = false
+  }
+})
 
 // --- Panel ---------------------------------------------------------------
 function spark(canvas, values, color) {
@@ -255,13 +287,14 @@ async function start() {
   try {
     who = await get('/remote/api/whoami')
   } catch (e) {
-    show('pair')
+    show(state.invite ? 'invite' : 'pair')
     setConn('off', e.auth ? 'Sin vincular' : 'Sin conexión')
-    if (!e.auth) $('pair-msg').textContent = e.message
+    if (!e.auth) $(state.invite ? 'invite-msg' : 'pair-msg').textContent = e.message
     return
   }
   show('dash')
   $('proc-card').hidden = !who.comparte.procesos
+  if (!who.comparte.estadisticas) $('stats-card').hidden = true
   try {
     const h = await get('/remote/api/history?seconds=300')
     state.cpuHist = h.muestras.map((s) => s.cpu_percent)
@@ -291,4 +324,6 @@ window.addEventListener('resize', () => {
   spark($('ram-chart'), state.ramHist, cssVar('--ram'))
 })
 
+state.invite = takeInvite()
+if (state.invite) show('invite')
 start()

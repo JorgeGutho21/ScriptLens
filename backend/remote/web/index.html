@@ -48,6 +48,20 @@
       <button type="button" id="cancel" class="ghost">Cancelar</button>
     </section>
 
+    <!-- Invitación por correo -->
+    <section id="invite" class="card narrow" hidden>
+      <h1>Confirme su correo</h1>
+      <p>Abrió una invitación de solo lectura. Escriba el correo al que se la enviaron para comprobar que es usted.</p>
+      <form id="invite-form" autocomplete="on">
+        <label>Correo electrónico
+          <input id="invite-email" type="email" inputmode="email" autocomplete="email" required maxlength="254" placeholder="nombre@ejemplo.com" aria-describedby="invite-msg">
+        </label>
+        <button type="submit" id="invite-btn">Ver la computadora</button>
+      </form>
+      <p id="invite-msg" class="msg" role="alert"></p>
+      <p class="muted small">El enlace sirve una sola vez. Si ya lo usó o caducó, pida a la persona dueña de la PC una invitación nueva.</p>
+    </section>
+
     <!-- Panel -->
     <section id="dash" hidden>
       <div class="grid kpis">

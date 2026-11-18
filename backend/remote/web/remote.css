@@ -65,8 +65,8 @@ label { display: block; font-size: 13.5px; color: var(--muted); margin: 10px 0; 
 input { display: block; width: 100%; margin-top: 4px; padding: 11px 12px; font: inherit; font-size: 17px; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; }
 input#code { letter-spacing: .35em; font-size: 22px; text-align: center; font-variant-numeric: tabular-nums; }
 button { font: inherit; }
-#pair-btn, #cancel { width: 100%; margin-top: 6px; padding: 12px; border-radius: 12px; border: 0; background: var(--accent); color: #fff; font-weight: 600; font-size: 16px; cursor: pointer; }
-#pair-btn:disabled { opacity: .6; }
+#pair-btn, #invite-btn, #cancel { width: 100%; margin-top: 6px; padding: 12px; border-radius: 12px; border: 0; background: var(--accent); color: #fff; font-weight: 600; font-size: 16px; cursor: pointer; }
+#pair-btn:disabled, #invite-btn:disabled { opacity: .6; }
 button.ghost { background: var(--surface-2) !important; color: var(--text) !important; border: 1px solid var(--border) !important; }
 button.link { background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; }
 .steps { padding-left: 20px; color: var(--muted); font-size: 14px; } .steps b { color: var(--text); }

@@ -172,12 +172,13 @@ class RemoteAuth:
             del self._pending[k]
 
     # --- Sesiones (persistentes en SQLite, solo el hash) -------------------
-    def _create_session(self, token: str, nombre: str, tipo: str, ip: str) -> str:
+    def _create_session(self, token: str, nombre: str, tipo: str, ip: str, ttl: float | None = None, permisos: str | None = None, correo: str | None = None) -> str:
+        """Crea una sesión. ``permisos`` (JSON) limita lo que ve; ``None`` = lo que comparta la PC."""
         sid = secrets.token_hex(8)
         now = self.clock()
         self.db.execute(
-            "INSERT INTO remote_sessions(id, token_hash, nombre, tipo, ip, created_at, expires_at, last_seen, last_ip) VALUES (?,?,?,?,?,?,?,?,?)",
-            (sid, _hash(token), nombre, tipo, ip, now, now + SESSION_TTL[tipo], None, ip),
+            "INSERT INTO remote_sessions(id, token_hash, nombre, tipo, ip, created_at, expires_at, last_seen, last_ip, permisos, correo) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+            (sid, _hash(token), nombre, tipo, ip, now, now + (ttl or SESSION_TTL[tipo]), None, ip, permisos, correo),
         )
         return sid
 
@@ -201,7 +202,7 @@ class RemoteAuth:
     def sessions(self) -> list[dict]:
         now = self.clock()
         self.db.execute("DELETE FROM remote_sessions WHERE expires_at <= ?", (now,))
-        rows = self.db.query("SELECT id, nombre, tipo, ip, created_at, expires_at, last_seen, last_ip FROM remote_sessions ORDER BY created_at DESC")
+        rows = self.db.query("SELECT id, nombre, tipo, ip, created_at, expires_at, last_seen, last_ip, correo FROM remote_sessions ORDER BY created_at DESC")
         for r in rows:
             r["activa_ahora"] = r["last_seen"] is not None and now - r["last_seen"] < 30
         return rows

@@ -5,6 +5,7 @@ import { Button, Notice, Row, Toggle } from '../components/controls'
 import { Card } from '../components/ui'
 import { api, apiDelete, apiPost } from '../lib/api'
 import { usePolling } from '../lib/usePolling'
+import { type Invitation, InviteCard } from './RemoteInvite'
 
 interface RemoteStatus {
   estado: 'apagado' | 'activo' | 'pausado'
@@ -18,8 +19,10 @@ interface RemoteStatus {
   huella_corta: string | null
   codigo: { codigo: string | null; caduca_en: number }
   solicitudes: { id: string; nombre: string; tipo: 'navegador' | 'consola'; ip: string; frase: string; creado: number }[]
-  sesiones: { id: string; nombre: string; tipo: 'navegador' | 'consola'; ip: string; created_at: number; expires_at: number; last_seen: number | null; last_ip: string | null; activa_ahora: boolean }[]
+  sesiones: { id: string; nombre: string; tipo: 'navegador' | 'consola'; ip: string; created_at: number; expires_at: number; last_seen: number | null; last_ip: string | null; activa_ahora: boolean; correo: string | null }[]
   comparte: { procesos: boolean; seguridad: boolean; estadisticas: boolean }
+  invitaciones: Invitation[]
+  correo: { modo: 'local' | 'smtp'; error: string | null; salida: string | null }
 }
 
 const STATE_LABEL = { apagado: 'Apagado', activo: 'Activo', pausado: 'En pausa' }
@@ -188,6 +191,8 @@ export function RemotePage() {
         </Card>
       )}
 
+      <InviteCard active={on} mode={s.correo.modo} outbox={s.correo.salida} invitations={s.invitaciones} onChange={refresh} />
+
       <Card title="Dispositivos vinculados">
         {s.sesiones.length === 0 ? (
           <p className="text-sm text-muted">Ningún dispositivo tiene acceso.</p>
@@ -198,7 +203,8 @@ export function RemotePage() {
                 {x.tipo === 'consola' ? <Laptop size={18} className="text-muted" /> : <Smartphone size={18} className="text-muted" />}
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-medium text-fg">
-                    {x.nombre} {x.activa_ahora && <span className="ml-1 rounded-full bg-ok-soft px-2 py-0.5 text-[11px] text-ok">consultando ahora</span>}
+                    {x.nombre} {x.correo && <span className="ml-1 rounded-full bg-accent-soft px-2 py-0.5 text-[11px] text-accent">por invitación</span>}
+                    {x.activa_ahora && <span className="ml-1 rounded-full bg-ok-soft px-2 py-0.5 text-[11px] text-ok">consultando ahora</span>}
                   </div>
                   <div className="text-xs text-muted">
                     {x.last_ip ?? x.ip} · última consulta: {when(x.last_seen)} · caduca: {when(x.expires_at)}
