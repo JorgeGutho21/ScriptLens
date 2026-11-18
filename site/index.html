@@ -25,6 +25,9 @@
         <a href="#capturas">Capturas</a>
         <a href="#requisitos">Requisitos</a>
         <a href="#guia">Instalación</a>
+        <a href="#usar">Uso</a>
+        <a href="#remoto">Acceso remoto</a>
+        <a href="#preguntas">Preguntas</a>
         <a href="#documentos">Documentos</a>
       </nav>
     </div>
@@ -186,6 +189,42 @@
       </div>
     </section>
 
+    <section class="seccion" id="usar">
+      <div class="contenedor angosto">
+        <h2>Cómo usar ScriptLens IA</h2>
+        <ol class="pasos-simples">
+          <li><strong>Abra ScriptLens</strong> desde el menú Inicio. El <em>Panel general</em> empieza a medir solo: procesador, memoria, disco, red y tiempo encendido.</li>
+          <li><strong>Mi PC → Procesos</strong> muestra qué programas consumen más y si alguno merece revisión.</li>
+          <li><strong>Mi PC → Estadísticas</strong> muestra el consumo por hora, día y semana, cuándo se encendió el equipo y cuánto tiempo se usó de forma activa. Puede pausarlas, borrarlas y exportarlas en HTML o CSV.</li>
+          <li><strong>Seguridad → Auditoría 30 controles</strong> revisa 30 configuraciones de Windows (solo lectura) y genera un informe PDF o HTML.</li>
+          <li><strong>Herramientas → Asistente IA</strong> responde preguntas: las simples al instante con los datos medidos; las explicaciones, con IA local (Ollama).</li>
+          <li><strong>Herramientas → Informes</strong> genera el diagnóstico completo en PDF o HTML (se guarda en <em>Documentos\ScriptLens IA\Informes</em>).</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="seccion alterna" id="remoto">
+      <div class="contenedor angosto">
+        <h2>Ver la PC desde el celular y conectar otra computadora</h2>
+        <p>El acceso remoto es <strong>de solo lectura</strong>, funciona solo en la <strong>misma red</strong> (WiFi, cable o hotspot) y está apagado hasta que usted lo activa.</p>
+        <h3>Desde el celular u otra laptop</h3>
+        <ol class="pasos-simples">
+          <li>En la PC, abra <strong>Conectar → Acceso remoto</strong> y pulse <strong>Activar acceso remoto</strong>.</li>
+          <li>Si Windows pregunta, permita el acceso solo en <strong>Redes privadas</strong>.</li>
+          <li>En el celular, conectado a la misma red, abra la dirección que muestra la PC (por ejemplo <code>https://192.168.1.25:8765/</code>). Acepte el aviso del certificado después de comparar la huella.</li>
+          <li>Escriba el <strong>código de 6 cifras</strong> y un nombre para el dispositivo.</li>
+          <li>En la PC, pulse <strong>Autorizar</strong> si la frase de verificación coincide. El celular verá los datos en vivo, sin poder cambiar nada.</li>
+        </ol>
+        <h3>Supervisar otra computadora</h3>
+        <ol class="pasos-simples">
+          <li>Instale ScriptLens en la segunda PC y active allí el acceso remoto.</li>
+          <li>En la PC principal, abra <strong>Conectar → Mis computadoras → Vincular computadora</strong> y escriba la IP, el puerto y el código de la segunda PC.</li>
+          <li>Autorice la solicitud en la segunda PC. Su tarjeta mostrará CPU, RAM, disco, alertas y si está <em>Conectada</em> o <em>Desconectada</em>.</li>
+        </ol>
+        <p>Para quitar el acceso: <strong>Revocar</strong> (un dispositivo) o <strong>Desactivar y desconectar todo</strong>. Guía completa: <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/guias/Conectar_y_supervisar_computadoras.md">Conectar y supervisar computadoras</a>.</p>
+      </div>
+    </section>
+
     <section class="seccion">
       <div class="contenedor angosto">
         <h2>Qué es</h2>
@@ -201,10 +240,14 @@
           <article><h3>Procesos</h3><p>Búsqueda, filtros, árbol padre-hijo, ruta, firma digital y respuestas a «¿qué hace?», «¿puedo cerrarlo?» y «¿es sospechoso?».</p></article>
           <article><h3>Seguridad</h3><p>Revisión de solo lectura de Microsoft Defender, firewall, inicio automático, tareas programadas, servicios y eventos.</p></article>
           <article><h3>Análisis de scripts</h3><p>43 reglas asociadas a MITRE ATT&amp;CK, desofuscación estática, explicación línea por línea y un clasificador evaluado con datos no vistos.</p></article>
-          <article><h3>Asistente con IA local</h3><p>Modelo de lenguaje en el propio equipo mediante Ollama. Cada cifra de la respuesta se comprueba contra los datos medidos.</p></article>
+          <article><h3>Asistente con IA local</h3><p>Respuestas inmediatas con los datos medidos y modos de IA rápida o detallada en el propio equipo con Ollama. Cada cifra se comprueba contra las mediciones.</p></article>
           <article><h3>Optimización supervisada</h3><p>Recomendaciones basadas en mediciones, acciones reversibles o confirmadas y registro con mediciones antes y después.</p></article>
           <article><h3>Comparar mi PC</h3><p>Guarda diagnósticos en una base local y compara dos momentos sin atribuir causas sin evidencia.</p></article>
           <article><h3>Informes</h3><p>Exporta informes PDF y HTML con métricas, evidencias, recomendaciones y limitaciones.</p></article>
+          <article><h3>Estadísticas de mi PC</h3><p>Consumo por hora, día y semana; hora de encendido; tiempo de sesión y de uso activo por separado; alertas por consumo sostenido.</p></article>
+          <article><h3>Auditoría 30 controles</h3><p>Los 30 controles de seguridad de Windows del taller, con evidencia, explicación y recomendación. Solo lectura.</p></article>
+          <article><h3>Acceso remoto</h3><p>Ver la PC desde el celular por HTTPS en la red local, con código temporal y aprobación. Nadie puede cambiar nada desde fuera.</p></article>
+          <article><h3>Mis computadoras</h3><p>Supervise varias PC con ScriptLens desde una sola: estado, CPU, RAM, disco, alertas, historial y comparación.</p></article>
         </div>
       </div>
     </section>
@@ -240,6 +283,18 @@
           </table>
         </div>
         <p class="nota">No compatible con Windows de 32 bits, Windows 7/8, macOS ni Linux. Los entornos realmente probados figuran en la <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/pruebas/compatibilidad.md">matriz de compatibilidad</a>.</p>
+      </div>
+    </section>
+
+    <section class="seccion" id="preguntas">
+      <div class="contenedor angosto">
+        <h2>Preguntas frecuentes</h2>
+        <details><summary>¿Alguien de mi red puede ver mi PC sin permiso?</summary><p>No. El acceso remoto está apagado por defecto y, cuando se activa, cada dispositivo necesita un código temporal y que usted pulse «Autorizar» en la PC. Puede revocarlo cuando quiera.</p></details>
+        <details><summary>¿Se puede cerrar programas o cambiar algo desde el celular?</summary><p>No. La vista remota es de solo lectura: el servidor remoto ni siquiera tiene las rutas de acciones.</p></details>
+        <details><summary>¿Por qué el navegador avisa de que la conexión no es segura?</summary><p>La conexión está cifrada, pero con un certificado propio de su PC (no hay una autoridad para direcciones como 192.168.x.x). Compare la huella que muestra ScriptLens y continúe.</p></details>
+        <details><summary>En la universidad no conecta, ¿qué hago?</summary><p>Muchas redes institucionales aíslan a los dispositivos. Active el hotspot de un celular y conecte ahí la PC y el otro dispositivo.</p></details>
+        <details><summary>¿Las estadísticas registran lo que escribo o las páginas que visito?</summary><p>No. Solo cuentan segundos de actividad. El registro de aplicaciones guarda únicamente el nombre del programa y solo si usted lo activa. Las páginas web no se registran.</p></details>
+        <details><summary>¿Necesito Internet o pagar por la IA?</summary><p>No. El asistente usa Ollama en su propio equipo; las preguntas simples se responden sin IA.</p></details>
       </div>
     </section>
 

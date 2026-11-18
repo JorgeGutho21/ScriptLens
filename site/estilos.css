@@ -146,3 +146,11 @@ tbody th { font-weight: 600; white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* v0.2: pasos numerados sencillos y preguntas frecuentes */
+.pasos-simples { padding-left: 1.4em; display: grid; gap: 8px; line-height: 1.55; }
+.pasos-simples code { overflow-wrap: anywhere; }
+#remoto h3 { margin-top: 22px; }
+#preguntas details { margin: 8px 0; border: 1px solid var(--borde); border-radius: 8px; background: var(--superficie); }
+#preguntas summary { cursor: pointer; padding: 12px 16px; font-weight: 600; }
+#preguntas details p { padding: 0 16px 12px; margin: 0; }

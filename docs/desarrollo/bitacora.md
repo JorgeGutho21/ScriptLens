@@ -159,3 +159,60 @@
 | Repositorio | Apartado *About* con descripción, enlace a la última versión y temas |
 | Flujo del instalador | `instalador.yml` ejecutado en `main` desde un equipo limpio de GitHub: éxito; artefacto con instalador y `.sha256` coherentes |
 | Actualizaciones | `backend.core.updates.check()` contra la release real: versión 0.1.0, «Tiene la versión más reciente» |
+
+## Versión 0.2 — Fase 0: auditoría · 2026-11-18
+
+| Campo | Detalle |
+|---|---|
+| Base | `main` en `c94cfe3` tras fusionar el PR #8 (CI y Pages en verde). Rama de trabajo `feat/v0.2-remoto-flota` |
+| Estado | 135 pruebas aprobadas; matriz y arquitectura en `docs/desarrollo/ESTADO_v0.2.md` |
+| Material del taller | ZIP de 30 controles y seis BAT analizados solo de forma estática; persistencia, cierre de procesos y FTP descartados |
+
+## Fase 1 — Acceso remoto de solo lectura
+
+| Campo | Detalle |
+|---|---|
+| Implementado | `backend/remote/` (servicio, TLS, autenticación, aplicación remota, vistas, página web) y pantalla «Acceso remoto» |
+| Pruebas | 13 automáticas; ensayo real por `https://192.168.1.20:8765` con `scripts/probar_remoto.py`: 401 sin sesión, 200 tras aprobar, 404 en cinco operaciones prohibidas, 401 tras cerrar sesión |
+| Hallazgo | El navegador integrado rechaza el certificado propio (`ERR_CERT_AUTHORITY_INVALID`), igual que un celular mostrará un aviso; por eso la huella se muestra en la PC |
+
+## Fase 2 — Mis computadoras
+
+| Campo | Detalle |
+|---|---|
+| Implementado | `backend/fleet/` (cliente con huella fijada, DPAPI, sondeo, historial) y pantalla «Mis computadoras» |
+| Pruebas | 6 automáticas con dos agentes TLS reales; revisión visual con un segundo agente en el puerto 8766 (conectado → desconectado) |
+| Error corregido | Volver a vincular dejaba viva la sesión anterior en el agente |
+
+## Fase 3 — Estadísticas
+
+| Campo | Detalle |
+|---|---|
+| Implementado | `backend/stats/` y pantalla «Estadísticas de mi PC» |
+| Pruebas | 7 automáticas con reloj controlado; 78 eventos reales de arranque y reanudación leídos en 1,0 s |
+| Pendiente | Dominios web (necesitan una extensión voluntaria del navegador) |
+
+## Fase 4 — Auditoría de 30 controles
+
+| Campo | Detalle |
+|---|---|
+| Implementado | `backend/audit30/`, pantalla e informes PDF/HTML |
+| Resultado real | Windows 11 Pro 25H2 sin administrador: 19 CUMPLE, 5 NO CUMPLE, 4 REQUIERE REVISIÓN, 2 NO APLICA (79,2 % entre concluyentes), 12–27 s |
+| Errores corregidos | Falso negativo de `Get-Tpm` sin elevación; rutas no registradas en el primer commit (corregido en `e077470`) |
+
+## Fase 5 — Asistente más rápido
+
+| Campo | Detalle |
+|---|---|
+| Medición antes | `qwen3:4b-instruct`, código v0.1.1: mediana 7,0 s al primer fragmento y 32,7 s en total |
+| Medición después | Automático: 2,0 s y 3,5 s; detallado con el mismo modelo: 5,6 s y 22,4 s; rápido (`qwen3:1.7b`, todo en GPU): 2,2 s y 4,6 s |
+| Calidad | 10/10 cifras verificadas en todas las series; el 1.7B cometió un error de contenido documentado en `docs/pruebas/asistente/RESULTADOS.md` |
+
+## Fases 6 y 7 — Interfaz, CI y documentación
+
+| Campo | Detalle |
+|---|---|
+| Interfaz | Navegación agrupada por tareas, guía de bienvenida ampliada; revisión visual de las pantallas nuevas en 1280 × 720 |
+| CI | Pasos explícitos de seguridad remota, auditoría y estadísticas, oxlint y sintaxis de la vista remota |
+| Documentos | Guía «Conectar y supervisar computadoras», arquitectura v0.2, privacidad, CHANGELOG, README y GitHub Pages |
+| Kubernetes | Evaluado y descartado con justificación en `docs/arquitectura/v0.2_remoto_flota_estadisticas.md` |

@@ -86,3 +86,59 @@ Leyenda: **IMPLEMENTADO** (código completo) · **PARCIAL** · **PENDIENTE** · 
   contexto reducido y cancelación.
 
 Kubernetes no aporta valor a una aplicación de escritorio en LAN; no se usa ni se presenta como usado.
+
+---
+
+## 6. Resultado de la versión 0.2 (actualizado el 2026-11-18)
+
+### Matriz de funcionalidades después del desarrollo
+
+| Área | Estado de implementación | Estado de prueba | Evidencia |
+| --- | --- | --- | --- |
+| Acceso remoto de solo lectura | IMPLEMENTADO | PROBADO (automático + LAN real del mismo equipo) | `test_remote.py` (13), `scripts/probar_remoto.py` contra `https://192.168.1.20:8765` |
+| Consola «Mis computadoras» | IMPLEMENTADO | PROBADO con dos agentes simulados en un equipo | `test_fleet.py` (6), revisión visual con un segundo agente en el puerto 8766 |
+| Estadísticas | IMPLEMENTADO (dominios web: PENDIENTE, requiere extensión voluntaria) | PROBADO | `test_stats.py` (7), 78 eventos reales de arranque leídos |
+| Auditoría de 30 controles | IMPLEMENTADO | PROBADO | `test_audit30.py` (10), ejecución real: 19 CUMPLE, 5 NO CUMPLE, 4 REVISIÓN, 2 NO APLICA |
+| Chatbot rápido | IMPLEMENTADO | MEDIDO | `docs/pruebas/asistente/RESULTADOS.md` |
+| Interfaz rediseñada | IMPLEMENTADO | REVISADO visualmente en escritorio (1280 × 720) | Panel, Acceso remoto, Mis computadoras, Estadísticas y Auditoría |
+
+### Matriz de aceptación (`CRITERIOS_ACEPTACION.md`)
+
+| N.º | Criterio | Resultado | Evidencia |
+| --- | --- | --- | --- |
+| 1 | Diagnóstico local igual tras el cambio | ✅ | Las 135 pruebas anteriores siguen aprobadas dentro de las 186 actuales |
+| 2 | Acceso remoto inicia apagado | ✅ | `test_local_control_api`; el estado nunca se restaura al abrir |
+| 3 | El propietario habilita y empareja desde la PC | ✅ | Pantalla Acceso remoto: botón Autorizar probado con la frase `GM-6L` |
+| 4 | Un celular ve datos actualizados de esa PC | ⚠️ PARCIAL | Probado con un cliente HTTPS por la IP de la LAN; **falta un celular físico** |
+| 5 | Sesión no autorizada rechazada | ✅ | `test_unauthenticated_requests_are_rejected` (incluye el token interno de Tauri) |
+| 6 | Remoto no puede POST/DELETE de acciones, ajustes ni archivos | ✅ | `test_no_write_or_local_route_reachable_remotely` recorre todas las rutas locales |
+| 7 | Desactivar/revocar corta conexiones existentes y futuras | ✅ | `test_revocation_and_disable_cut_existing_sessions`, `test_revocation_marks_device_disconnected` |
+| 8 | El modo remoto indica el origen y la antigüedad de las cifras | ✅ | `medido_en` en cada respuesta; «En vivo / Datos atrasados / Desconectado» |
+| 9 | Dos equipos se vinculan y muestran CPU/RAM separados | ⚠️ SIMULADO | Dos agentes con identidad, certificado y datos propios en el mismo hardware |
+| 10 | Equipo desconectado se muestra offline, no en vivo | ✅ | Prueba automática y visual («Desconectado · última lectura 1:41:02») |
+| 11 | Historial con `device_id` y marcas de tiempo | ✅ | `test_two_agents_are_independent` |
+| 12 | Estadísticas por día/semana/mes, sesiones y tiempo activo distinguidos | ✅ | `test_active_time_and_session_are_distinct` |
+| 13 | Apps y dominios opt-in; pausa, borrado y retención | ✅ apps / ❌ dominios | Dominios no implementados a propósito (sin extensión de navegador) |
+| 14 | Los 30 controles con evidencia, estado e informe PDF/HTML | ✅ | `test_real_windows11_capture`, `test_reports`, `test_routes_run_and_report` |
+| 15 | La auditoría no cambia configuraciones | ✅ | `test_collection_script_is_read_only` (análisis estático del script) |
+| 16 | Chatbot: datos antes y después | ✅ | 32,7 s → 3,5 s de mediana total; RAM/VRAM del modelo registrada |
+| 17 | Preguntas simples sin esperar al modelo | ✅ | `test_instant_answers_without_model_and_with_verified_figures` |
+| 18 | Con y sin Ollama; 10 preguntas; cancelación | ✅ | `test_works_without_ollama`, benchmark de 10 preguntas, `test_cancellation_stops_generation` |
+| 19 | Interfaz móvil/escritorio sin recortes, onboarding | ⚠️ PARCIAL | Escritorio revisado; vista del celular verificada solo por código (CSS adaptable), sin captura en un teléfono |
+| 20 | CI de Python, React/TS, Rust y seguridad remota | ✅ | GitHub Actions en verde en cada fase |
+| 21 | Instalador actualizado, sin administrador, datos conservados | ver §7 | |
+| 22 | Versión, SHA-256 y release solo si aprobada | ver §7 | |
+| 23 | README/Pages enlazan a la versión publicada | ver §7 | |
+| 24 | Windows 10 y equipos de 4 GB | ❌ NO PROBADOS | Solo hay un equipo Windows 11 de 31,8 GB |
+| 25 | Demostración real con 2 PC y celular | ❌ SIMULADA | Procedimiento en `docs/guias/Conectar_y_supervisar_computadoras.md` |
+| 26 | Licencias y atribuciones, sin secretos en Git | ✅ | Licencias de referencias verificadas en GitHub; BAT del taller no se subieron |
+
+### Errores encontrados y corregidos durante el desarrollo
+
+- Volver a vincular una consola dejaba viva la sesión anterior en la otra PC → se cierra antes de reemplazarla.
+- Sin administrador, `Get-Tpm` informa `TpmPresent=False` aunque el TPM exista → solo se usa elevado.
+- La respuesta inmediata incluía una fecha que no estaba en los datos medidos (la verificación la marcó) → se añadió
+  la fecha real del último arranque a los datos.
+- Las rutas de la auditoría no se registraron en el commit de la fase 4 (la orden falló antes de ejecutarse) → corregido
+  y cubierto con una prueba de rutas.
+- La pantalla de auditoría dejaba de consultar rápido justo después de pulsar el botón → espera un resultado posterior al clic.

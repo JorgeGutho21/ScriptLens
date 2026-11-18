@@ -2,6 +2,24 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado semántico.
 
+## [0.2.0] — 2026-11-18
+
+### Añadido
+- **Acceso remoto de solo lectura** («Ver mi PC desde otro dispositivo»): servidor HTTPS en la red local, apagado por defecto, con certificado propio, código temporal, frase de verificación, aprobación en la PC, sesiones revocables y página adaptada a celulares.
+- **Mis computadoras**: consola para vincular y supervisar varias PC con ScriptLens (estado conectado/desconectado, última lectura, CPU, RAM, disco, tiempo encendido, alertas, historial de 24 h, comparación y desvinculación).
+- **Estadísticas de mi PC**: historial por hora, día y semana; tiempo desde el arranque, sesión y uso activo por separado; sesiones de uso; horarios de actividad; procesos y (con consentimiento) aplicaciones más usadas; alertas por consumo sostenido; informes HTML y CSV; pausa, borrado y retención.
+- **Auditoría de Windows — 30 controles** del taller, de solo lectura, con evidencia, explicación, recomendación e informes PDF y HTML.
+- **Asistente más rápido**: respuesta inmediata con datos medidos, modos IA rápida (Qwen3 1.7B) e IA detallada (Qwen3 4B Instruct), cancelación y estadísticas de cada respuesta. Mediana medida: de 32,7 s a 3,5 s en modo Automático.
+- Guía «Conectar y supervisar computadoras con ScriptLens IA» y documento de arquitectura de la versión 0.2.
+
+### Cambiado
+- Navegación agrupada en «Mi PC», «Seguridad», «Conectar» y «Herramientas»; «Ajustes» pasa a llamarse «Configuración».
+- Guía de bienvenida con las funciones nuevas.
+- CI: pasos explícitos para las pruebas de seguridad remota, auditoría y estadísticas, oxlint y sintaxis de la vista remota.
+
+### Seguridad
+- La API local (Tauri, 127.0.0.1 y token interno) no cambia. Ninguna ruta de acciones, ajustes, asistente o archivos existe en el servidor remoto.
+
 ## [0.1.1] — 2026-11-15
 
 ### Cambiado

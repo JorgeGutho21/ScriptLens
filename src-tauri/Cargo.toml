@@ -1,6 +1,6 @@
 [package]
 name = "scriptlens"
-version = "0.1.1"
+version = "0.2.0"
 description = "ScriptLens IA — diagnóstico, seguridad y auditoría de Windows"
 authors = ["Jorge Gutiérrez (@JorgeGutho21)"]
 license = "MIT"
