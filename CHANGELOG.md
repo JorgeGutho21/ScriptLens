@@ -4,6 +4,9 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 
 ## [Sin publicar]
 
+### Añadido
+- **Invitar por correo** en «Acceso remoto»: enlace de un solo uso enviado a un correo concreto, con el token en el fragmento de la URL, el correo del destinatario como segunda llave, caducidad, bloqueo tras 3 correos erróneos, permisos por invitación (programas, seguridad, estadísticas) y revocación. Modo de prueba con bandeja de salida local (`.eml`) y adaptador SMTP opcional. Base de datos v3.
+
 ### Documentación
 - Página oficial rediseñada: portada con la PC y el celular, explorador de los 10 módulos, recorrido del acceso remoto en 9 pasos, sección «Mis computadoras», estadísticas, auditoría y asistente, galería por categorías con visor ampliable, instalación en 10 pasos y navegación móvil. Imágenes WebP optimizadas (`site/img`).
 - 13 capturas nuevas de la versión 0.2.0 (acceso remoto, vista del celular, Mis computadoras, equipo desconectado, modos del asistente y panel general) y captura actualizada de la release v0.2.0.

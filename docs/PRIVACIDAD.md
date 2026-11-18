@@ -23,6 +23,8 @@ ScriptLens IA analiza el equipo **localmente**. No existe ningún servidor de Sc
 | Aplicaciones en primer plano (solo nombre del ejecutable) | «Aplicaciones más utilizadas» | Misma base de datos | **Desactivado por defecto**; requiere consentimiento; se puede pausar y borrar. No se guardan títulos de ventana ni direcciones web |
 | Arranques y apagados (registro de eventos de Windows) | Horas de encendido | Misma base de datos | Igual que las estadísticas |
 | Dispositivos vinculados al acceso remoto | Saber quién puede consultar la PC | Misma base de datos: nombre, IP, fechas y **hash** del token | Hasta su caducidad (12 h navegador, 30 días consola), revocación o «Desactivar» |
+| Invitaciones por correo | Dar acceso de solo lectura a una persona concreta | Misma base de datos: correo, permisos, fechas y **hash** del enlace (nunca el enlace) | 7 días; el enlace caduca antes (5 min a 24 h) y sirve una sola vez |
+| Correos de invitación en modo de prueba | Entregar el enlace sin servidor de correo | Archivos `.eml` en `…\scriptlens\remote\correo_salida\` | Hasta que el usuario los borre; el enlace deja de servir al usarse, caducar o anularse |
 | Equipos vinculados en «Mis computadoras» | Consultar otras PC | Misma base de datos; el token, cifrado con DPAPI de Windows | Hasta desvincular |
 | Historial de otras PC | Gráficas de la consola | Misma base de datos | 7 días |
 | Certificado y clave del acceso remoto | Cifrar la conexión en la red local | `…\scriptlens\remote\` en la carpeta de datos | Hasta desinstalar |
@@ -34,6 +36,7 @@ Ajustes muestra las rutas reales y permite desactivar el historial y las convers
 
 - **Acceso remoto** (puerto 8765 por defecto): **apagado** al abrir ScriptLens. Solo cuando el usuario lo activa, atiende en las direcciones IPv4 privadas del equipo, por HTTPS, y solo a dispositivos autorizados con código y aprobación. Comparte únicamente mediciones de rendimiento, el resumen de seguridad y estadísticas resumidas; cada categoría opcional se puede desactivar. No abre puertos en el router.
 - **Mis computadoras**: solo se conecta a las PC que el usuario vinculó, dentro de la red local.
+- **Invitaciones por correo**: en el modo predeterminado (prueba) no se envía nada: el correo se guarda como archivo en el equipo. Solo si el usuario configura `SCRIPTLENS_MAIL_MODE=smtp` y su propio servidor SMTP, ScriptLens envía el mensaje con ese servidor (STARTTLS). El mensaje contiene el nombre del equipo, el enlace de un solo uso y la huella del certificado; ningún dato de rendimiento.
 
 - **Ollama** (`127.0.0.1:11434`): local; los datos no salen del equipo.
 - **Descarga de un modelo de IA**: solo si el usuario la autoriza explícitamente; la realiza Ollama desde su registro oficial.

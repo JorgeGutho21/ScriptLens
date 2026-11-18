@@ -244,3 +244,12 @@
 | Documentos | DOCX y PDF regenerados con `docs/academico/generar_documentos.py` y `exportar_pdf.ps1` (mismas páginas: 50, 28, 20 y 19); presentación regenerada y exportada a PDF. Se comprobó que ningún documento incluye ya las imágenes anteriores |
 | Límite | Las imágenes anteriores siguen en el historial de Git y en los archivos «Source code» de las releases v0.1.0, v0.1.1 y v0.2.0; no se reescribe el historial |
 
+## Invitar por correo · 2026-11-18
+
+| Campo | Detalle |
+|---|---|
+| Implementado | `backend/remote/invites.py`, `backend/remote/mailer.py`, ruta remota `POST /remote/api/invite/accept`, API local `/api/remote/invites` y `/api/remote/outbox`, pantalla «Confirme su correo» en la vista remota y tarjeta «Invitar por correo» en la aplicación; base de datos v3 |
+| Seguridad | Token de 256 bits guardado como SHA-256 y enviado en el fragmento de la URL; correo como segunda llave; un solo uso atómico; caducidad; bloqueo tras 3 correos erróneos; 5 fallos/min por IP; permisos por sesión como intersección con lo que comparte la PC; mismo mensaje para cualquier fallo |
+| Pruebas | 12 pruebas nuevas (`tests/backend/test_invites.py`, incluida la actualización desde una base v2), 198 en total; flujo completo en el navegador con instancias aisladas en 127.0.0.1 |
+| No probado | Envío SMTP con un servidor real (solo simulado); uso desde un celular físico |
+

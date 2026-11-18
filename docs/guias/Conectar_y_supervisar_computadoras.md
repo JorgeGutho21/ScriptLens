@@ -59,6 +59,31 @@ solo lectura**: desde otro dispositivo se puede mirar, pero no cerrar programas,
 9. **Vea los procesos.** La tarjeta «Programas con mayor consumo» se ordena por CPU o RAM. Solo se comparten nombres y
    consumo; nunca rutas, usuarios ni líneas de comando. El propietario puede ocultarla en «Qué puede ver el otro dispositivo».
 
+### Invitar a una persona por correo
+
+En lugar del código de 6 cifras, el propietario puede enviar un **enlace de un solo uso** a un correo concreto.
+
+1. Con el acceso remoto activo, en **Acceso remoto → Invitar por correo**, escriba el correo de la persona, marque qué
+   podrá ver además del rendimiento (programas, seguridad, estadísticas), cuánto tarda en caducar el enlace si no se
+   abre (15 min a 24 h) y cuánto dura el acceso una vez abierto (1 a 12 h). Pulse **Enviar invitación**.
+2. **Modo de prueba (predeterminado):** el correo no sale de la PC; se guarda como archivo `.eml` en la carpeta que
+   indica la pantalla. Ábralo con su programa de correo y reenvíelo, o pulse **Copiar enlace**.
+3. La persona abre el enlace desde la **misma red**. La página borra el enlace de la barra de direcciones y le pide
+   que escriba **su correo**. Si coincide con el de la invitación, entra en la vista de solo lectura con los permisos
+   marcados. Un correo distinto, un enlace usado o caducado reciben el mismo mensaje de error, y tres correos
+   erróneos bloquean la invitación.
+4. En la lista de invitaciones verá si está **Pendiente**, **Usada**, **Caducada**, **Revocada** o **Bloqueada**.
+   **Anular** inutiliza un enlace no usado y **Quitar acceso** cierra la sesión de quien ya entró.
+
+![Tarjeta «Invitar por correo» con una invitación pendiente](../capturas/35_invitar_por_correo.png)
+
+<img src="../capturas/36_celular_confirmar_correo.png" width="220" alt="El destinatario confirma su correo"> <img src="../capturas/37_celular_invitacion_en_vivo.png" width="220" alt="Vista en vivo con los permisos de la invitación">
+
+Para enviar correos reales, defina antes de abrir ScriptLens las variables `SCRIPTLENS_MAIL_MODE=smtp`,
+`SCRIPTLENS_SMTP_HOST`, `SCRIPTLENS_SMTP_PORT`, `SCRIPTLENS_SMTP_USER`, `SCRIPTLENS_SMTP_PASSWORD` y
+`SCRIPTLENS_SMTP_FROM` (por ejemplo, con una contraseña de aplicación de su proveedor). El envío SMTP real **no se ha
+probado** todavía con un servidor externo; solo con un servidor simulado en las pruebas automáticas.
+
 ## Parte 2 — Supervisar varias computadoras
 
 10. **Conecte una segunda computadora.** En la segunda PC instale ScriptLens y active el acceso remoto (pasos 2 a 4).
@@ -139,5 +164,6 @@ problema es el firewall o el acceso remoto está apagado; si nada responde, hay 
 - **Probado en este proyecto:** acceso remoto por HTTPS a través de la IP de red local (192.168.1.20) desde un
   cliente que simula un segundo dispositivo, en Windows 11 Pro 25H2; dos agentes y una consola reales en el mismo
   equipo (pruebas automáticas y prueba visual); revocación, pausa, huella alterada y operaciones prohibidas.
+- **Invitaciones por correo:** probadas de punta a punta en el mismo equipo (127.0.0.1): creación desde la PC, archivo `.eml`, enlace abierto en una vista de celular, correo equivocado rechazado, permisos aplicados y reutilización rechazada.
 - **No probado todavía con hardware real:** un celular físico y dos computadoras físicas distintas. Ver
   `docs/desarrollo/ESTADO_v0.2.md` para el detalle y el procedimiento de la demostración en clase.

@@ -207,6 +207,7 @@ Guía completa paso a paso: [Conectar y supervisar computadoras con ScriptLens I
 4. En la PC pulse **Autorizar** si la frase de verificación coincide. El celular verá CPU, RAM, discos, red, procesos y hallazgos en vivo, **sin poder cambiar nada**.
 5. Para supervisar otra PC: active el acceso remoto en ella y, en la PC principal, use **Conectar → Mis computadoras → Vincular computadora** con su IP y su código.
 6. **Desactivar y desconectar todo** revoca de inmediato a todos los dispositivos.
+7. **Invitar por correo** (en desarrollo, aún sin versión publicada): envía a un correo concreto un enlace de un solo uso; la persona confirma su correo al abrirlo y solo ve lo que usted marque. En modo de prueba el correo se guarda como archivo `.eml` en la PC. Detalles en la [guía](docs/guias/Conectar_y_supervisar_computadoras.md#invitar-a-una-persona-por-correo).
 
 Muchas redes universitarias aíslan a los dispositivos entre sí; en ese caso use el punto de acceso (hotspot) de un celular.
 
