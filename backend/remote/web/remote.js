@@ -167,7 +167,7 @@ function renderProcesses(p) {
     tr.append(name, el('td', `${x.cpu_prom_1min_pct.toFixed(1)} %`), el('td', `${x.ram_mb.toFixed(0)} MB`))
     return tr
   }))
-  $('proc-note').textContent = `${p.criterio}. Medido a las ${hhmm(p.medido_en)}.`
+  $('proc-note').textContent = `${p.criterio}. Medido a las ${hhmm(p.medido_en)}`
 }
 
 function renderFindings(f) {
@@ -198,7 +198,7 @@ function renderFindings(f) {
 function renderStats(st) {
   if (!st || !st.disponible) { $('stats-card').hidden = true; return }
   $('stats-card').hidden = false
-  const rows = [['Tiempo encendido hoy', dur(st.encendido_s)], ['Uso activo hoy', dur(st.activo_s)], ['CPU promedio', pct(st.cpu_prom)], ['RAM promedio', pct(st.ram_prom)]]
+  const rows = [['Desde el último arranque', dur(st.encendido_s)], ['Uso activo hoy', dur(st.activo_s)], ['CPU promedio', pct(st.cpu_prom)], ['RAM promedio', pct(st.ram_prom)]]
   if (st.primer_arranque) rows.push(['Primer encendido', dateTime(st.primer_arranque)])
   $('stats').replaceChildren(...rows.flatMap(([k, v]) => [el('dt', k), el('dd', v)]))
 }
