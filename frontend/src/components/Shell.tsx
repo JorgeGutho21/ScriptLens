@@ -1,11 +1,15 @@
 import {
+  BarChart3,
   Bot,
+  ClipboardCheck,
   FileCode2,
   FileText,
   GitCompareArrows,
   Info,
   LayoutDashboard,
   ListTree,
+  MonitorSmartphone,
+  Network,
   Moon,
   Settings,
   ShieldCheck,
@@ -19,26 +23,69 @@ import { usePrefs } from '../lib/prefs'
 import { APP_VERSION } from '../version'
 import { Logo } from './Logo'
 
-export type PageId = 'panel' | 'procesos' | 'optimizar' | 'seguridad' | 'scripts' | 'asistente' | 'comparar' | 'informes' | 'ajustes' | 'acerca'
+export type PageId =
+  | 'panel'
+  | 'procesos'
+  | 'estadisticas'
+  | 'optimizar'
+  | 'seguridad'
+  | 'auditoria'
+  | 'scripts'
+  | 'equipos'
+  | 'remoto'
+  | 'asistente'
+  | 'comparar'
+  | 'informes'
+  | 'ajustes'
+  | 'acerca'
 
-export const NAV: { id: PageId; label: string; icon: ReactNode}[] = [
-  { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} /> },
-  { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} /> },
-  { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} /> },
-  { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} /> },
-  { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} /> },
-  { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} /> },
-  { id: 'comparar', label: 'Comparar mi PC', icon: <GitCompareArrows size={18} /> },
-  { id: 'informes', label: 'Informes', icon: <FileText size={18} /> },
+type NavItem = { id: PageId; label: string; icon: ReactNode }
+
+// Agrupado por lo que la persona quiere hacer, no por módulo técnico.
+export const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
+  {
+    title: 'Mi PC',
+    items: [
+      { id: 'panel', label: 'Panel general', icon: <LayoutDashboard size={18} /> },
+      { id: 'procesos', label: 'Procesos', icon: <ListTree size={18} /> },
+      { id: 'estadisticas', label: 'Estadísticas', icon: <BarChart3 size={18} /> },
+      { id: 'optimizar', label: 'Optimizar', icon: <Wrench size={18} /> },
+    ],
+  },
+  {
+    title: 'Seguridad',
+    items: [
+      { id: 'seguridad', label: 'Seguridad', icon: <ShieldCheck size={18} /> },
+      { id: 'auditoria', label: 'Auditoría 30 controles', icon: <ClipboardCheck size={18} /> },
+      { id: 'scripts', label: 'Analizar scripts', icon: <FileCode2 size={18} /> },
+    ],
+  },
+  {
+    title: 'Conectar',
+    items: [
+      { id: 'equipos', label: 'Mis computadoras', icon: <Network size={18} /> },
+      { id: 'remoto', label: 'Acceso remoto', icon: <MonitorSmartphone size={18} /> },
+    ],
+  },
+  {
+    title: 'Herramientas',
+    items: [
+      { id: 'asistente', label: 'Asistente IA', icon: <Bot size={18} /> },
+      { id: 'comparar', label: 'Historial', icon: <GitCompareArrows size={18} /> },
+      { id: 'informes', label: 'Informes', icon: <FileText size={18} /> },
+    ],
+  },
 ]
 
-const BOTTOM: typeof NAV = [
-  { id: 'ajustes', label: 'Ajustes', icon: <Settings size={18} /> },
+export const NAV: NavItem[] = NAV_GROUPS.flatMap((g) => g.items)
+
+const BOTTOM: NavItem[] = [
+  { id: 'ajustes', label: 'Configuración', icon: <Settings size={18} /> },
   { id: 'acerca', label: 'Acerca de', icon: <Info size={18} /> },
 ]
 
 export function Sidebar({ page, onNavigate }: { page: PageId; onNavigate: (p: PageId) => void }) {
-  const item = (n: (typeof NAV)[number]) => {
+  const item = (n: NavItem) => {
     const active = n.id === page
     return (
       <li key={n.id}>
@@ -46,7 +93,8 @@ export function Sidebar({ page, onNavigate }: { page: PageId; onNavigate: (p: Pa
           type="button"
           onClick={() => onNavigate(n.id)}
           aria-current={active ? 'page' : undefined}
-          className={`group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${
+          title={n.label}
+          className={`group relative flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm transition-colors ${
             active ? 'bg-accent-soft font-medium text-fg' : 'text-muted hover:bg-surface-2 hover:text-fg'
           }`}
         >
@@ -58,8 +106,8 @@ export function Sidebar({ page, onNavigate }: { page: PageId; onNavigate: (p: Pa
     )
   }
   return (
-    <nav aria-label="Navegación principal" className="flex w-[68px] shrink-0 flex-col border-r border-line bg-surface/60 px-2.5 py-4 backdrop-blur lg:w-[244px] lg:px-3.5">
-      <div className="mb-6 px-1.5">
+    <nav aria-label="Navegación principal" className="flex w-[68px] shrink-0 flex-col overflow-y-auto border-r border-line bg-surface/60 px-2.5 py-4 backdrop-blur lg:w-[244px] lg:px-3.5">
+      <div className="mb-4 px-1.5">
         <div className="hidden lg:block">
           <Logo />
         </div>
@@ -67,12 +115,16 @@ export function Sidebar({ page, onNavigate }: { page: PageId; onNavigate: (p: Pa
           <Logo compact />
         </div>
       </div>
-      <ul className="flex flex-col gap-1">{NAV.map(item)}</ul>
-      <ul className="mt-auto flex flex-col gap-1 border-t border-line pt-3">{BOTTOM.map(item)}</ul>
+      {NAV_GROUPS.map((g) => (
+        <div key={g.title} className="mb-2">
+          <div className="hidden px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-faint lg:block">{g.title}</div>
+          <ul className="flex flex-col gap-0.5">{g.items.map(item)}</ul>
+        </div>
+      ))}
+      <ul className="mt-auto flex flex-col gap-0.5 border-t border-line pt-3">{BOTTOM.map(item)}</ul>
     </nav>
   )
 }
-
 export function TopBar({ title }: { title: string }) {
   const { summary, error } = useMetrics()
   const { prefs, update } = usePrefs()

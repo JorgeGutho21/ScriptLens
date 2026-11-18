@@ -15,6 +15,10 @@ import { OptimizePage } from './pages/Optimize'
 import { AssistantPage } from './pages/Assistant'
 import { ReportsPage } from './pages/Reports'
 import { AboutPage, SettingsPage } from './pages/Other'
+import { RemotePage } from './pages/Remote'
+import { FleetPage } from './pages/Fleet'
+import { StatsPage } from './pages/Stats'
+import { Audit30Page } from './pages/Audit30'
 
 const TITLES: Record<PageId, string> = {
   panel: 'Panel general',
@@ -23,9 +27,13 @@ const TITLES: Record<PageId, string> = {
   seguridad: 'Centro de seguridad',
   scripts: 'Analizador de scripts',
   asistente: 'Asistente inteligente',
-  comparar: 'Comparar mi computador',
+  comparar: 'Historial y comparación',
   informes: 'Informes',
-  ajustes: 'Ajustes',
+  estadisticas: 'Estadísticas de mi PC',
+  auditoria: 'Auditoría de Windows — 30 controles',
+  equipos: 'Mis computadoras',
+  remoto: 'Acceso remoto',
+  ajustes: 'Configuración',
   acerca: 'Acerca de ScriptLens',
 }
 
@@ -82,6 +90,10 @@ function Main() {
           {page === 'optimizar' && <OptimizePage goProcesses={() => setPage('procesos')} />}
           {page === 'ajustes' && <SettingsPage />}
           {page === 'acerca' && <AboutPage />}
+          {page === 'remoto' && <RemotePage />}
+          {page === 'equipos' && <FleetPage />}
+          {page === 'estadisticas' && <StatsPage />}
+          {page === 'auditoria' && <Audit30Page />}
           </ErrorBoundary>
         </main>
         <Footer />

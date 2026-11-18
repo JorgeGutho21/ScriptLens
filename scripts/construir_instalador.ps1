@@ -28,6 +28,7 @@ Write-Host '1/3 Empaquetando el motor de análisis (PyInstaller)…'
   --distpath build\backend --workpath build\pyinstaller --specpath build `
   --paths $root `
   --add-data "$root\backend\scripts\data;backend\scripts\data" `
+  --add-data "$root\backend\remote\web;backend\remote\web" `
   --collect-submodules uvicorn --collect-submodules backend `
   --hidden-import sklearn.utils._typedefs --hidden-import sklearn.neighbors._partition_nodes `
   --exclude-module tkinter --exclude-module matplotlib --exclude-module IPython --exclude-module pytest `

@@ -9,10 +9,11 @@ from __future__ import annotations
 
 import json
 import re
+import threading
 import time
 from typing import Iterator
 
-from . import fallback, llm, tools
+from . import fallback, instant, llm, tools
 from .router import route
 from .verify import verify
 
@@ -47,11 +48,25 @@ def gather(engine, question: str) -> tuple[dict, dict]:
     return r, data
 
 
-def _messages(question: str, data: dict, history: list[dict]) -> list[dict]:
-    datos = json.dumps(data, ensure_ascii=False, default=str)
-    msgs = [{"role": "system", "content": SYSTEM_PROMPT}]
-    for h in history[-4:]:
-        msgs.append({"role": h["role"], "content": h["content"][:1500]})
+MODES = ("auto", "inmediata", "rapida", "detallada")
+SHORT = "\n9. Modo rápido: responde en 2 a 5 frases, sin repetir todas las cifras."
+
+
+def _compact(x, limit: int):
+    """Reduce listas largas y elimina vacíos: menos tokens de entrada → respuesta antes."""
+    if isinstance(x, dict):
+        return {k: _compact(v, limit) for k, v in x.items() if v not in (None, "", [], {})}
+    if isinstance(x, list):
+        return [_compact(v, limit) for v in x[:limit]]
+    return x
+
+
+def _messages(question: str, data: dict, history: list[dict], modo: str = "detallada") -> list[dict]:
+    fast = modo == "rapida"
+    datos = json.dumps(_compact(data, 5 if fast else 8), ensure_ascii=False, default=str, separators=(",", ":"))
+    msgs = [{"role": "system", "content": SYSTEM_PROMPT + (SHORT if fast else "")}]
+    for h in history[-(2 if fast else 4):]:
+        msgs.append({"role": h["role"], "content": h["content"][: 600 if fast else 1500]})
     msgs.append(
         {
             "role": "user",
@@ -61,38 +76,61 @@ def _messages(question: str, data: dict, history: list[dict]) -> list[dict]:
     return msgs
 
 
-def ask(engine, question: str, model: str | None, history: list[dict], use_ai: bool = True) -> Iterator[dict]:
+def _pick_model(modo: str, requested: str | None, st: dict) -> str:
+    if requested:
+        return requested
+    if modo == "rapida" and llm.has_model(llm.FAST_MODEL, st):
+        return llm.FAST_MODEL
+    return llm.DEFAULT_MODEL
+
+
+def ask(engine, question: str, model: str | None, history: list[dict], use_ai: bool = True, modo: str | None = None, cancel: threading.Event | None = None) -> Iterator[dict]:
+    """Responde en streaming. ``modo``: auto (por defecto), inmediata, rapida o detallada."""
     t0 = time.time()
+    modo = modo if modo in MODES else "auto"
     r, data = gather(engine, question)
     yield {"type": "route", "intenciones": r["intenciones"], "herramientas": list(data.keys())}
 
-    status = llm.status() if use_ai else {"instalado_o_activo": False, "modelos": []}
-    model = model or llm.DEFAULT_MODEL
-    available = status["instalado_o_activo"] and any(m == model or m == model + ":latest" for m in status["modelos"])
+    # 1) Respuesta inmediata: datos concretos sin explicación → no se espera al modelo.
+    if modo == "inmediata" or (modo == "auto" and instant.can_answer(r, question)):
+        text = instant.answer(r, data) if instant.can_answer(r, question) else fallback.answer(r, data)
+        yield {"type": "token", "text": text}
+        yield {"type": "done", "answer": text, "modo": "inmediata", "motivo": None, "modelo": None, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 2)}
+        return
 
-    if not available:
+    gen_mode = "rapida" if modo in ("auto", "rapida") else "detallada"
+    status = llm.status() if use_ai else {"instalado_o_activo": False, "modelos": []}
+    model = _pick_model(gen_mode, model, status)
+    if not llm.has_model(model, status):
         text = fallback.answer(r, data)
         motivo = "Asistente sin IA: Ollama no está activo." if use_ai and not status["instalado_o_activo"] else ("Asistente sin IA: el modelo no está descargado." if use_ai else "Modo sin IA seleccionado.")
         yield {"type": "token", "text": text}
-        yield {"type": "done", "answer": text, "modo": "sin_ia", "motivo": motivo, "modelo": None, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 1)}
+        yield {"type": "done", "answer": text, "modo": "sin_ia", "motivo": motivo, "modelo": None, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 2)}
         return
 
     pieces: list[str] = []
+    stats: dict = {}
     try:
         if model in THINKING_MODELS:
             # Los modelos de razonamiento escriben su «pensamiento» antes de la respuesta: se descarta.
-            full = "".join(llm.chat_stream(model, _messages(question, data, history), num_predict=3000))
+            full = "".join(llm.chat_stream(model, _messages(question, data, history, gen_mode), gen_mode, stats, cancel, num_predict=3000))
             text = full.split("</think>")[-1].strip()
             yield {"type": "token", "text": text}
             pieces = [text]
         else:
-            for piece in llm.chat_stream(model, _messages(question, data, history)):
+            for piece in llm.chat_stream(model, _messages(question, data, history, gen_mode), gen_mode, stats, cancel):
                 pieces.append(piece)
                 yield {"type": "token", "text": piece}
     except Exception as e:  # noqa: BLE001 — Ollama caído a mitad de respuesta
+        llm.invalidate_status()
         text = fallback.answer(r, data)
         yield {"type": "token", "text": ("\n\n" if pieces else "") + text}
-        yield {"type": "done", "answer": "".join(pieces) + text, "modo": "sin_ia", "motivo": f"El modelo local falló ({e}); se respondió con los datos medidos.", "modelo": model, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 1)}
+        yield {"type": "done", "answer": "".join(pieces) + text, "modo": "sin_ia", "motivo": f"El modelo local falló ({e}); se respondió con los datos medidos.", "modelo": model, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 2)}
         return
     text = "".join(pieces).strip()
-    yield {"type": "done", "answer": text, "modo": "ia", "motivo": None, "modelo": model, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 1)}
+    if stats.get("cancelada"):
+        yield {"type": "done", "answer": text + " […]", "modo": "cancelada", "motivo": "Respuesta cancelada por el usuario.", "modelo": model, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 2), "estadisticas": stats}
+        return
+    proc = next((m["procesador"] for m in llm.loaded() if m["modelo"].startswith(model)), None)
+    stats["procesador"] = proc
+    yield {"type": "done", "answer": text, "modo": gen_mode, "motivo": None, "modelo": model, "verificacion": verify(text, data), "evidencia": data, "segundos": round(time.time() - t0, 2), "estadisticas": stats}

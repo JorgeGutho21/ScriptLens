@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import threading
 import time
 
 from fastapi import APIRouter, HTTPException
@@ -17,6 +18,8 @@ class AskReq(BaseModel):
     conversacion_id: int | None = None
     modelo: str | None = Field(default=None, pattern=r"^[\w.:\-]{1,60}$")
     usar_ia: bool = True
+    modo: str = Field(default="auto", pattern=r"^(auto|inmediata|rapida|detallada)$")
+    solicitud_id: str | None = Field(default=None, pattern=r"^[\w-]{8,64}$")
 
 
 class PullReq(BaseModel):
@@ -27,11 +30,27 @@ class PullReq(BaseModel):
 def router(engine) -> APIRouter:
     r = APIRouter(prefix="/api/assistant")
     db = engine.db
+    running: dict[str, threading.Event] = {}
 
     @r.get("/status")
     def status():
-        s = llm.status()
-        return {**s, "modelo_predeterminado": llm.DEFAULT_MODEL, "modelos_sugeridos": llm.MODELS}
+        s = llm.status(cached=False)
+        return {**s, "modelo_predeterminado": llm.DEFAULT_MODEL, "modelo_rapido": llm.FAST_MODEL, "modelos_sugeridos": llm.MODELS, "cargados": llm.loaded() if s["instalado_o_activo"] else []}
+
+    @r.post("/warmup")
+    def warmup(modo: str = "rapida"):
+        """Carga el modelo en memoria para que la primera respuesta no espere la carga."""
+        model = llm.FAST_MODEL if modo == "rapida" and llm.has_model(llm.FAST_MODEL) else llm.DEFAULT_MODEL
+        if not llm.has_model(model):
+            raise HTTPException(409, "El modelo no está descargado.")
+        return {"modelo": model, "cargado": llm.warmup(model)}
+
+    @r.post("/cancel/{sid}")
+    def cancel(sid: str):
+        ev = running.get(sid)
+        if ev:
+            ev.set()
+        return {"cancelada": bool(ev)}
 
     @r.post("/ask")
     def ask(req: AskReq):
@@ -45,15 +64,28 @@ def router(engine) -> APIRouter:
         elif save:
             cid = db.execute("INSERT INTO conversations(created_at, title) VALUES (?, ?)", (time.time(), req.pregunta[:80])).lastrowid
 
+        cancel = threading.Event()
+        if req.solicitud_id:
+            running[req.solicitud_id] = cancel
+
         def events():
+            try:
+                yield from _events()
+            finally:
+                # Si la interfaz cierra la conexión, también se detiene la generación.
+                cancel.set()
+                if req.solicitud_id:
+                    running.pop(req.solicitud_id, None)
+
+        def _events():
             if cid is not None and save:
                 db.execute("INSERT INTO messages(conversation_id, created_at, role, content) VALUES (?,?,?,?)", (cid, time.time(), "user", req.pregunta))
             yield json.dumps({"type": "conversation", "id": cid if save else None}) + "\n"
-            for ev in service.ask(engine, req.pregunta, req.modelo, history, req.usar_ia):
+            for ev in service.ask(engine, req.pregunta, req.modelo, history, req.usar_ia, req.modo, cancel):
                 if ev["type"] == "done" and cid is not None and save:
                     db.execute(
                         "INSERT INTO messages(conversation_id, created_at, role, content, evidence_json) VALUES (?,?,?,?,?)",
-                        (cid, time.time(), "assistant", ev["answer"], json.dumps({k: ev[k] for k in ("modo", "modelo", "verificacion")}, default=str)),
+                        (cid, time.time(), "assistant", ev["answer"], json.dumps({k: ev.get(k) for k in ("modo", "modelo", "verificacion", "segundos", "estadisticas")}, default=str)),
                     )
                 yield json.dumps(ev, ensure_ascii=False, default=str) + "\n"
 

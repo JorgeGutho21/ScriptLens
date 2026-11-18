@@ -1,0 +1,185 @@
+{
+ "etiqueta": "antes_qwen3-4b-instruct",
+ "fecha": "2026-11-18 01:36",
+ "equipo": {
+  "so": "Windows 11 10.0.26200",
+  "procesador": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel"
+ },
+ "ollama": {
+  "instalado_o_activo": true,
+  "version": "0.40.16",
+  "modelos": [
+   "qwen3:1.7b",
+   "qwen3:4b-instruct",
+   "qwen3:4b",
+   "lfm3-vl:latest"
+  ]
+ },
+ "modelo": "qwen3:4b-instruct",
+ "modo": null,
+ "memoria_ollama": [
+  {
+   "modelo": "qwen3:4b-instruct",
+   "ram_total_mb": 3959,
+   "vram_mb": 2194
+  }
+ ],
+ "mediana": {
+  "primer_fragmento_s": 7.0,
+  "total_s": 32.68,
+  "tokens_por_s": 6.0
+ },
+ "verificadas": 10,
+ "resultados": [
+  {
+   "pregunta": "¿Por qué mi computador está lento?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 33.46,
+   "total_s": 65.92,
+   "fragmentos": 143,
+   "tokens_generados": null,
+   "tokens_por_s": 4.4,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 3,
+   "no_verificadas": [],
+   "respuesta": "Tu computador está lento principalmente porque Chrome y otros programas usan mucha memoria RAM. Chrome tiene 25 instancias y ocupa más de 4 GB, lo que es alto para un equipo con 31.8 GB de RAM. Además, msedgewebview2.exe y OneDrive también usan CPU y RAM en segundo plano. El disco C: está en uso del 32%, lo que no es un problema grave, pero el alto uso de memoria puede ralentizar el sistema. Si qu"
+  },
+  {
+   "pregunta": "¿Qué programa consume más RAM?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 6.63,
+   "total_s": 20.1,
+   "fragmentos": 85,
+   "tokens_generados": null,
+   "tokens_por_s": 6.3,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 2,
+   "no_verificadas": [],
+   "respuesta": "El programa que consume más RAM es **chrome.exe**, con 4.314 MB (más de 4 GB).  \n\nEste consumo se debe a que tienes 24 instancias de Chrome abiertas, lo que puede afectar el rendimiento del equipo.  \n\nSi deseas, puedes revisar en ScriptLens si es posible cerrar algunas pestañas o instancias para liberar memoria."
+  },
+  {
+   "pregunta": "¿Qué proceso consume más CPU?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 7.0,
+   "total_s": 26.71,
+   "fragmentos": 140,
+   "tokens_generados": null,
+   "tokens_por_s": 7.1,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 4,
+   "no_verificadas": [],
+   "respuesta": "El proceso que consume más CPU es **llama-server.exe**, con un promedio de 36.7% en el último minuto.  \n\nAunque otros procesos como chrome.exe y claude.exe tienen muchas instancias, su uso promedio de CPU es menor (7.8% y 4.1% respectivamente).  \n\nEl sistema muestra un alto consumo general de CPU (93.1% promedio), lo que puede afectar el rendimiento, especialmente si se mantiene por mucho tiempo. "
+  },
+  {
+   "pregunta": "¿Qué tareas se ejecutan en segundo plano?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 6.45,
+   "total_s": 24.26,
+   "fragmentos": 125,
+   "tokens_generados": null,
+   "tokens_por_s": 7.0,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "En segundo plano se ejecutan varias tareas del sistema y aplicaciones. Entre ellas están servicios del sistema como \"svchost.exe\", que gestionan funciones esenciales de Windows. También se encuentran aplicaciones como Chrome, Edge, Spotify y herramientas como PowerShell (pwsh.exe) o DevHub. Algunas de estas, como \"claude.exe\" o \"llama-server.exe\", pueden estar relacionadas con inteligencia artific"
+  },
+  {
+   "pregunta": "¿Qué aplicaciones puedo cerrar sin afectar Windows?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 6.0,
+   "total_s": 32.68,
+   "fragmentos": 167,
+   "tokens_generados": null,
+   "tokens_por_s": 6.3,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Puedes cerrar las siguientes aplicaciones sin afectar a Windows, ya que no son componentes esenciales del sistema:\n\n- **devenv.exe** (Visual Studio, usada para desarrollo)\n- **chrome.exe** (Google Chrome)\n- **claude.exe** (una aplicación de inteligencia artificial)\n- **WhatsApp.Root.exe** (WhatsApp)\n- **Spotify.exe** (música)\n- **ApplicationFrameHost.exe** (soporte para ventanas de apps)\n- **Syste"
+  },
+  {
+   "pregunta": "¿Qué procesos requieren revisión?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 38.57,
+   "total_s": 68.8,
+   "fragmentos": 164,
+   "tokens_generados": null,
+   "tokens_por_s": 5.4,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "El proceso que requiere revisión es **llama-server.exe**, ya que consume mucho procesador de forma continua.  \n\nEste proceso se ejecuta en la ruta: `C:\\Users\\Usuario\\AppData\\Local\\Programs\\Ollama\\lib\\ollama\\llama-server.exe`.  \n\nNo hay otras amenazas activas detectadas por Microsoft Defender, pero se recomienda revisar el inicio automático de ciertos programas y tareas programadas, como \"SoyMicros"
+  },
+  {
+   "pregunta": "¿Hay programas sospechosos?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 6.05,
+   "total_s": 33.04,
+   "fragmentos": 161,
+   "tokens_generados": null,
+   "tokens_por_s": 6.0,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Sí, hay programas que requieren revisión.  \n\nEl antivirus (Microsoft Defender) detectó un **trozo de malware** llamado \"Trojan:Win32/ClickFix.OF!MTB\" en un comando de PowerShell.  \n\nAdemás, hay dos entradas de inicio automático que no están claras:  \n- \"SoyMicrosoft\" y \"EcoAccessLimpiarCarpetaVacia\", que podrían ser scripts no conocidos.  \n- Una tarea programada llamada \"EcoAccess P3 - vigilante d"
+  },
+  {
+   "pregunta": "¿Qué programas inician con Windows?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 8.76,
+   "total_s": 27.45,
+   "fragmentos": 111,
+   "tokens_generados": null,
+   "tokens_por_s": 5.9,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 0,
+   "no_verificadas": [],
+   "respuesta": "Los programas que inician con Windows son: **SoyMicrosoft**, **EcoAccessLimpiarCarpetaVacia** y **XMouseButtonControl**.\n\nEstos programas se ejecutan al arrancar el sistema, según el registro de inicio de Windows.  \nAlgunos de ellos ejecutan scripts o apuntan a archivos que no existen, lo que puede requerir revisión.  \nPara ver más detalles o gestionarlos, puedes abrir ScriptLens y revisar la secc"
+  },
+  {
+   "pregunta": "¿Cómo puedo mejorar el rendimiento?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 12.34,
+   "total_s": 64.88,
+   "fragmentos": 211,
+   "tokens_generados": null,
+   "tokens_por_s": 4.0,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 5,
+   "no_verificadas": [],
+   "respuesta": "El procesador está muy ocupado, especialmente por \"llama-server.exe\" y \"chrome.exe\", que usan mucho CPU y memoria. Chrome tiene 25 instancias y consume 4.29 GB de RAM, lo que puede ralentizar el sistema. \"llama-server.exe\" usa 2.1 GB de RAM y 34.5% de CPU promedio, lo que contribuye al alto uso del procesador. El disco C: está en un 32% de uso, lo que no es un problema grave.  \n\nPara mejorar el re"
+  },
+  {
+   "pregunta": "¿Qué está ocupando el disco?",
+   "modo": "ia",
+   "modelo": "qwen3:4b-instruct",
+   "primer_fragmento_s": 2.96,
+   "total_s": 19.47,
+   "fragmentos": 98,
+   "tokens_generados": null,
+   "tokens_por_s": 5.9,
+   "carga_modelo_s": null,
+   "tokens_prompt": null,
+   "cifras": 2,
+   "no_verificadas": [],
+   "respuesta": "No se puede determinar qué programas o archivos están ocupando el disco con los datos disponibles. El porcentaje de uso (32,2%) y el espacio libre (645,6 GB) indican el estado general del almacenamiento, pero no muestran qué procesos o archivos específicos ocupan el espacio. Para ver qué está usando el disco, debes consultar la sección \"Procesos\" o \"Uso del disco\" en ScriptLens."
+  }
+ ]
+}

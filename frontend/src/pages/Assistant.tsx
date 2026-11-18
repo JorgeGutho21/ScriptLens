@@ -1,21 +1,34 @@
-import { Bot, CheckCircle2, ChevronRight, Cpu, Download, HardDrive, History, Lock, MessageSquarePlus, RefreshCcw, Send, ShieldCheck, Trash2, TriangleAlert, User } from 'lucide-react'
+import { Bot, CheckCircle2, ChevronRight, Cpu, Download, HardDrive, History, Lock, MessageSquarePlus, RefreshCcw, Send, ShieldCheck, Square, Trash2, TriangleAlert, User, Zap } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Confirm } from '../components/Confirm'
 import { Card } from '../components/ui'
-import { api, apiDelete, apiStream, openLink } from '../lib/api'
+import { api, apiDelete, apiPost, apiStream, openLink } from '../lib/api'
+import { useMetrics } from '../lib/metrics'
 
 interface Status {
   instalado_o_activo: boolean
   version: string | null
   modelos: string[]
   modelo_predeterminado: string
+  modelo_rapido: string
+  cargados: { modelo: string; ram_mb: number; vram_mb: number; procesador: string }[]
   modelos_sugeridos: { id: string; nombre: string; descarga_gb: number; ram_gb: number; nota: string }[]
 }
 
 interface Msg {
   role: 'user' | 'assistant'
   content: string
-  meta?: { modo?: 'ia' | 'sin_ia'; motivo?: string | null; modelo?: string | null; verificacion?: { cifras: number; no_verificadas: string[]; verificada: boolean }; evidencia?: Record<string, unknown>; segundos?: number; herramientas?: string[] }
+  meta?: {
+    modo?: 'inmediata' | 'rapida' | 'detallada' | 'sin_ia' | 'cancelada' | 'ia'
+    motivo?: string | null
+    modelo?: string | null
+    verificacion?: { cifras: number; no_verificadas: string[]; verificada: boolean }
+    evidencia?: Record<string, unknown>
+    segundos?: number
+    herramientas?: string[]
+    estadisticas?: { eval_count?: number; eval_s?: number; load_s?: number; procesador?: string | null }
+    primer_fragmento?: number
+  }
 }
 
 const SUGERENCIAS = [
@@ -30,6 +43,17 @@ const SUGERENCIAS = [
   '¿Qué cambios hubo desde el último análisis?',
   'Explícame este script línea por línea',
 ]
+
+type Mode = 'auto' | 'inmediata' | 'rapida' | 'detallada'
+
+const MODES: { id: Mode; label: string; hint: string }[] = [
+  { id: 'auto', label: 'Automático', hint: 'Datos simples al instante; el resto con IA rápida' },
+  { id: 'inmediata', label: 'Inmediata', hint: 'Solo datos medidos, sin IA' },
+  { id: 'rapida', label: 'IA rápida', hint: 'Respuestas breves (Qwen3 1.7B si está descargado)' },
+  { id: 'detallada', label: 'IA detallada', hint: 'Explicaciones más completas (Qwen3 4B Instruct)' },
+]
+
+const MODE_ES: Record<string, string> = { inmediata: 'Respuesta inmediata', rapida: 'IA rápida', detallada: 'IA detallada', ia: 'IA local', sin_ia: 'Sin IA', cancelada: 'Cancelada' }
 
 const TOOL_ES: Record<string, string> = {
   resumen_rendimiento: 'Rendimiento del último minuto',
@@ -51,7 +75,11 @@ const TOOL_ES: Record<string, string> = {
 export function AssistantPage() {
   const [status, setStatus] = useState<Status | null>(null)
   const [model, setModel] = useState<string>('')
-  const [useAi, setUseAi] = useState(true)
+  const [mode, setMode] = useState<Mode>('auto')
+  const abort = useRef<AbortController | null>(null)
+  const reqId = useRef<string | null>(null)
+  const warmed = useRef(false)
+  const { summary } = useMetrics()
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [conv, setConv] = useState<number | null>(null)
   const [input, setInput] = useState('')
@@ -64,7 +92,6 @@ export function AssistantPage() {
   const loadStatus = () =>
     api<Status>('/api/assistant/status').then((s) => {
       setStatus(s)
-      setModel((m) => m || (s.modelos.includes(s.modelo_predeterminado) ? s.modelo_predeterminado : s.modelos.find((x) => x.startsWith('qwen3')) ?? s.modelo_predeterminado))
     })
   const loadHistory = () => api<{ conversaciones: { id: number; created_at: number; title: string }[] }>('/api/assistant/conversations').then((r) => setHistory(r.conversaciones))
 
@@ -77,7 +104,20 @@ export function AssistantPage() {
     end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [msgs])
 
-  const ready = !!status?.instalado_o_activo && status.modelos.includes(model)
+  const ready = !!status?.instalado_o_activo && status.modelos.length > 0
+
+  // Precarga el modelo (solo si hay RAM libre suficiente) para que la primera respuesta no espere la carga.
+  useEffect(() => {
+    const free = summary?.current?.mem_available ?? 0
+    if (warmed.current || !ready || mode === 'inmediata' || free < 3.5 * 1024 ** 3) return
+    warmed.current = true
+    apiPost('/api/assistant/warmup', undefined, { modo: mode === 'detallada' ? 'detallada' : 'rapida' }).catch(() => {})
+  }, [ready, mode, summary])
+
+  const stop = async () => {
+    if (reqId.current) await apiPost(`/api/assistant/cancel/${reqId.current}`).catch(() => {})
+    abort.current?.abort()
+  }
 
   const send = async (q: string) => {
     if (!q.trim() || busy) return
@@ -86,16 +126,27 @@ export function AssistantPage() {
     setMsgs((m) => [...m, { role: 'user', content: q }, { role: 'assistant', content: '' }])
     try {
       let tools: string[] = []
-      for await (const ev of apiStream<Record<string, unknown>>('/api/assistant/ask', { pregunta: q, conversacion_id: conv, modelo: model || null, usar_ia: useAi })) {
+      const t0 = performance.now()
+      let first: number | undefined
+      abort.current = new AbortController()
+      reqId.current = crypto.randomUUID()
+      const body = { pregunta: q, conversacion_id: conv, modelo: model || null, usar_ia: mode !== 'inmediata', modo: mode, solicitud_id: reqId.current }
+      for await (const ev of apiStream<Record<string, unknown>>('/api/assistant/ask', body, abort.current.signal)) {
         if (ev.type === 'conversation' && ev.id) setConv(ev.id as number)
         if (ev.type === 'route') tools = ev.herramientas as string[]
-        if (ev.type === 'token') setMsgs((m) => m.map((x, i) => (i === m.length - 1 ? { ...x, content: x.content + (ev.text as string) } : x)))
+        if (ev.type === 'token') {
+          first ??= (performance.now() - t0) / 1000
+          setMsgs((m) => m.map((x, i) => (i === m.length - 1 ? { ...x, content: x.content + (ev.text as string) } : x)))
+        }
         if (ev.type === 'done')
-          setMsgs((m) => m.map((x, i) => (i === m.length - 1 ? { ...x, content: (ev.answer as string) || x.content, meta: { ...(ev as unknown as Msg['meta']), herramientas: tools } } : x)))
+          setMsgs((m) => m.map((x, i) => (i === m.length - 1 ? { ...x, content: (ev.answer as string) || x.content, meta: { ...(ev as unknown as Msg['meta']), herramientas: tools, primer_fragmento: first } } : x)))
       }
     } catch (e) {
-      setMsgs((m) => m.map((x, i) => (i === m.length - 1 ? { ...x, content: `No se pudo obtener respuesta: ${(e as Error).message}` } : x)))
+      const aborted = (e as Error).name === 'AbortError'
+      setMsgs((m) => m.map((x, i) => (i === m.length - 1 ? { ...x, content: aborted ? `${x.content} […]` : `No se pudo obtener respuesta: ${(e as Error).message}`, meta: aborted ? { modo: 'cancelada', motivo: 'Respuesta cancelada por el usuario.' } : x.meta } : x)))
     } finally {
+      abort.current = null
+      reqId.current = null
       setBusy(false)
       loadHistory()
     }
@@ -134,13 +185,19 @@ export function AssistantPage() {
           </div>
           <div className="min-w-0 flex-1">
             <div className="font-medium text-fg">Asistente de ScriptLens</div>
-            <div className="text-xs text-faint">{ready && useAi ? `IA local: ${model}` : 'Modo sin IA: respuestas con plantillas a partir de los datos medidos'}</div>
+            <div className="text-xs text-faint">{MODES.find((x) => x.id === mode)?.hint}{!ready && mode !== 'inmediata' ? ' · sin Ollama responde con los datos medidos' : ''}</div>
           </div>
-          <label className="flex items-center gap-2 text-xs text-muted">
-            <input type="checkbox" checked={useAi} onChange={(e) => setUseAi(e.target.checked)} className="accent-[var(--accent)]" /> Usar IA local
-          </label>
-          {status && status.modelos.length > 0 && (
+          <div role="radiogroup" aria-label="Modo de respuesta" className="flex flex-wrap rounded-xl border border-line bg-surface-2 p-0.5 text-xs">
+            {MODES.map((x) => (
+              <button key={x.id} type="button" role="radio" aria-checked={mode === x.id} title={x.hint} onClick={() => setMode(x.id)} className={`rounded-[10px] px-2.5 py-1 ${mode === x.id ? 'bg-accent text-white' : 'text-muted hover:text-fg'}`}>
+                {x.id === 'inmediata' && <Zap size={11} className="mr-1 inline" />}
+                {x.label}
+              </button>
+            ))}
+          </div>
+          {status && status.modelos.length > 0 && mode !== 'inmediata' && (
             <select value={model} onChange={(e) => setModel(e.target.value)} aria-label="Modelo" className="rounded-lg border border-line bg-surface-2 px-2 py-1 text-xs">
+              <option value="">Modelo según el modo</option>
               {status.modelos.map((m) => (
                 <option key={m}>{m}</option>
               ))}
@@ -192,9 +249,15 @@ export function AssistantPage() {
             aria-label="Pregunta para el asistente"
             className="flex-1 rounded-xl border border-line bg-surface-2 px-3.5 py-2.5 text-sm placeholder:text-faint"
           />
-          <button type="submit" disabled={busy || !input.trim()} aria-label="Enviar" className="grid w-11 place-items-center rounded-xl bg-accent text-white hover:bg-accent-strong disabled:opacity-50">
-            <Send size={17} />
-          </button>
+          {busy ? (
+            <button type="button" onClick={stop} aria-label="Detener la respuesta" title="Detener" className="grid w-11 place-items-center rounded-xl border border-danger/50 text-danger hover:bg-danger-soft">
+              <Square size={15} fill="currentColor" />
+            </button>
+          ) : (
+            <button type="submit" disabled={!input.trim()} aria-label="Enviar" className="grid w-11 place-items-center rounded-xl bg-accent text-white hover:bg-accent-strong disabled:opacity-50">
+              <Send size={17} />
+            </button>
+          )}
         </form>
       </div>
 
@@ -204,7 +267,13 @@ export function AssistantPage() {
             <p className="flex items-center gap-2 text-sm text-ok">
               <CheckCircle2 size={16} /> Ollama {status.version} activo
             </p>
-          ) : (
+          ) : null}
+          {status?.instalado_o_activo && status.cargados.length > 0 && (
+            <p className="mt-1 text-xs text-muted">
+              En memoria: {status.cargados.map((m) => `${m.modelo} (${m.procesador}, ${(m.ram_mb / 1024).toFixed(1)} GB)`).join(' · ')}
+            </p>
+          )}
+          {status && !status.instalado_o_activo && (
             <div className="flex flex-wrap items-center gap-2">
               <p className="flex items-center gap-2 text-sm text-warn">
                 <TriangleAlert size={16} /> Ollama no está instalado o no está abierto
@@ -219,8 +288,8 @@ export function AssistantPage() {
             <div className="mt-2 space-y-2 leading-relaxed">
               <p><strong className="text-fg">Ollama</strong> es un programa gratuito que ejecuta modelos de inteligencia artificial en su propio equipo.</p>
               <p className="flex gap-1.5"><Lock size={14} className="mt-0.5 shrink-0" /> Privacidad: las preguntas y los datos nunca salen del computador.</p>
-              <p className="flex gap-1.5"><HardDrive size={14} className="mt-0.5 shrink-0" /> Modelo recomendado: Qwen3 4B Instruct (descarga ≈ 2,5 GB).</p>
-              <p className="flex gap-1.5"><Cpu size={14} className="mt-0.5 shrink-0" /> Recursos: al menos 8 GB de RAM; con 4–5 GB libres responde en 10–30 s en un portátil sin tarjeta gráfica dedicada.</p>
+              <p className="flex gap-1.5"><HardDrive size={14} className="mt-0.5 shrink-0" /> Modelos: Qwen3 1.7B para el modo rápido (≈ 1,4 GB) y Qwen3 4B Instruct para el detallado (≈ 2,5 GB).</p>
+              <p className="flex gap-1.5"><Cpu size={14} className="mt-0.5 shrink-0" /> Recursos: al menos 8 GB de RAM. La velocidad depende del equipo; los tiempos medidos están en la documentación.</p>
               <ol className="list-decimal space-y-1 pl-5">
                 <li>Descargue Ollama desde su sitio oficial: <button onClick={() => openLink('https://ollama.com/download')} className="text-accent hover:underline">ollama.com/download</button>.</li>
                 <li>Instálelo y ábralo (queda en la bandeja del sistema).</li>
@@ -318,7 +387,14 @@ function MessageView({ m, streaming }: { m: Msg; streaming: boolean }) {
               ) : (
                 <span className="flex items-center gap-1 text-warn"><TriangleAlert size={13} /> Cifras no verificadas: {m.meta.verificacion.no_verificadas.join(', ')}. Tómelas con precaución.</span>
               ))}
-              <span className="text-faint">· {m.meta.modo === 'ia' ? `IA local (${m.meta.modelo})` : 'Sin IA'}{m.meta.segundos != null ? ` · ${m.meta.segundos} s` : ''}</span>
+              <span className="text-faint">
+                · {MODE_ES[m.meta.modo ?? ''] ?? 'Sin IA'}
+                {m.meta.modelo ? ` (${m.meta.modelo})` : ''}
+                {m.meta.primer_fragmento != null && m.meta.modo !== 'inmediata' ? ` · 1.ª palabra en ${m.meta.primer_fragmento.toFixed(1)} s` : ''}
+                {m.meta.segundos != null ? ` · total ${m.meta.segundos} s` : ''}
+                {m.meta.estadisticas?.eval_count && m.meta.estadisticas.eval_s ? ` · ${(m.meta.estadisticas.eval_count / m.meta.estadisticas.eval_s).toFixed(1)} palabras/s aprox.` : ''}
+                {m.meta.estadisticas?.procesador ? ` · ${m.meta.estadisticas.procesador}` : ''}
+              </span>
             </div>
             {m.meta.motivo && <div className="text-faint">{m.meta.motivo}</div>}
             {m.meta.evidencia && (

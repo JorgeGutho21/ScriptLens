@@ -8,7 +8,7 @@
   Termina cuando el instalador se cierra.
 .EXAMPLE
   PowerShell (raíz del repositorio):
-      .\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.1.1_x64-setup.exe
+      .\scripts\capturar-instalador.ps1 -Instalador .\build\release\ScriptLens-IA_0.2.0_x64-setup.exe
 #>
 param([Parameter(Mandatory)][string]$Instalador, [string]$Carpeta = 'docs\instalacion\capturas')
 $ErrorActionPreference = 'Stop'

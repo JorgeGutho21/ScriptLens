@@ -24,7 +24,7 @@
 
 ## Contenido
 
-[Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Licencias](#licencias) · [Soporte](#soporte)
+[Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Acceso remoto y varias PC](#ver-la-pc-desde-el-celular-y-supervisar-varias-computadoras) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Licencias](#licencias) · [Soporte](#soporte)
 
 ## Qué es
 
@@ -53,12 +53,18 @@ Las herramientas incluidas en Windows muestran cifras (porcentajes, identificado
 | Optimizar | Recomendaciones basadas en mediciones, cierre o finalización supervisados de procesos no protegidos, limpieza de temporales con vista previa, desinstaladores oficiales y registro de acciones con mediciones antes/después |
 | Seguridad | Microsoft Defender, firewall, inicio automático (activación/desactivación reversible), tareas programadas, servicios y eventos; cada hallazgo explica qué, dónde, por qué, evidencia, qué falta, consecuencias, qué hacer y qué evitar |
 | Analizar scripts | 43 reglas (24 del proyecto académico original), técnicas MITRE ATT&CK 20.1, desofuscación estática, flujo, explicación línea por línea y regresión logística balanceada sobre TF-IDF de n-gramas de caracteres |
-| Asistente IA | Ollama + Qwen3 4B Instruct, herramientas internas de solo lectura, verificación cifra por cifra y respuestas sin IA cuando Ollama no está instalado |
+| Estadísticas de mi PC | Historial por hora, día y semana de CPU, RAM, disco y red; tiempo desde el arranque, sesión y uso activo por separado; sesiones, horarios de actividad, procesos y (con consentimiento) aplicaciones más usadas; alertas por consumo sostenido; informes HTML y CSV |
+| Auditoría 30 controles | Los 30 controles de seguridad de Windows del taller (actualizaciones, firewall, Defender, RDP, SMB, WinRM, cuentas, UAC, BitLocker, Secure Boot, TPM, auditoría, PowerShell, recursos compartidos, servicios, AutoRun) con evidencia, explicación y recomendación; solo lectura; informes PDF y HTML |
+| Acceso remoto | Ver esta PC desde un celular u otra laptop de la misma red, por HTTPS y en modo de **solo lectura**, con código temporal, aprobación en la PC y revocación |
+| Mis computadoras | Consola para supervisar varias PC con ScriptLens: estado conectado/desconectado, última lectura, CPU, RAM, disco, alertas, historial y comparación |
+| Asistente IA | Respuesta inmediata con datos medidos para preguntas simples, modo IA rápida (Qwen3 1.7B) e IA detallada (Qwen3 4B Instruct) con Ollama, cancelación, verificación cifra por cifra y respuestas sin IA cuando Ollama no está instalado |
 | Comparar mi PC | Guarda diagnósticos en SQLite y compara dos momentos sin atribuir causas sin evidencia |
 | Informes | PDF y HTML con métricas, evidencias, recomendaciones, acciones y limitaciones |
 | Experiencia | Modo sencillo y avanzado, tema claro y oscuro, tamaño de texto, reducción de animaciones, glosario contextual y asistente de primera ejecución |
 
 <p>
+  <img src="docs/capturas/22_auditoria_30_controles.png" width="49%" alt="Auditoría de 30 controles">
+  <img src="docs/capturas/21_estadisticas.png" width="49%" alt="Estadísticas de mi PC">
   <img src="docs/capturas/05_detalle_proceso.png" width="49%" alt="Detalle de un proceso">
   <img src="docs/capturas/09_seguridad.png" width="49%" alt="Centro de seguridad">
   <img src="docs/capturas/10_analisis_script.png" width="49%" alt="Análisis de un script">
@@ -176,6 +182,19 @@ Se usa la variante *Instruct* porque `qwen3:4b` razona antes de responder: en el
 2. Espere un minuto en el **Panel general**: ScriptLens necesita ese tiempo para distinguir un consumo sostenido de un pico momentáneo.
 3. Abra **Seguridad** y pulse **Revisar ahora** (tarda entre 5 y 30 s).
 4. Lea el recuadro «Qué está pasando» del panel y los hallazgos marcados «Requiere revisión».
+
+## Ver la PC desde el celular y supervisar varias computadoras
+
+Guía completa paso a paso: [Conectar y supervisar computadoras con ScriptLens IA](docs/guias/Conectar_y_supervisar_computadoras.md).
+
+1. En la PC: **Acceso remoto → Activar acceso remoto**. Aparecen la dirección (por ejemplo `https://192.168.1.25:8765/`), un código de 6 cifras y la huella del certificado.
+2. Si Windows pregunta, permita el acceso solo en **Redes privadas**.
+3. En el celular, conectado a la **misma red** (o al hotspot del celular), abra la dirección, acepte el aviso del certificado tras comparar la huella y escriba el código.
+4. En la PC pulse **Autorizar** si la frase de verificación coincide. El celular verá CPU, RAM, discos, red, procesos y hallazgos en vivo, **sin poder cambiar nada**.
+5. Para supervisar otra PC: active el acceso remoto en ella y, en la PC principal, use **Mis computadoras → Vincular computadora** con su IP y su código.
+6. **Desactivar y desconectar todo** revoca de inmediato a todos los dispositivos.
+
+Muchas redes universitarias aíslan a los dispositivos entre sí; en ese caso use el punto de acceso (hotspot) de un celular.
 
 ## Qué hace cada módulo
 

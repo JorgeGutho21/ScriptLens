@@ -14,6 +14,8 @@ ScriptLens IA se distribuye bajo licencia MIT. Incluye o utiliza los siguientes 
 | [NumPy](https://github.com/numpy/numpy) · [SciPy](https://github.com/scipy/scipy) | BSD-3-Clause | Cálculo numérico (dependencias de scikit-learn) |
 | [joblib](https://github.com/joblib/joblib) | BSD-3-Clause | Guardar y cargar el modelo |
 | [reportlab](https://www.reportlab.com/opensource/) | BSD | Informes PDF |
+| [cryptography](https://github.com/pyca/cryptography) | Apache-2.0 o BSD-3-Clause | Certificado TLS propio del acceso remoto |
+| [Qwen3 1.7B](https://ollama.com/library/qwen3) (opcional, se descarga con Ollama) | Apache-2.0 | Modo «IA rápida» del asistente; no se distribuye con ScriptLens |
 | [PyInstaller](https://github.com/pyinstaller/pyinstaller) (bootloader) | GPL-2.0 con excepción de bootloader | Empaquetado del motor; la excepción permite distribuir programas empaquetados bajo cualquier licencia |
 | [Tauri](https://github.com/tauri-apps/tauri) · [tauri-plugin-single-instance](https://github.com/tauri-apps/plugins-workspace) | MIT / Apache-2.0 | Contenedor de escritorio, instalador NSIS, instancia única |
 | [NSIS](https://nsis.sourceforge.io/) | zlib/libpng | Instalador de Windows |

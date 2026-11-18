@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 APP_NAME = "ScriptLens IA"
-APP_VERSION = "0.1.1"
+APP_VERSION = "0.2.0"
 AUTHOR = "Jorge Gutiérrez"
 AUTHOR_GITHUB = "@JorgeGutho21"
 REPOSITORY_URL = "https://github.com/JorgeGutho21/ScriptLens"

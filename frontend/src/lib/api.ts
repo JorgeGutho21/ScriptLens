@@ -199,13 +199,13 @@ async function request<T>(method: string, path: string, params?: Record<string, 
 }
 
 /** POST con respuesta NDJSON (una línea JSON por evento), para respuestas en streaming. */
-export async function* apiStream<T>(path: string, body: unknown): AsyncGenerator<T> {
+export async function* apiStream<T>(path: string, body: unknown, signal?: AbortSignal): AsyncGenerator<T> {
   connection ??= resolveConnection().catch((e) => {
     connection = null
     throw e
   })
   const { baseUrl, token } = await connection
-  const res = await fetch(new URL(path, baseUrl), { method: 'POST', headers: { 'X-ScriptLens-Token': token, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  const res = await fetch(new URL(path, baseUrl), { method: 'POST', headers: { 'X-ScriptLens-Token': token, 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal })
   if (!res.ok || !res.body) {
     let detail = `Error ${res.status}`
     try {

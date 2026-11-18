@@ -86,6 +86,7 @@ def resumen_rendimiento(engine) -> dict:
         "procesos": cur.get("process_count"),
         "segundos_medidos": s["window_seconds"],
         "tiempo_encendido_h": round((time.time() - info["boot_time"]) / 3600, 1),
+        "ultimo_arranque": time.strftime("%d/%m/%Y %H:%M", time.localtime(info["boot_time"])),
         "hallazgos": [{"estado": f["estado"], "titulo": f["titulo"], "evidencia": f["evidencia"]} for f in s["findings"]],
     }
 
