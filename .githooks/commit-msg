@@ -1,0 +1,8 @@
+#!/bin/sh
+# Bloquea los coautores automáticos conocidos sin tocar los créditos de personas.
+patron='^co-authored-by:[[:space:]].*<(noreply@anthropic\.com|[0-9]+\+(claude|copilot(\[bot\])?|chatgpt-codex-connector\[bot\])@users\.noreply\.github\.com)>[[:space:]]*$'
+if git interpret-trailers --parse "$1" | grep -Eiq "$patron"
+then
+    echo "Retira el tráiler automático de la herramienta y vuelve a confirmar el commit." >&2
+    exit 1
+fi

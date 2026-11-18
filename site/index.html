@@ -8,11 +8,12 @@
   <meta name="author" content="Jorge Gutiérrez">
   <meta property="og:title" content="ScriptLens IA">
   <meta property="og:description" content="Diagnóstico, seguridad y auditoría de Windows con IA local verificada.">
-  <meta property="og:image" content="capturas/02_panel_general.png">
+  <meta property="og:image" content="https://jorgegutho21.github.io/ScriptLens/capturas/02_panel_general.png">
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+  <a class="boton saltar" href="#inicio">Ir al contenido</a>
   <header class="barra">
     <div class="contenedor barra-interior">
       <a class="marca" href="#inicio">
@@ -23,30 +24,165 @@
         <a href="#funciones">Funciones</a>
         <a href="#capturas">Capturas</a>
         <a href="#requisitos">Requisitos</a>
-        <a href="#descarga">Descarga</a>
+        <a href="#guia">Instalación</a>
         <a href="#documentos">Documentos</a>
       </nav>
     </div>
   </header>
 
-  <main id="inicio">
+  <main id="inicio" tabindex="-1">
     <section class="portada">
       <div class="contenedor portada-rejilla">
         <div>
-          <img class="portada-logo" src="logo.svg" alt="Logotipo de ScriptLens IA" width="88" height="88">
+          <img class="portada-logo" src="logo.svg" alt="" width="72" height="72">
           <h1>ScriptLens IA</h1>
-          <p class="lema">Sistema inteligente de diagnóstico, seguridad, auditoría y optimización supervisada de Windows.</p>
+          <p class="lema">Entiende qué hace lento tu PC, revisa su seguridad y analiza scripts sin ejecutarlos.</p>
           <p class="autor">Desarrollado por <strong>Jorge Gutiérrez</strong> · GitHub <a href="https://github.com/JorgeGutho21">@JorgeGutho21</a><br>
+            Docente: Oswaldo Rueda Carreño<br>
             Universidad Popular del Cesar · Ingeniería de Sistemas · ExpoSoftware 2026-II</p>
           <div class="acciones">
             <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar para Windows</a>
-            <a class="boton" href="docs/Guia_Instalacion_ScriptLens_IA.pdf">Guía de instalación</a>
+            <a class="boton" href="#guia">Guía de instalación</a>
           </div>
           <p class="nota">Versión 0.1.1 · Windows 10 y 11 de 64 bits · 49,3 MB · Gratuito y de código abierto (MIT)</p>
         </div>
         <figure class="portada-imagen">
           <img src="capturas/02_panel_general.png" alt="Panel general de ScriptLens IA con CPU, memoria, disco y red medidos en tiempo real" loading="eager">
         </figure>
+      </div>
+    </section>
+
+
+    <section class="seccion alterna" id="guia">
+      <div class="contenedor angosto">
+        <h2>Instala ScriptLens IA paso a paso</h2>
+        <ol class="guia-pasos">
+          <li>
+            <h3>Abre la página oficial</h3>
+            <p>En tu navegador, entra en <a href="https://jorgegutho21.github.io/ScriptLens/">jorgegutho21.github.io/ScriptLens/</a>. Comprueba que ves el nombre <strong>ScriptLens IA</strong> y el autor <strong>Jorge Gutiérrez</strong>.</p>
+          </li>
+          <li id="descarga">
+            <h3>Descarga la versión v0.1.1</h3>
+            <p>En el equipo Windows de 64 bits donde instalarás la aplicación, descarga <strong class="archivo">ScriptLens-IA_0.1.1_x64-setup.exe</strong> (49,3 MB) y su archivo de verificación. El navegador suele guardarlos en <strong>Descargas</strong>.</p>
+            <div class="acciones">
+              <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar instalador</a>
+              <a class="boton" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe.sha256">Descargar SHA-256</a>
+            </div>
+            <p>También puedes encontrar ambos archivos en <strong>Assets</strong> en la <a href="https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1">release v0.1.1 de GitHub</a>.</p>
+            <figure class="captura-guia">
+              <a href="instalacion/03_assets.png"><img src="instalacion/03_assets.png" loading="lazy" alt="Apartado Assets de la release v0.1.1 con el instalador y su archivo SHA-256"></a>
+              <figcaption>Figura 1. Archivos de la versión v0.1.1 en GitHub.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <h3>Verifica el archivo descargado</h3>
+            <p>Abre el <strong>Explorador de archivos</strong> con <kbd>Windows</kbd> + <kbd>E</kbd> y entra en la carpeta donde guardaste el instalador. Escribe <code>powershell</code> en la barra de direcciones del Explorador y pulsa <kbd>Enter</kbd>. En esa ventana, pega este comando y pulsa <kbd>Enter</kbd>.</p>
+            <pre><code>Get-FileHash ".\ScriptLens-IA_0.1.1_x64-setup.exe" -Algorithm SHA256</code></pre>
+            <p>El comando calcula la huella del archivo. Compara el valor de la columna <strong>Hash</strong> con el que aparece abajo o en la primera línea del archivo <code>.sha256</code>.</p>
+            <code class="huella">8006D5301CE4868B038BC3E2E83A0448A12C53F19C56579947EF9C9E6E795ABF</code>
+            <p>Si algún carácter difiere, no abras el instalador y vuelve a descargarlo desde esta página.</p>
+          </li>
+          <li>
+            <h3>Abre el instalador de Windows</h3>
+            <p>Vuelve al Explorador y haz doble clic en <strong class="archivo">ScriptLens-IA_0.1.1_x64-setup.exe</strong>. Si aparece «Windows protegió su PC», consulta <a href="#ayuda">Solución de errores</a>.</p>
+          </li>
+          <li>
+            <h3>Sigue las pantallas del asistente</h3>
+            <p>Las imágenes son capturas del instalador. Selecciona cualquiera para verla a tamaño completo.</p>
+            <div class="pantallas">
+              <figure class="captura-guia">
+                <a href="instalacion/10_instalador_bienvenida.png"><img src="instalacion/10_instalador_bienvenida.png" loading="lazy" alt="Pantalla de bienvenida con el botón Siguiente"></a>
+                <figcaption>Figura 2. En la bienvenida, pulsa <strong>Siguiente</strong>.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="instalacion/11_instalador_licencia.png"><img src="instalacion/11_instalador_licencia.png" loading="lazy" alt="Acuerdo de licencia MIT con el botón Acepto"></a>
+                <figcaption>Figura 3. Lee la licencia MIT. Si estás de acuerdo, pulsa <strong>Acepto</strong>.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="instalacion/12_instalador_ya_instalado.png"><img src="instalacion/12_instalador_ya_instalado.png" loading="lazy" alt="Opciones de mantenimiento para una instalación existente"></a>
+                <figcaption>Figura 4. Si ya tenías ScriptLens, elige <strong>Añadir o reinstalar componentes</strong> y pulsa <strong>Siguiente</strong>.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="instalacion/13_instalador_carpeta.png"><img src="instalacion/13_instalador_carpeta.png" loading="lazy" alt="Carpeta de instalación y botón Siguiente"></a>
+                <figcaption>Figura 5. Deja la carpeta propuesta (<code>%LOCALAPPDATA%\ScriptLens IA</code> en una instalación nueva) y pulsa <strong>Siguiente</strong>.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="instalacion/14_instalador_instalando.png"><img src="instalacion/14_instalador_instalando.png" loading="lazy" alt="Barra de progreso mientras se copian los archivos"></a>
+                <figcaption>Figura 6. Espera mientras se copian los archivos.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="instalacion/15_instalador_completado.png"><img src="instalacion/15_instalador_completado.png" loading="lazy" alt="Instalación completada con el botón Siguiente habilitado"></a>
+                <figcaption>Figura 7. Cuando se complete la instalación, pulsa <strong>Siguiente</strong>.</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li>
+            <h3>Finaliza la instalación</h3>
+            <figure class="captura-guia">
+              <a href="instalacion/16_instalador_finalizar.png"><img src="instalacion/16_instalador_finalizar.png" loading="lazy" alt="Pantalla final con opciones para ejecutar la aplicación y crear un acceso directo"></a>
+              <figcaption>Figura 8. Deja marcada <strong>Ejecutar ScriptLens IA</strong> para abrir la aplicación al terminar. El acceso directo del escritorio es opcional. Pulsa <strong>Terminar</strong>.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <h3>Abre ScriptLens IA</h3>
+            <p class="nota">Las capturas de la aplicación se tomaron en v0.1.0. Los pasos también se aplican a v0.1.1.</p>
+            <p>Abre <strong>Inicio</strong> en Windows, escribe <strong>ScriptLens IA</strong> y selecciona la aplicación. Si ya se abrió al terminar la instalación, sigue el asistente de bienvenida. Dale hasta 30 segundos para iniciar el motor la primera vez.</p>
+            <figure class="captura-guia">
+              <a href="capturas/01_bienvenida.png"><img src="capturas/01_bienvenida.png" loading="lazy" alt="Asistente de bienvenida dentro de ScriptLens IA"></a>
+              <figcaption>Figura 9. Asistente de primera ejecución.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <h3>Haz tu primer diagnóstico</h3>
+            <p>En el menú lateral, abre <strong>Panel general</strong>. Deja que la aplicación recopile alrededor de un minuto de mediciones. Revisa si el uso de CPU, memoria o disco se mantiene alto y lee las explicaciones del panel. Para conservar una referencia, ve a <strong>Comparar mi PC</strong> y pulsa <strong>Guardar diagnóstico</strong>.</p>
+            <figure class="captura-guia">
+              <a href="capturas/02_panel_general.png"><img src="capturas/02_panel_general.png" loading="lazy" alt="Panel general con mediciones de CPU, memoria, disco y red"></a>
+              <figcaption>Figura 10. Panel general con mediciones del equipo.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <h3>Consulta procesos, seguridad e informes</h3>
+            <ul class="modulos-guia">
+              <li><strong>Procesos.</strong> Busca un programa y selecciónalo para ver su ruta y firma. Revisa los detalles antes de decidir si lo cierras.</li>
+              <li><strong>Seguridad.</strong> Consulta el estado de Defender, firewall e inicio automático. Abre cada hallazgo para leer la evidencia y las sugerencias.</li>
+              <li><strong>Informes.</strong> Pulsa <strong>Crear PDF</strong> o <strong>Crear HTML</strong>. Para localizar el resultado, pulsa <strong>Abrir carpeta</strong> en <strong>Informes guardados</strong>.</li>
+            </ul>
+            <div class="pantallas">
+              <figure class="captura-guia">
+                <a href="capturas/04_procesos.png"><img src="capturas/04_procesos.png" loading="lazy" alt="Tabla de procesos con búsqueda y filtros"></a>
+                <figcaption>Figura 11. Lista de procesos.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="capturas/09_seguridad.png"><img src="capturas/09_seguridad.png" loading="lazy" alt="Resumen del centro de seguridad"></a>
+                <figcaption>Figura 12. Centro de seguridad.</figcaption>
+              </figure>
+              <figure class="captura-guia">
+                <a href="capturas/15_informes.png"><img src="capturas/15_informes.png" loading="lazy" alt="Pantalla de informes con los botones Crear PDF y Crear HTML"></a>
+                <figcaption>Figura 13. Generación de informes.</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li id="ayuda">
+            <h3>Soluciona errores habituales</h3>
+            <details>
+              <summary>PowerShell dice que no encuentra el archivo</summary>
+              <p>Vuelve a la carpeta del instalador y abre PowerShell desde su barra de direcciones. Comprueba que la descarga terminó y que el nombre coincide con el del comando. Si el navegador añadió un sufijo como <code>(1)</code>, usa el nombre real entre comillas.</p>
+            </details>
+            <details>
+              <summary>Windows muestra un aviso de SmartScreen</summary>
+              <p>El instalador v0.1.1 se distribuye sin firma de código. Comprueba la procedencia y la huella del paso 3. Si solo se trata del aviso de reputación y coincide la verificación, puedes elegir <strong>Más información</strong> y <strong>Ejecutar de todas formas</strong> cuando Windows ofrezca esa opción. Si se detecta una amenaza o tu organización bloquea la instalación, detente.</p>
+            </details>
+            <details>
+              <summary>La aplicación se queda iniciando</summary>
+              <p>Espera 30 segundos y, si el aviso persiste, cierra ScriptLens IA y ábrelo de nuevo desde Inicio. Si la aplicación indica que falta WebView2, consulta los <a href="#requisitos">requisitos de Windows</a>. Si el problema continúa, <a href="https://github.com/JorgeGutho21/ScriptLens/issues">repórtalo en GitHub</a> con tu versión de Windows y el mensaje que aparece.</p>
+            </details>
+            <details>
+              <summary>El asistente funciona en modo sin IA</summary>
+              <p>Abre <strong>Asistente IA</strong> y consulta las instrucciones para activar Ollama y descargar el modelo local. Puedes usar el diagnóstico, los procesos y los informes mientras el asistente funciona en modo sin IA.</p>
+            </details>
+          </li>
+        </ol>
+        <a class="boton" href="docs/Guia_Instalacion_ScriptLens_IA.pdf">Consultar la guía en PDF</a>
       </div>
     </section>
 
@@ -76,7 +212,7 @@
     <section class="seccion" id="capturas">
       <div class="contenedor">
         <h2>Capturas reales</h2>
-        <p class="subtitulo">Tomadas de la aplicación instalada con el instalador publicado, con datos reales del equipo de pruebas.</p>
+        <p class="subtitulo">Capturas de ScriptLens IA v0.1.0 con datos del equipo de pruebas. La interfaz de estos módulos también corresponde a v0.1.1.</p>
         <div class="galeria">
           <figure><img src="capturas/05_detalle_proceso.png" alt="Detalle de un proceso" loading="lazy"><figcaption>Detalle de un proceso</figcaption></figure>
           <figure><img src="capturas/09_seguridad.png" alt="Centro de seguridad" loading="lazy"><figcaption>Centro de seguridad</figcaption></figure>
@@ -98,7 +234,7 @@
               <tr><th>Sistema operativo</th><td>Windows 10 (1809 o posterior) u 11, 64 bits</td><td>Windows 11 de 64 bits actualizado</td></tr>
               <tr><th>Memoria RAM</th><td>4 GB</td><td>8 GB o más</td></tr>
               <tr><th>Disco libre</th><td>200 MB</td><td>3 GB (incluye el modelo de IA)</td></tr>
-              <tr><th>Componentes</th><td>Microsoft Edge WebView2 (incluido en Windows 11)</td><td>Ollama</td></tr>
+              <tr><th>Componentes</th><td><a href="https://developer.microsoft.com/microsoft-edge/webview2/#download">Microsoft Edge WebView2</a> (incluido en Windows 11)</td><td>Ollama</td></tr>
               <tr><th>Permisos</th><td>Cuenta de usuario estándar; no requiere administrador</td><td>—</td></tr>
             </tbody>
           </table>
@@ -107,27 +243,7 @@
       </div>
     </section>
 
-    <section class="seccion" id="descarga">
-      <div class="contenedor angosto">
-        <h2>Descarga</h2>
-        <div class="descarga">
-          <div>
-            <p class="descarga-nombre">ScriptLens-IA_0.1.1_x64-setup.exe</p>
-            <p class="nota">49,3 MB (51 701 506 bytes) · SHA-256:</p>
-            <code class="huella">8006D5301CE4868B038BC3E2E83A0448A12C53F19C56579947EF9C9E6E795ABF</code>
-          </div>
-          <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar instalador</a>
-        </div>
-        <ol class="pasos">
-          <li>Descarga el instalador desde este enlace o desde la <a href="https://github.com/JorgeGutho21/ScriptLens/releases/latest">página de la versión</a>.</li>
-          <li>Comprueba la huella en PowerShell: <code>Get-FileHash .\ScriptLens-IA_0.1.1_x64-setup.exe</code></li>
-          <li>Ábrelo y sigue el asistente: Siguiente → Acepto → Siguiente → Terminar.</li>
-        </ol>
-        <p class="nota">El instalador aún no tiene firma de código, por lo que Windows SmartScreen puede mostrar un aviso. Antes de continuar, comprueba que el archivo proviene de este repositorio y que la huella coincide. La <a href="docs/Guia_Instalacion_ScriptLens_IA.pdf">guía de instalación</a> explica cada pantalla.</p>
-      </div>
-    </section>
-
-    <section class="seccion alterna" id="documentos">
+    <section class="seccion" id="documentos">
       <div class="contenedor">
         <h2>Documentos</h2>
         <div class="tarjetas documentos">
@@ -144,6 +260,7 @@
     <div class="contenedor pie-interior">
       <div>
         <p><strong>ScriptLens IA</strong> · Desarrollado por Jorge Gutiérrez (<a href="https://github.com/JorgeGutho21">@JorgeGutho21</a>)</p>
+        <p>Docente: Oswaldo Rueda Carreño</p>
         <p>Universidad Popular del Cesar · ExpoSoftware 2026-II</p>
       </div>
       <nav aria-label="Avisos legales">

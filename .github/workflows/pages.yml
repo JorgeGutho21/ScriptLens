@@ -6,6 +6,16 @@ on:
     paths:
       - 'site/**'
       - 'docs/capturas/**'
+      - 'docs/instalacion/capturas/**'
+      - 'docs/**/*.pdf'
+      - 'assets/branding/**'
+      - '.github/workflows/pages.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'docs/capturas/**'
+      - 'docs/instalacion/capturas/**'
       - 'docs/**/*.pdf'
       - 'assets/branding/**'
       - '.github/workflows/pages.yml'
@@ -13,39 +23,42 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
   construir:
-    name: Preparar la página
+    name: Empaquetar la página y sus capturas
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/configure-pages@v6
       - name: Reunir archivos
         run: |
-          mkdir -p _site/capturas _site/docs
+          mkdir -p _site/capturas _site/instalacion _site/docs
           cp site/index.html site/estilos.css _site/
           cp assets/branding/scriptlens-icon.svg _site/logo.svg
           cp docs/capturas/*.png _site/capturas/
+          cp docs/instalacion/capturas/03_assets.png docs/instalacion/capturas/1*.png _site/instalacion/
           cp docs/instalacion/Guia_Instalacion_ScriptLens_IA.pdf \
              docs/manual_usuario/Manual_Usuario_ScriptLens_IA.pdf \
              docs/expo_software/ExpoSoftware_2026_II_ScriptLens_IA.pdf \
              docs/desarrollo/Documentacion_Tecnica_ScriptLens_IA.pdf _site/docs/
           touch _site/.nojekyll
+      - name: Validar archivos y anclas
+        run: python site/verificar_enlaces.py _site
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   publicar:
     name: Publicar en GitHub Pages
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: construir
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.despliegue.outputs.page_url }}
