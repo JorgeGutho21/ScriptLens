@@ -2,39 +2,12 @@ import { ExternalLink, RefreshCcw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Lens3D } from '../components/Lens3D'
 import { api, openLink } from '../lib/api'
-import type { ReactNode } from 'react'
 import { LogoMark } from '../components/Logo'
 import { Card } from '../components/ui'
+import { Row, Toggle } from '../components/controls'
 import { usePrefs } from '../lib/prefs'
 import { APP_VERSION, REPOSITORY_URL } from '../version'
 import { PrivacyCard } from './Privacy'
-
-function Row({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
-  return (
-    <div className="flex items-center justify-between gap-6 border-t border-line py-4 first:border-t-0 first:pt-0">
-      <div>
-        <div className="text-sm font-medium text-fg">{label}</div>
-        {hint && <div className="mt-0.5 text-[13px] text-muted">{hint}</div>}
-      </div>
-      {children}
-    </div>
-  )
-}
-
-function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      aria-label={label}
-      onClick={() => onChange(!checked)}
-      className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${checked ? 'bg-accent' : 'bg-surface-3'}`}
-    >
-      <span className={`absolute left-0 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${checked ? 'translate-x-5' : 'translate-x-0.5'}`} />
-    </button>
-  )
-}
 
 export function SettingsPage() {
   const { prefs, update } = usePrefs()

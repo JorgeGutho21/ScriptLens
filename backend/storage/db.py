@@ -12,7 +12,7 @@ import threading
 import time
 from pathlib import Path
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 _MIGRATIONS = {
     1: """
@@ -59,9 +59,96 @@ _MIGRATIONS = {
     );
     CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
     """,
+    # v0.2: acceso remoto, consola de varias computadoras y estadísticas persistentes.
+    2: """
+    CREATE TABLE IF NOT EXISTS remote_sessions (
+        id TEXT PRIMARY KEY,
+        token_hash TEXT NOT NULL UNIQUE,
+        nombre TEXT NOT NULL,
+        tipo TEXT NOT NULL,
+        ip TEXT NOT NULL,
+        created_at REAL NOT NULL,
+        expires_at REAL NOT NULL,
+        last_seen REAL,
+        last_ip TEXT
+    );
+    CREATE TABLE IF NOT EXISTS fleet_devices (
+        id TEXT PRIMARY KEY,
+        nombre TEXT NOT NULL,
+        direccion TEXT NOT NULL,
+        puerto INTEGER NOT NULL,
+        huella TEXT NOT NULL,
+        token_enc BLOB NOT NULL,
+        created_at REAL NOT NULL,
+        last_ok REAL,
+        last_error TEXT,
+        last_overview_json TEXT
+    );
+    CREATE TABLE IF NOT EXISTS fleet_samples (
+        device_id TEXT NOT NULL REFERENCES fleet_devices(id) ON DELETE CASCADE,
+        ts REAL NOT NULL,
+        cpu REAL, ram REAL, disk_pct REAL, net_sent REAL, net_recv REAL, uptime REAL,
+        PRIMARY KEY (device_id, ts)
+    );
+    CREATE TABLE IF NOT EXISTS stats_minute (
+        ts INTEGER PRIMARY KEY,
+        samples INTEGER NOT NULL,
+        cpu_avg REAL, cpu_max REAL, ram_avg REAL, ram_max REAL,
+        disk_read REAL, disk_write REAL, net_sent REAL, net_recv REAL,
+        active_seconds REAL, session_user INTEGER
+    );
+    CREATE TABLE IF NOT EXISTS stats_hour (
+        ts INTEGER PRIMARY KEY,
+        minutes INTEGER NOT NULL,
+        cpu_avg REAL, cpu_max REAL, ram_avg REAL, ram_max REAL,
+        disk_read REAL, disk_write REAL, net_sent REAL, net_recv REAL,
+        active_seconds REAL
+    );
+    CREATE TABLE IF NOT EXISTS stats_proc_hour (
+        ts INTEGER NOT NULL,
+        name TEXT NOT NULL,
+        cpu_avg REAL NOT NULL,
+        ram_max INTEGER NOT NULL,
+        minutes INTEGER NOT NULL,
+        PRIMARY KEY (ts, name)
+    );
+    CREATE TABLE IF NOT EXISTS app_usage (
+        ts INTEGER NOT NULL,
+        app TEXT NOT NULL,
+        seconds REAL NOT NULL,
+        PRIMARY KEY (ts, app)
+    );
+    CREATE TABLE IF NOT EXISTS boots (
+        boot_time INTEGER PRIMARY KEY,
+        source TEXT NOT NULL,
+        shutdown_time INTEGER
+    );
+    CREATE TABLE IF NOT EXISTS stats_alerts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        created_at REAL NOT NULL,
+        kind TEXT NOT NULL,
+        detail TEXT NOT NULL,
+        value REAL,
+        minutes INTEGER
+    );
+    CREATE INDEX IF NOT EXISTS idx_fleet_samples_ts ON fleet_samples(ts);
+    CREATE INDEX IF NOT EXISTS idx_app_usage_ts ON app_usage(ts);
+    """,
 }
 
-DEFAULT_SETTINGS = {"history_enabled": True, "conversations_enabled": True}
+DEFAULT_SETTINGS = {
+    "history_enabled": True,
+    "conversations_enabled": True,
+    # Acceso remoto (siempre arranca apagado; estas son preferencias de lo que se comparte).
+    "remote_port": 8765,
+    "remote_share_processes": True,
+    "remote_share_security": True,
+    "remote_share_stats": True,
+    # Estadísticas
+    "stats_enabled": True,
+    "stats_retention_days": 90,  # detalle por minuto se conserva 7 días; esto aplica a horas y alertas
+    "app_tracking_enabled": False,  # aplicaciones en primer plano: solo con consentimiento explícito
+}
 
 
 class Database:

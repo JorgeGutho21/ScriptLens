@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="referrer" content="no-referrer">
+  <title>ScriptLens IA — Vista remota</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="remote.css">
+</head>
+<body>
+  <header class="top">
+    <img src="icon.svg" alt="" width="28" height="28">
+    <div class="brand"><strong>ScriptLens <span class="accent">IA</span></strong><small id="pc-name">Vista remota</small></div>
+    <span id="conn" class="conn" role="status" aria-live="polite"><span class="dot"></span><span id="conn-text">Conectando…</span></span>
+  </header>
+
+  <div class="ro-banner" role="note">Vista remota de solo lectura: no se puede cerrar programas, cambiar ajustes ni ejecutar nada en la PC.</div>
+
+  <main id="app">
+    <!-- Vinculación -->
+    <section id="pair" class="card narrow" hidden>
+      <h1>Vincular este dispositivo</h1>
+      <ol class="steps">
+        <li>En la PC, abra ScriptLens → <b>Acceso remoto</b> y active «Ver mi PC desde otro dispositivo».</li>
+        <li>Escriba aquí el <b>código de 6 cifras</b> que aparece en la PC.</li>
+        <li>Autorice la solicitud en la PC cuando vea la misma frase de verificación.</li>
+      </ol>
+      <form id="pair-form" autocomplete="off">
+        <label>Código temporal
+          <input id="code" inputmode="numeric" pattern="\d{6}" maxlength="6" required placeholder="000000" aria-describedby="pair-msg">
+        </label>
+        <label>Nombre de este dispositivo
+          <input id="devname" maxlength="60" required placeholder="Celular de Ana">
+        </label>
+        <button type="submit" id="pair-btn">Solicitar acceso</button>
+      </form>
+      <p id="pair-msg" class="msg" role="alert"></p>
+    </section>
+
+    <section id="wait" class="card narrow" hidden>
+      <h1>Esperando autorización</h1>
+      <p>En la PC aparecerá esta solicitud. Autorícela solo si ve la misma frase:</p>
+      <p class="phrase" id="phrase">—</p>
+      <p class="muted">Huella del certificado de la PC (compárela si su navegador mostró un aviso):</p>
+      <p class="mono small" id="fp">—</p>
+      <button type="button" id="cancel" class="ghost">Cancelar</button>
+    </section>
+
+    <!-- Panel -->
+    <section id="dash" hidden>
+      <div class="grid kpis">
+        <article class="card kpi"><h2>Procesador</h2><p class="big" id="cpu">—</p><canvas id="cpu-chart" height="48" aria-label="Historial de CPU"></canvas></article>
+        <article class="card kpi"><h2>Memoria RAM</h2><p class="big" id="ram">—</p><p class="muted" id="ram-detail">—</p><canvas id="ram-chart" height="48" aria-label="Historial de RAM"></canvas></article>
+        <article class="card kpi"><h2>Tiempo encendido</h2><p class="big" id="uptime">—</p><p class="muted" id="boot">—</p></article>
+        <article class="card kpi"><h2>Red</h2><p class="mid" id="net">—</p><h2 class="sp">Actividad de disco</h2><p class="mid" id="diskio">—</p></article>
+      </div>
+
+      <article class="card"><h2>Equipo</h2><dl id="sys" class="sys"></dl></article>
+
+      <article class="card"><h2>Uso por núcleo</h2><div id="cores" class="cores"></div></article>
+
+      <article class="card"><h2>Almacenamiento</h2><div id="disks"></div></article>
+
+      <article class="card" id="proc-card">
+        <div class="row"><h2>Programas con mayor consumo</h2>
+          <div class="seg" role="radiogroup" aria-label="Ordenar por">
+            <button role="radio" aria-checked="true" data-by="cpu">CPU</button>
+            <button role="radio" aria-checked="false" data-by="memory">RAM</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Programa</th><th>CPU</th><th>RAM</th></tr></thead><tbody id="procs"></tbody></table></div>
+        <p class="muted small" id="proc-note"></p>
+      </article>
+
+      <article class="card"><h2>Hallazgos</h2><ul id="findings" class="findings"></ul><div id="security"></div></article>
+
+      <article class="card" id="stats-card" hidden><h2>Estadísticas de hoy</h2><dl id="stats" class="sys"></dl></article>
+
+      <p class="foot">
+        <span id="fresh">—</span> · <button type="button" id="logout" class="link">Cerrar esta sesión</button>
+      </p>
+    </section>
+  </main>
+  <footer class="credit">ScriptLens IA · Desarrollado por Jorge Gutiérrez · GitHub @JorgeGutho21</footer>
+  <script src="remote.js"></script>
+</body>
+</html>

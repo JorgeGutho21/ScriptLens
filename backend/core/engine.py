@@ -31,6 +31,9 @@ class Engine:
         from backend.actions.operations import ActionManager
 
         self.actions = ActionManager(self)
+        from backend.remote.service import RemoteService
+
+        self.remote = RemoteService(self)
         self._stop = threading.Event()
         self._threads: list[threading.Thread] = []
         self._info_cache: tuple[float, dict] | None = None
@@ -67,6 +70,7 @@ class Engine:
     def stop(self) -> None:
         self._stop.set()
         self.signatures.stop()
+        self.remote.shutdown()
 
     def _loop(self, fn, interval: float) -> None:
         while not self._stop.is_set():
