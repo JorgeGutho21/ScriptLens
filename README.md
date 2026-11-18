@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1/ScriptLens-IA_0.1.1_x64-setup.exe">Descargar para Windows</a> ·
+  <a href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe">Descargar para Windows</a> ·
   <a href="https://jorgegutho21.github.io/ScriptLens/#guia">Guía de instalación</a>
 </p>
 
@@ -93,12 +93,12 @@ Archivos de cada versión publicada en [Releases](https://github.com/JorgeGutho2
 
 | Archivo | Para qué sirve |
 |---|---|
-| `ScriptLens-IA_0.1.1_x64-setup.exe` | Instalador para Windows de 64 bits |
-| `ScriptLens-IA_0.1.1_x64-setup.exe.sha256` | Huella SHA-256 para comprobar que el archivo descargado es el original |
+| `ScriptLens-IA_0.2.0_x64-setup.exe` | Instalador para Windows de 64 bits |
+| `ScriptLens-IA_0.2.0_x64-setup.exe.sha256` | Huella SHA-256 para comprobar que el archivo descargado es el original |
 
 ### Método A — Instalador gráfico (recomendado)
 
-1. Abra la [guía de instalación](https://jorgegutho21.github.io/ScriptLens/#guia) o la [release v0.1.1](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.1.1) y descargue los dos archivos de la tabla anterior.
+1. Abra la [guía de instalación](https://jorgegutho21.github.io/ScriptLens/#guia) o la [release v0.2.0](https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.2.0) y descargue los dos archivos de la tabla anterior.
 2. Compruebe la huella SHA-256 (Método B, paso 2). Si no coincide, **no abra el archivo**.
 3. Haga doble clic en el instalador. El instalador no tiene firma de código comercial, por lo que Windows SmartScreen puede mostrar «Windows protegió su PC». Continúe solo si descargó el archivo de la página oficial y la huella coincide: pulse **Más información** → **Ejecutar de todas formas**. Si tiene dudas, no continúe.
 4. Siga el asistente (**Siguiente** → **Instalar** → **Finalizar**). La instalación es solo para su usuario y no pide permisos de administrador.
@@ -111,15 +111,15 @@ Abra **PowerShell** (menú Inicio → escriba «PowerShell»; no hace falta «Ej
 ```powershell
 # 1. Descargar el instalador y su huella a la carpeta Descargas
 cd $HOME\Downloads
-$base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1"
-$f = "ScriptLens-IA_0.1.1_x64-setup.exe"
+$base = "https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0"
+$f = "ScriptLens-IA_0.2.0_x64-setup.exe"
 Invoke-WebRequest "$base/$f" -OutFile $f
 Invoke-WebRequest "$base/$f.sha256" -OutFile "$f.sha256"
 ```
 
 ```powershell
 # 2. Comprobar la huella: debe responder "Coincide"
-$f = "ScriptLens-IA_0.1.1_x64-setup.exe"
+$f = "ScriptLens-IA_0.2.0_x64-setup.exe"
 $esperado = (Get-Content "$f.sha256").Split(" ")[0]
 $real = (Get-FileHash $f -Algorithm SHA256).Hash
 if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale" }
@@ -127,10 +127,10 @@ if ($real -eq $esperado) { "Coincide" } else { "NO coincide: no instale" }
 
 ```powershell
 # 3. Abrir el instalador (solo si respondió "Coincide")
-Start-Process ".\ScriptLens-IA_0.1.1_x64-setup.exe"
+Start-Process ".\ScriptLens-IA_0.2.0_x64-setup.exe"
 ```
 
-Instalación silenciosa para su usuario (sin ventanas): `Start-Process ".\ScriptLens-IA_0.1.1_x64-setup.exe" -ArgumentList "/S" -Wait`.
+Instalación silenciosa para su usuario (sin ventanas): `Start-Process ".\ScriptLens-IA_0.2.0_x64-setup.exe" -ArgumentList "/S" -Wait`.
 
 ### Método C — Símbolo del sistema (CMD)
 
@@ -138,15 +138,15 @@ En **Símbolo del sistema** (menú Inicio → escriba «cmd»):
 
 ```bat
 cd %USERPROFILE%\Downloads
-set BASE=https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.1.1
-set F=ScriptLens-IA_0.1.1_x64-setup.exe
+set BASE=https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0
+set F=ScriptLens-IA_0.2.0_x64-setup.exe
 curl -L -O %BASE%/%F%
 curl -L -O %BASE%/%F%.sha256
 certutil -hashfile %F% SHA256
 type %F%.sha256
 ```
 
-Compare a simple vista la huella que muestra `certutil` con la del archivo `.sha256` (deben ser iguales, sin importar mayúsculas). Si coinciden, ejecute `start ScriptLens-IA_0.1.1_x64-setup.exe`.
+Compare a simple vista la huella que muestra `certutil` con la del archivo `.sha256` (deben ser iguales, sin importar mayúsculas). Si coinciden, ejecute `start ScriptLens-IA_0.2.0_x64-setup.exe`.
 
 ### Método D — Desarrolladores (código fuente)
 
