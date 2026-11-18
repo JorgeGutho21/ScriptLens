@@ -224,3 +224,13 @@
 | Fusión | PR #9 en `main` (`35055c0`) con CI y Pages en verde |
 | Release | `v0.2.0`, *Latest*; instalador de 54 531 345 bytes y `.sha256` de 101 bytes; huella `FAE79D9D…3E2C` verificada en la descarga pública |
 | Enlaces | PR #10 actualiza README y Pages a la v0.2.0 |
+
+## Rediseño de la página oficial · 2026-11-18
+
+| Campo | Detalle |
+|---|---|
+| Auditoría inicial | La página mostraba la huella SHA-256 de una versión anterior, la captura de *Assets* era de la v0.1.1 y faltaban capturas de las funciones de la v0.2.0 |
+| Capturas | 13 nuevas, tomadas con `scripts/demo_capturas.py` (instancias aisladas solo en `127.0.0.1`, nombres neutros) y `scripts/capturar_navegador.py` (Edge sin ventana); rotuladas como demostración en la página |
+| Página | `site/index.html`, `site/estilos.css`, `site/app.js` sin dependencias; imágenes WebP de `site/optimizar_capturas.py` (2,4 MB para 36 capturas en dos tamaños) |
+| Verificación | Sin desbordamiento horizontal a 320, 375, 768, 1024 y 1440 px; enlaces y anclas con `site/verificar_enlaces.py`; menú, pestañas por teclado, filtros y visor probados en el navegador; contraste AA medido |
+| Pendiente | Prueba con un celular y dos computadoras físicas (sin cambios respecto de la v0.2.0) |

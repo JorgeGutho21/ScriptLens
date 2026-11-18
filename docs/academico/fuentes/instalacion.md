@@ -54,7 +54,7 @@ Tabla: Archivos que debe descargar
 
 Los archivos «Source code (zip)» y «Source code (tar.gz)» son el código fuente para programadores: **no** los necesita.
 
-Figura: docs/instalacion/capturas/03_assets.png | Apartado Assets de la versión v0.1.1 | Los dos primeros archivos son los que debe descargar. Junto a cada uno, GitHub muestra el comienzo de su huella SHA-256 (sha256:8006d530…).
+Figura: docs/instalacion/capturas/03_assets.png | Apartado Assets de la versión v0.2.0 | Los dos primeros archivos son los que debe descargar. Junto a cada uno, GitHub muestra el comienzo de su huella SHA-256 (sha256:fae79d9d…).
 
 Pulse el nombre de cada archivo. El navegador lo guarda en la carpeta **Descargas**. Si el navegador pregunta si desea conservar el archivo, elija **Conservar**.
 

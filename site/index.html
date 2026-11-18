@@ -3,312 +3,631 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ScriptLens IA — Diagnóstico y seguridad de Windows</title>
-  <meta name="description" content="ScriptLens IA: diagnóstico, seguridad y auditoría de Windows con análisis de scripts sin ejecutarlos e IA local verificada. Desarrollado por Jorge Gutiérrez, Universidad Popular del Cesar, ExpoSoftware 2026-II.">
+  <title>ScriptLens IA — Diagnóstico y supervisión de computadoras Windows</title>
+  <meta name="description" content="ScriptLens IA diagnostica, supervisa y explica el estado de tus computadoras Windows: rendimiento en tiempo real, seguridad, auditoría de 30 controles, acceso remoto de solo lectura desde el celular, varias computadoras y asistente de IA local. Desarrollado por Jorge Gutiérrez.">
   <meta name="author" content="Jorge Gutiérrez">
+  <meta name="theme-color" content="#08111f">
   <meta property="og:title" content="ScriptLens IA">
-  <meta property="og:description" content="Diagnóstico, seguridad y auditoría de Windows con IA local verificada.">
-  <meta property="og:image" content="https://jorgegutho21.github.io/ScriptLens/capturas/02_panel_general.png">
+  <meta property="og:description" content="Diagnostica, supervisa y comprende el estado de tus computadoras Windows.">
+  <meta property="og:image" content="https://jorgegutho21.github.io/ScriptLens/img/34_panel_general.webp">
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="estilos.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="boton saltar" href="#inicio">Ir al contenido</a>
-  <header class="barra">
+  <svg width="0" height="0" class="oculto" aria-hidden="true">
+    <defs>
+      <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
+      <symbol id="i-procesos" viewBox="0 0 24 24"><path d="M4 6h3M4 12h3M4 18h3M11 6h9M11 12h9M11 18h9"/></symbol>
+      <symbol id="i-estadisticas" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3M20 16V6"/></symbol>
+      <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-lista" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M8.5 11l1.5 1.5L13 9.5M8.5 16.5 10 18l3-3"/></symbol>
+      <symbol id="i-remoto" viewBox="0 0 24 24"><rect x="2" y="4" width="14" height="10" rx="1.5"/><path d="M6 18h6M9 14v4"/><rect x="17" y="9" width="5" height="11" rx="1.2"/></symbol>
+      <symbol id="i-red" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></symbol>
+      <symbol id="i-script" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M10 13l-2 2 2 2M14 13l2 2-2 2"/></symbol>
+      <symbol id="i-asistente" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V4M9 12v1M15 12v1M9 16h6"/></symbol>
+      <symbol id="i-informe" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+      <symbol id="i-descarga" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+      <symbol id="i-candado" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+      <symbol id="i-ojo" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r=".8"/></symbol>
+      <symbol id="i-reloj" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-revocar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+      <symbol id="i-izq" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+      <symbol id="i-der" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+      <symbol id="i-libro" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2V5Z"/><path d="M4 20a2 2 0 0 0 2 2h13v-4"/></symbol>
+    </defs>
+  </svg>
+
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+
+  <header class="barra" id="barra">
     <div class="contenedor barra-interior">
-      <a class="marca" href="#inicio">
-        <img src="logo.svg" alt="" width="32" height="32">
-        <span>ScriptLens IA</span>
+      <a class="marca" href="#inicio" aria-label="ScriptLens IA, ir al inicio">
+        <img src="logo.svg" alt="" width="30" height="30">
+        <span>ScriptLens <b>IA</b></span>
       </a>
-      <nav aria-label="Secciones">
+      <button class="boton-menu" type="button" aria-expanded="false" aria-controls="menu" id="boton-menu">
+        <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span>Menú</span>
+      </button>
+      <nav id="menu" class="menu" aria-label="Secciones de la página">
         <a href="#funciones">Funciones</a>
-        <a href="#capturas">Capturas</a>
-        <a href="#requisitos">Requisitos</a>
-        <a href="#guia">Instalación</a>
-        <a href="#usar">Uso</a>
         <a href="#remoto">Acceso remoto</a>
+        <a href="#computadoras">Mis computadoras</a>
+        <a href="#estadisticas">Estadísticas y seguridad</a>
+        <a href="#capturas">Capturas</a>
+        <a href="#instalacion">Instalación</a>
         <a href="#preguntas">Preguntas</a>
-        <a href="#documentos">Documentos</a>
+        <a href="#documentacion">Documentación</a>
+        <a class="menu-descarga" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe">Descargar</a>
       </nav>
     </div>
   </header>
 
-  <main id="inicio" tabindex="-1">
-    <section class="portada">
+  <main id="contenido" tabindex="-1">
+    <!-- Portada -->
+    <section class="portada" id="inicio" aria-labelledby="titulo">
       <div class="contenedor portada-rejilla">
-        <div>
-          <img class="portada-logo" src="logo.svg" alt="" width="72" height="72">
-          <h1>ScriptLens IA</h1>
-          <p class="lema">Entiende qué hace lento tu PC, revisa su seguridad y analiza scripts sin ejecutarlos.</p>
-          <p class="autor">Desarrollado por <strong>Jorge Gutiérrez</strong> · GitHub <a href="https://github.com/JorgeGutho21">@JorgeGutho21</a><br>
-            Docente: Oswaldo Rueda Carreño<br>
-            Universidad Popular del Cesar · Ingeniería de Sistemas · ExpoSoftware 2026-II</p>
+        <div class="portada-texto">
+          <p class="version"><span class="punto" aria-hidden="true"></span>Versión 0.2.0 disponible</p>
+          <h1 id="titulo">ScriptLens IA</h1>
+          <p class="lema">Diagnostica, supervisa y comprende el estado de tus computadoras Windows.</p>
+          <ul class="capacidades">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-panel"/></svg>Diagnóstico en tiempo real</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg>Seguridad y auditoría</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-remoto"/></svg>Tu PC desde el celular</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-red"/></svg>Varias computadoras</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-estadisticas"/></svg>Estadísticas de uso</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-asistente"/></svg>Asistente de IA local</li>
+          </ul>
           <div class="acciones">
-            <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe">Descargar para Windows</a>
-            <a class="boton" href="#guia">Guía de instalación</a>
+            <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe">
+              <svg class="ico" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar para Windows
+            </a>
+            <a class="boton" href="#remoto">Ver cómo funciona</a>
+            <a class="boton fantasma" href="#instalacion">Guía de instalación</a>
           </div>
-          <p class="nota">Versión 0.2.0 · Windows 10 y 11 de 64 bits · 52,0 MB · Gratuito y de código abierto (MIT)</p>
+          <dl class="ficha">
+            <div><dt>Sistema</dt><dd>Windows 10 y 11, 64 bits</dd></div>
+            <div><dt>Instalador</dt><dd>52 MB, sin administrador</dd></div>
+            <div><dt>Licencia</dt><dd>Gratuito, código abierto (MIT)</dd></div>
+          </dl>
         </div>
-        <figure class="portada-imagen">
-          <img src="capturas/02_panel_general.png" alt="Panel general de ScriptLens IA con CPU, memoria, disco y red medidos en tiempo real" loading="eager">
-        </figure>
+
+        <div class="escena" aria-label="ScriptLens en una PC y la misma información vista desde un celular">
+          <figure class="escena-pc">
+            <div class="ventana-barra" aria-hidden="true"><i></i><i></i><i></i><span>ScriptLens IA en Windows</span></div>
+            <img src="img/34_panel_general.webp" width="1440" height="900" fetchpriority="high"
+                 alt="Panel general de ScriptLens IA: procesador, memoria RAM, disco, red y tiempo encendido medidos en tiempo real">
+          </figure>
+          <figure class="escena-celular">
+            <img src="img/27_celular_en_vivo.webp" width="640" height="1385"
+                 alt="Vista remota en un celular: procesador al 11 %, memoria al 56 % y tiempo encendido, con el aviso de solo lectura">
+          </figure>
+          <p class="escena-enlace" aria-hidden="true"><svg class="ico"><use href="#i-candado"/></svg>Solo lectura en tu red local</p>
+        </div>
+      </div>
+      <p class="contenedor aclaracion">Capturas reales de la aplicación. La del celular es la vista remota abierta en un navegador con tamaño de teléfono, en el mismo equipo.</p>
+    </section>
+
+    <!-- Funcionalidades -->
+    <section class="seccion" id="funciones" aria-labelledby="t-funciones">
+      <span id="usar"></span>
+      <div class="contenedor">
+        <header class="encabezado">
+          <h2 id="t-funciones">Qué puede hacer ScriptLens</h2>
+          <p>Diez módulos, organizados como en la aplicación. Elige uno para ver una captura real y para qué sirve.</p>
+        </header>
+
+        <div class="explorador" data-explorador>
+          <div class="explorador-lista" role="tablist" aria-label="Módulos de ScriptLens" aria-orientation="vertical">
+            <p class="grupo">Mi PC</p>
+            <button role="tab" id="m-panel" aria-controls="p-panel" aria-selected="true"><svg class="ico" aria-hidden="true"><use href="#i-panel"/></svg>Panel general</button>
+            <button role="tab" id="m-procesos" aria-controls="p-procesos" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-procesos"/></svg>Procesos</button>
+            <button role="tab" id="m-estadisticas" aria-controls="p-estadisticas" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-estadisticas"/></svg>Estadísticas de mi PC</button>
+            <p class="grupo">Seguridad</p>
+            <button role="tab" id="m-seguridad" aria-controls="p-seguridad" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-escudo"/></svg>Seguridad de Windows</button>
+            <button role="tab" id="m-auditoria" aria-controls="p-auditoria" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>Auditoría de 30 controles</button>
+            <button role="tab" id="m-scripts" aria-controls="p-scripts" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-script"/></svg>Análisis de scripts</button>
+            <p class="grupo">Conectar</p>
+            <button role="tab" id="m-remoto" aria-controls="p-remoto" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-remoto"/></svg>Acceso remoto</button>
+            <button role="tab" id="m-computadoras" aria-controls="p-computadoras" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-red"/></svg>Mis computadoras</button>
+            <p class="grupo">Herramientas</p>
+            <button role="tab" id="m-asistente" aria-controls="p-asistente" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-asistente"/></svg>Asistente IA local</button>
+            <button role="tab" id="m-informes" aria-controls="p-informes" aria-selected="false" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-informe"/></svg>Informes e historial</button>
+          </div>
+
+          <div class="explorador-paneles">
+            <article class="modulo" role="tabpanel" id="p-panel" aria-labelledby="m-panel">
+              <img src="img/34_panel_general-p.webp" srcset="img/34_panel_general-p.webp 720w, img/34_panel_general.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="900" loading="lazy" alt="Panel general con CPU, memoria, disco, red y tiempo encendido">
+              <div class="modulo-texto">
+                <h3>Panel general</h3>
+                <p>Muestra cuánto trabajan el procesador, la memoria, el disco y la red, y te dice en una frase si el equipo está tranquilo o sobrecargado. Juzga el consumo del último minuto, no un pico de un segundo.</p>
+                <a href="docs/Manual_Usuario_ScriptLens_IA.pdf">Leer en el manual</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-procesos" aria-labelledby="m-procesos">
+              <img src="img/04_procesos-p.webp" srcset="img/04_procesos-p.webp 720w, img/04_procesos.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="924" loading="lazy" alt="Lista de procesos con búsqueda, filtros y consumo de cada programa">
+              <div class="modulo-texto">
+                <h3>Procesos</h3>
+                <p>Encuentra qué programa está gastando recursos. Para cada uno verás su ruta, su firma digital y respuestas a «¿qué hace?», «¿puedo cerrarlo?» y «¿es sospechoso?». Cerrar algo siempre pide tu confirmación.</p>
+                <a href="docs/Manual_Usuario_ScriptLens_IA.pdf">Leer en el manual</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-estadisticas" aria-labelledby="m-estadisticas">
+              <img src="img/21_estadisticas-p.webp" srcset="img/21_estadisticas-p.webp 720w, img/21_estadisticas.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="924" loading="lazy" alt="Estadísticas de mi PC con tiempo desde el arranque, sesión, uso activo y horario de actividad">
+              <div class="modulo-texto">
+                <h3>Estadísticas de mi PC</h3>
+                <p>Cuándo se encendió el equipo, cuánto tiempo se usó de verdad y cómo variaron la CPU y la RAM por hora, día y semana. Puedes pausarlas, borrarlas o exportarlas a HTML y CSV.</p>
+                <a href="#estadisticas">Ver la explicación</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-seguridad" aria-labelledby="m-seguridad">
+              <img src="img/09_seguridad-p.webp" srcset="img/09_seguridad-p.webp 720w, img/09_seguridad.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="924" loading="lazy" alt="Centro de seguridad con el estado de Defender, firewall e inicio automático">
+              <div class="modulo-texto">
+                <h3>Seguridad de Windows</h3>
+                <p>Revisa Microsoft Defender, el firewall, lo que arranca con Windows, las tareas programadas y los servicios. Cada hallazgo trae la evidencia y una sugerencia; nada se cambia por tu cuenta.</p>
+                <a href="docs/Manual_Usuario_ScriptLens_IA.pdf">Leer en el manual</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-auditoria" aria-labelledby="m-auditoria">
+              <img src="img/22_auditoria_30_controles-p.webp" srcset="img/22_auditoria_30_controles-p.webp 720w, img/22_auditoria_30_controles.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="924" loading="lazy" alt="Auditoría de 30 controles con el resultado de cada control y su evidencia">
+              <div class="modulo-texto">
+                <h3>Auditoría de 30 controles</h3>
+                <p>Comprueba 30 configuraciones de seguridad de Windows y explica cada resultado con evidencia y una recomendación. Solo lee la configuración: nunca la modifica.</p>
+                <a href="#auditoria">Ver la explicación</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-scripts" aria-labelledby="m-scripts">
+              <img src="img/11_script_lineas_attack-p.webp" srcset="img/11_script_lineas_attack-p.webp 720w, img/11_script_lineas_attack.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="924" loading="lazy" alt="Análisis de un script línea por línea con técnicas de MITRE ATT&amp;CK">
+              <div class="modulo-texto">
+                <h3>Análisis de scripts</h3>
+                <p>Abre un archivo BAT, CMD o PowerShell y ScriptLens explica qué haría, línea por línea, <strong>sin ejecutarlo</strong>. Usa 43 reglas asociadas a MITRE ATT&amp;CK y desofusca el código antes de analizarlo.</p>
+                <a href="docs/Documentacion_Tecnica_ScriptLens_IA.pdf">Leer la documentación técnica</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-remoto" aria-labelledby="m-remoto">
+              <img src="img/24_remoto_activado-p.webp" srcset="img/24_remoto_activado-p.webp 720w, img/24_remoto_activado.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="900" loading="lazy" alt="Acceso remoto activo con la dirección, el código temporal y la huella del certificado">
+              <div class="modulo-texto">
+                <h3>Acceso remoto</h3>
+                <p>Mira tu PC desde el celular u otra laptop de la misma red. Es de solo lectura, está apagado hasta que lo activas y cada dispositivo necesita un código y tu autorización.</p>
+                <a href="#remoto">Ver el paso a paso</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-computadoras" aria-labelledby="m-computadoras">
+              <img src="img/30_mis_computadoras-p.webp" srcset="img/30_mis_computadoras-p.webp 720w, img/30_mis_computadoras.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="900" loading="lazy" alt="Mis computadoras con tarjetas de tres equipos y una tabla comparativa">
+              <div class="modulo-texto">
+                <h3>Mis computadoras</h3>
+                <p>Una consola para supervisar varias PC con ScriptLens: estado, CPU, RAM, disco, alertas, historial de 24 horas y comparación entre equipos.</p>
+                <a href="#computadoras">Ver cómo funciona</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-asistente" aria-labelledby="m-asistente">
+              <img src="img/33_asistente_modos-p.webp" srcset="img/33_asistente_modos-p.webp 720w, img/33_asistente_modos.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="900" loading="lazy" alt="Asistente con una respuesta inmediata y otra con IA rápida, ambas con cifras verificadas">
+              <div class="modulo-texto">
+                <h3>Asistente IA local</h3>
+                <p>Pregunta en lenguaje normal. Los datos simples se responden al instante; las explicaciones, con un modelo de IA que funciona en tu propio equipo. Cada cifra se compara con las mediciones.</p>
+                <a href="#asistente">Ver los modos</a>
+              </div>
+            </article>
+            <article class="modulo" role="tabpanel" id="p-informes" aria-labelledby="m-informes">
+              <img src="img/15_informes-p.webp" srcset="img/15_informes-p.webp 720w, img/15_informes.webp 1440w" sizes="(min-width: 960px) 760px, 100vw" width="1440" height="924" loading="lazy" alt="Pantalla de informes con los botones para crear PDF y HTML">
+              <div class="modulo-texto">
+                <h3>Informes e historial</h3>
+                <p>Guarda diagnósticos, compara dos momentos y exporta informes PDF o HTML con métricas, evidencias y recomendaciones. Se guardan en <em>Documentos\ScriptLens IA\Informes</em>.</p>
+                <a href="docs/Manual_Usuario_ScriptLens_IA.pdf">Leer en el manual</a>
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- Acceso remoto -->
+    <section class="seccion destacada" id="remoto" aria-labelledby="t-remoto">
+      <div class="contenedor">
+        <header class="encabezado">
+          <h2 id="t-remoto">Supervisa tu computadora desde otro dispositivo</h2>
+          <p>Abre en el celular la dirección que muestra tu PC y consulta su estado en vivo. Nadie puede cerrar programas ni cambiar nada desde fuera.</p>
+        </header>
 
-    <section class="seccion alterna" id="guia">
-      <div class="contenedor angosto">
-        <h2>Instala ScriptLens IA paso a paso</h2>
-        <ol class="guia-pasos">
-          <li>
-            <h3>Abre la página oficial</h3>
-            <p>En tu navegador, entra en <a href="https://jorgegutho21.github.io/ScriptLens/">jorgegutho21.github.io/ScriptLens/</a>. Comprueba que ves el nombre <strong>ScriptLens IA</strong> y el autor <strong>Jorge Gutiérrez</strong>.</p>
-          </li>
-          <li id="descarga">
-            <h3>Descarga la versión v0.2.0</h3>
-            <p>En el equipo Windows de 64 bits donde instalarás la aplicación, descarga <strong class="archivo">ScriptLens-IA_0.2.0_x64-setup.exe</strong> (52,0 MB) y su archivo de verificación. El navegador suele guardarlos en <strong>Descargas</strong>.</p>
-            <div class="acciones">
-              <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe">Descargar instalador</a>
-              <a class="boton" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe.sha256">Descargar SHA-256</a>
+        <ul class="garantias">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-ojo"/></svg><span><strong>Solo lectura.</strong> La vista remota no tiene botones ni rutas para actuar sobre la PC.</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-wifi"/></svg><span><strong>Misma red.</strong> WiFi, cable o el hotspot de un celular. No abre puertos en el router.</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg><span><strong>Con tu permiso.</strong> Código de 6 cifras que caduca en 5 minutos y tu aprobación en la PC.</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-revocar"/></svg><span><strong>Revocable.</strong> Quita el acceso a un dispositivo o a todos cuando termines.</span></li>
+        </ul>
+
+        <ol class="recorrido">
+          <li class="tramo">
+            <div class="tramo-texto">
+              <p class="lugar">En la PC</p>
+              <ol class="pasos" start="1" style="counter-reset: paso 0">
+                <li>Abre ScriptLens en Windows.</li>
+                <li>En el menú lateral, entra en <strong>Conectar → Acceso remoto</strong>.</li>
+                <li>Pulsa <strong>Activar acceso remoto</strong>. Si Windows pregunta, permite el acceso solo en <strong>redes privadas</strong>.</li>
+              </ol>
             </div>
-            <p>También puedes encontrar ambos archivos en <strong>Assets</strong> en la <a href="https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.2.0">release v0.2.0 de GitHub</a>.</p>
-            <figure class="captura-guia">
-              <a href="instalacion/03_assets.png"><img src="instalacion/03_assets.png" loading="lazy" alt="Apartado Assets de la release v0.2.0 con el instalador y su archivo SHA-256"></a>
-              <figcaption>Figura 1. Archivos de la versión v0.2.0 en GitHub.</figcaption>
+            <figure class="captura">
+              <img src="img/23_remoto_desactivado-p.webp" srcset="img/23_remoto_desactivado-p.webp 720w, img/23_remoto_desactivado.webp 1440w" sizes="(min-width: 960px) 640px, 100vw" width="1440" height="900" loading="lazy" alt="Acceso remoto apagado con el botón Activar acceso remoto y las opciones de lo que se comparte">
+              <figcaption>Apagado hasta que lo activas. También eliges qué puede ver el otro dispositivo.</figcaption>
             </figure>
           </li>
-          <li>
-            <h3>Verifica el archivo descargado</h3>
-            <p>Abre el <strong>Explorador de archivos</strong> con <kbd>Windows</kbd> + <kbd>E</kbd> y entra en la carpeta donde guardaste el instalador. Escribe <code>powershell</code> en la barra de direcciones del Explorador y pulsa <kbd>Enter</kbd>. En esa ventana, pega este comando y pulsa <kbd>Enter</kbd>.</p>
-            <pre><code>Get-FileHash ".\ScriptLens-IA_0.2.0_x64-setup.exe" -Algorithm SHA256</code></pre>
-            <p>El comando calcula la huella del archivo. Compara el valor de la columna <strong>Hash</strong> con el que aparece abajo o en la primera línea del archivo <code>.sha256</code>.</p>
-            <code class="huella">8006D5301CE4868B038BC3E2E83A0448A12C53F19C56579947EF9C9E6E795ABF</code>
-            <p>Si algún carácter difiere, no abras el instalador y vuelve a descargarlo desde esta página.</p>
+          <li class="tramo">
+            <div class="tramo-texto">
+              <p class="lugar">En la PC</p>
+              <ol class="pasos" start="4" style="counter-reset: paso 3">
+                <li>Comprueba la <strong>dirección</strong>, el <strong>código temporal</strong> y la <strong>huella del certificado</strong>. En tu red verás una dirección como <code>https://192.168.1.25:8765/</code>.</li>
+              </ol>
+            </div>
+            <figure class="captura">
+              <img src="img/24_remoto_activado-p.webp" srcset="img/24_remoto_activado-p.webp 720w, img/24_remoto_activado.webp 1440w" sizes="(min-width: 960px) 640px, 100vw" width="1440" height="900" loading="lazy" alt="Acceso remoto activo con la dirección, un código de 6 cifras que caduca en 5 minutos y la huella del certificado">
+              <figcaption>Dirección, código de un solo uso y huella para comprobar que te conectas a tu PC.</figcaption>
+            </figure>
           </li>
-          <li>
-            <h3>Abre el instalador de Windows</h3>
-            <p>Vuelve al Explorador y haz doble clic en <strong class="archivo">ScriptLens-IA_0.2.0_x64-setup.exe</strong>. Si aparece «Windows protegió su PC», consulta <a href="#ayuda">Solución de errores</a>.</p>
-          </li>
-          <li>
-            <h3>Sigue las pantallas del asistente</h3>
-            <p>Las imágenes son capturas del instalador. Selecciona cualquiera para verla a tamaño completo.</p>
-            <div class="pantallas">
-              <figure class="captura-guia">
-                <a href="instalacion/10_instalador_bienvenida.png"><img src="instalacion/10_instalador_bienvenida.png" loading="lazy" alt="Pantalla de bienvenida con el botón Siguiente"></a>
-                <figcaption>Figura 2. En la bienvenida, pulsa <strong>Siguiente</strong>.</figcaption>
+          <li class="tramo tramo-celular">
+            <div class="tramo-texto">
+              <p class="lugar">En el celular</p>
+              <ol class="pasos" start="5" style="counter-reset: paso 4">
+                <li>Conecta el celular a la <strong>misma red</strong> que la PC.</li>
+                <li>Abre la dirección segura en el navegador, escribe el código y un nombre para el dispositivo. El navegador avisará del certificado propio de la PC: continúa solo si la huella coincide.</li>
+              </ol>
+            </div>
+            <div class="par-celulares">
+              <figure class="captura celular">
+                <img src="img/26_celular_vincular-p.webp" srcset="img/26_celular_vincular-p.webp 360w, img/26_celular_vincular.webp 640w" sizes="200px" width="640" height="1385" loading="lazy" alt="Pantalla del celular para vincular el dispositivo con el código temporal y un nombre">
+                <figcaption>Vincular</figcaption>
               </figure>
-              <figure class="captura-guia">
-                <a href="instalacion/11_instalador_licencia.png"><img src="instalacion/11_instalador_licencia.png" loading="lazy" alt="Acuerdo de licencia MIT con el botón Acepto"></a>
-                <figcaption>Figura 3. Lee la licencia MIT. Si estás de acuerdo, pulsa <strong>Acepto</strong>.</figcaption>
-              </figure>
-              <figure class="captura-guia">
-                <a href="instalacion/12_instalador_ya_instalado.png"><img src="instalacion/12_instalador_ya_instalado.png" loading="lazy" alt="Opciones de mantenimiento para una instalación existente"></a>
-                <figcaption>Figura 4. Si ya tenías ScriptLens, elige <strong>Añadir o reinstalar componentes</strong> y pulsa <strong>Siguiente</strong>.</figcaption>
-              </figure>
-              <figure class="captura-guia">
-                <a href="instalacion/13_instalador_carpeta.png"><img src="instalacion/13_instalador_carpeta.png" loading="lazy" alt="Carpeta de instalación y botón Siguiente"></a>
-                <figcaption>Figura 5. Deja la carpeta propuesta (<code>%LOCALAPPDATA%\ScriptLens IA</code> en una instalación nueva) y pulsa <strong>Siguiente</strong>.</figcaption>
-              </figure>
-              <figure class="captura-guia">
-                <a href="instalacion/14_instalador_instalando.png"><img src="instalacion/14_instalador_instalando.png" loading="lazy" alt="Barra de progreso mientras se copian los archivos"></a>
-                <figcaption>Figura 6. Espera mientras se copian los archivos.</figcaption>
-              </figure>
-              <figure class="captura-guia">
-                <a href="instalacion/15_instalador_completado.png"><img src="instalacion/15_instalador_completado.png" loading="lazy" alt="Instalación completada con el botón Siguiente habilitado"></a>
-                <figcaption>Figura 7. Cuando se complete la instalación, pulsa <strong>Siguiente</strong>.</figcaption>
+              <figure class="captura celular">
+                <img src="img/26b_celular_esperando-p.webp" srcset="img/26b_celular_esperando-p.webp 360w, img/26b_celular_esperando.webp 640w" sizes="200px" width="640" height="1385" loading="lazy" alt="El celular espera la autorización y muestra la frase de verificación y la huella del certificado">
+                <figcaption>Frase de verificación</figcaption>
               </figure>
             </div>
+          </li>
+          <li class="tramo">
+            <div class="tramo-texto">
+              <p class="lugar">En la PC</p>
+              <ol class="pasos" start="7" style="counter-reset: paso 6">
+                <li>Aparece la solicitud con una frase de verificación. Si es la misma que ves en el celular, pulsa <strong>Autorizar</strong>.</li>
+              </ol>
+            </div>
+            <figure class="captura">
+              <img src="img/25_remoto_solicitud-p.webp" srcset="img/25_remoto_solicitud-p.webp 720w, img/25_remoto_solicitud.webp 1440w" sizes="(min-width: 960px) 640px, 100vw" width="1440" height="900" loading="lazy" alt="Solicitud de un celular con la frase de verificación y los botones Autorizar y Rechazar">
+              <figcaption>Autoriza solo si la frase coincide.</figcaption>
+            </figure>
+          </li>
+          <li class="tramo tramo-celular">
+            <div class="tramo-texto">
+              <p class="lugar">En el celular</p>
+              <ol class="pasos" start="8" style="counter-reset: paso 7">
+                <li>Consulta la CPU, la RAM, los discos, la red, el tiempo encendido y los programas que más consumen. Arriba verás <strong>En vivo</strong>; si la PC deja de responder, <strong>Desconectado</strong> con la hora de la última lectura.</li>
+              </ol>
+            </div>
+            <div class="par-celulares uno">
+              <figure class="captura celular">
+                <img src="img/27_celular_en_vivo-p.webp" srcset="img/27_celular_en_vivo-p.webp 360w, img/27_celular_en_vivo.webp 640w" sizes="220px" width="640" height="1385" loading="lazy" alt="Vista remota en el celular con procesador, memoria, tiempo encendido, red y disco en vivo">
+                <figcaption>Vista remota en vivo</figcaption>
+              </figure>
+            </div>
+          </li>
+          <li class="tramo">
+            <div class="tramo-texto">
+              <p class="lugar">En la PC</p>
+              <ol class="pasos" start="9" style="counter-reset: paso 8">
+                <li>Cuando termines, pulsa <strong>Revocar</strong> junto al dispositivo, o <strong>Desactivar y desconectar todo</strong>. Al cerrar ScriptLens el acceso remoto se apaga y vuelve a empezar apagado.</li>
+              </ol>
+            </div>
+            <figure class="captura">
+              <img src="img/28_remoto_dispositivo_vinculado-p.webp" srcset="img/28_remoto_dispositivo_vinculado-p.webp 720w, img/28_remoto_dispositivo_vinculado.webp 1440w" sizes="(min-width: 960px) 640px, 100vw" width="1440" height="900" loading="lazy" alt="Lista de dispositivos vinculados con el celular consultando ahora y el botón Revocar">
+              <figcaption>Cada dispositivo vinculado aparece con su última consulta y un botón para revocarlo.</figcaption>
+            </figure>
+          </li>
+        </ol>
+
+        <p class="nota-demo"><strong>Sobre estas capturas.</strong> Son reales, pero se tomaron en un solo equipo con la dirección local <code>127.0.0.1</code> en lugar de una red WiFi, y la vista del celular se abrió en un navegador con tamaño de teléfono. El código y la huella que aparecen ya no son válidos. La prueba con un celular físico está pendiente y se documenta en el <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/desarrollo/ESTADO_v0.2.md">estado de la versión 0.2</a>.</p>
+        <p class="mas"><a class="boton" href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/guias/Conectar_y_supervisar_computadoras.md"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>Guía completa para conectar y supervisar</a></p>
+      </div>
+    </section>
+
+    <!-- Mis computadoras -->
+    <section class="seccion" id="computadoras" aria-labelledby="t-computadoras">
+      <div class="contenedor">
+        <header class="encabezado">
+          <h2 id="t-computadoras">Todas tus computadoras, en una sola pantalla</h2>
+          <p>Desde <strong>Conectar → Mis computadoras</strong>, una PC con ScriptLens hace de consola y consulta a las demás cada 5 segundos. Cada equipo decide si participa y puede retirarse cuando quiera.</p>
+        </header>
+
+        <figure class="captura grande">
+          <img src="img/30_mis_computadoras-p.webp" srcset="img/30_mis_computadoras-p.webp 720w, img/30_mis_computadoras.webp 1440w" sizes="(min-width: 1180px) 1140px, 100vw" width="1440" height="900" loading="lazy" alt="Consola Mis computadoras con la PC principal, PC-LAB-01 y PC-LAB-02 conectadas y la comparación entre equipos">
+          <figcaption>La PC principal aparece aparte; cada equipo vinculado tiene su tarjeta con CPU, RAM, disco, tiempo encendido y estado.</figcaption>
+        </figure>
+
+        <div class="tareas">
+          <article>
+            <h3>Agregar una computadora</h3>
+            <p>En la otra PC activa el acceso remoto. En la consola pulsa <strong>Vincular computadora</strong>, escribe su IP, el puerto y el código, y autoriza la solicitud en esa PC si la frase coincide.</p>
+            <a class="miniatura" href="img/29_vincular_computadora.webp" data-galeria="Vincular una computadora: la consola espera la autorización y muestra la frase y la huella"><img src="img/29_vincular_computadora-p.webp" width="720" height="450" loading="lazy" alt="La consola espera la autorización de PC-LAB-02 y muestra la frase de verificación"></a>
+          </article>
+          <article>
+            <h3>Revisar un equipo</h3>
+            <p>Pulsa la tarjeta del equipo para abrir el detalle: CPU, RAM y disco al momento, la gráfica de las últimas 24 horas y los programas que más consumen. Un aviso recuerda que estás viendo <em>otra</em> PC.</p>
+            <a class="miniatura" href="img/31_detalle_otra_pc.webp" data-galeria="Detalle de otra PC con su historial y los programas de mayor consumo"><img src="img/31_detalle_otra_pc-p.webp" width="720" height="450" loading="lazy" alt="Detalle de PC-LAB-01 con historial de CPU y RAM y la tabla de programas"></a>
+          </article>
+          <article>
+            <h3>Saber si está conectado</h3>
+            <p><span class="estado ok">Conectado</span> significa que respondió en los últimos 20 segundos. <span class="estado mal">Desconectado</span> muestra la hora de la última lectura y avisa de que esas cifras no son actuales.</p>
+            <a class="miniatura" href="img/32_equipo_desconectado.webp" data-galeria="Un equipo desconectado muestra sus últimas cifras marcadas como no actuales"><img src="img/32_equipo_desconectado-p.webp" width="720" height="450" loading="lazy" alt="PC-LAB-02 marcado como desconectado con la hora de su última lectura"></a>
+          </article>
+        </div>
+
+        <div class="comparacion">
+          <h3>Diagnóstico local frente a la consola</h3>
+          <div class="tabla-envoltura">
+            <table>
+              <thead><tr><th scope="col"></th><th scope="col">Diagnóstico local</th><th scope="col">Mis computadoras</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Qué equipo ves</th><td>La PC donde está abierto ScriptLens</td><td>Otras PC que te autorizaron</td></tr>
+                <tr><th scope="row">Qué puedes hacer</th><td>Consultar y, con tu confirmación, cerrar programas u optimizar</td><td>Solo consultar</td></tr>
+                <tr><th scope="row">Información</th><td>Completa: procesos con ruta y firma, seguridad, scripts</td><td>CPU, RAM, disco, red, programas agrupados y alertas</td></tr>
+                <tr><th scope="row">Historial</th><td>En esta PC</td><td>Una lectura cada 10 s, guardada 7 días en la consola</td></tr>
+                <tr><th scope="row">Quitar el acceso</th><td>No aplica</td><td><strong>Desvincular</strong> en la consola, o <strong>Revocar</strong> en la otra PC</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="nota-demo"><strong>Simulación de varios equipos.</strong> PC-LAB-01 y PC-LAB-02 son instancias aisladas de ScriptLens que se ejecutaron en el mismo computador (por eso sus cifras se parecen). La prueba con dos computadoras físicas está pendiente.</p>
+      </div>
+    </section>
+
+    <!-- Estadísticas, auditoría y asistente -->
+    <section class="seccion alterna" id="estadisticas" aria-labelledby="t-estadisticas">
+      <div class="contenedor">
+        <header class="encabezado">
+          <h2 id="t-estadisticas">Estadísticas, auditoría y asistente</h2>
+          <p>Tres formas de entender tu equipo sin ser especialista: cómo se usa, qué tan bien está protegido y qué significa cada dato.</p>
+        </header>
+
+        <article class="bloque" aria-labelledby="t-est">
+          <figure class="captura">
+            <img src="img/21_estadisticas-p.webp" srcset="img/21_estadisticas-p.webp 720w, img/21_estadisticas.webp 1440w" sizes="(min-width: 960px) 620px, 100vw" width="1440" height="924" loading="lazy" alt="Estadísticas de mi PC: tiempo desde el arranque, sesión, uso activo, horario de actividad y consumo">
+          </figure>
+          <div class="bloque-texto">
+            <h3 id="t-est"><svg class="ico" aria-hidden="true"><use href="#i-estadisticas"/></svg>Estadísticas de mi PC</h3>
+            <dl class="glosario">
+              <div><dt>CPU</dt><dd>Qué tan ocupado está el procesador. Si pasa mucho tiempo por encima del 85 %, los programas responden más lento.</dd></div>
+              <div><dt>RAM</dt><dd>La memoria de trabajo. Cerca del 90 %, Windows empieza a usar el disco y todo se vuelve más lento.</dd></div>
+              <div><dt>Tiempo encendido</dt><dd>Desde cuándo está prendido el equipo sin reiniciar.</dd></div>
+              <div><dt>Sesión y uso activo</dt><dd>Cuánto tiempo hubo alguien conectado y cuánto se usó de verdad el teclado o el ratón. No se registra qué se escribe.</dd></div>
+              <div><dt>Aplicaciones</dt><dd>Qué programa estaba en primer plano y cuánto tiempo. Es opcional y está apagado hasta que lo actives.</dd></div>
+              <div><dt>Tendencias</dt><dd>Promedios por hora, día y semana para ver si el equipo se carga más que antes.</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="bloque invertido" id="auditoria" aria-labelledby="t-aud">
+          <figure class="captura">
+            <img src="img/22_auditoria_30_controles-p.webp" srcset="img/22_auditoria_30_controles-p.webp 720w, img/22_auditoria_30_controles.webp 1440w" sizes="(min-width: 960px) 620px, 100vw" width="1440" height="924" loading="lazy" alt="Auditoría de 30 controles con el resumen de resultados y la evidencia de cada control">
+          </figure>
+          <div class="bloque-texto">
+            <h3 id="t-aud"><svg class="ico" aria-hidden="true"><use href="#i-lista"/></svg>Auditoría de 30 controles</h3>
+            <p>Revisa la configuración de seguridad de Windows en unos 15 segundos y la explica en lenguaje sencillo. No cambia nada: si algo debe corregirse, te dice cómo hacerlo.</p>
+            <ul class="leyenda">
+              <li><span class="estado ok">Cumple</span> La configuración es la recomendada.</li>
+              <li><span class="estado mal">No cumple</span> Conviene corregirla; incluye la recomendación.</li>
+              <li><span class="estado aviso">Requiere revisión</span> Falta evidencia, por ejemplo sin permisos de administrador. Nunca se aprueba a ciegas.</li>
+              <li><span class="estado neutro">No aplica</span> El control no corresponde a ese equipo.</li>
+            </ul>
+            <p class="pequeno">En el equipo de pruebas (Windows 11 Pro 25H2, sin administrador) el resultado fue 19 que cumplen, 5 que no, 4 por revisar y 2 que no aplican. Cada computador obtendrá su propio resultado.</p>
+          </div>
+        </article>
+
+        <article class="bloque" id="asistente" aria-labelledby="t-asi">
+          <figure class="captura">
+            <img src="img/33_asistente_modos-p.webp" srcset="img/33_asistente_modos-p.webp 720w, img/33_asistente_modos.webp 1440w" sizes="(min-width: 960px) 620px, 100vw" width="1440" height="900" loading="lazy" alt="Asistente con una respuesta inmediata sobre la RAM y otra de IA rápida sobre la lentitud, con cifras verificadas y evidencia usada">
+          </figure>
+          <div class="bloque-texto">
+            <h3 id="t-asi"><svg class="ico" aria-hidden="true"><use href="#i-asistente"/></svg>Asistente IA local</h3>
+            <div class="modos">
+              <div><h4>Inmediata</h4><p>Datos medidos, sin IA. Para «¿cuánta RAM estoy usando?».</p></div>
+              <div><h4>IA rápida</h4><p>Respuestas breves con un modelo pequeño (Qwen3 1.7B).</p></div>
+              <div><h4>IA detallada</h4><p>Explicaciones más completas (Qwen3 4B Instruct).</p></div>
+            </div>
+            <p>Bajo cada respuesta verás cuántas cifras se comprobaron contra las mediciones y qué datos se usaron. La IA no puede ejecutar acciones.</p>
+            <p class="pequeno">Medición en el equipo de pruebas (31,8 GB de RAM, GPU integrada, 10 preguntas de referencia): modo automático con una mediana de 3,5 s por respuesta; IA detallada, 22,4 s. En otro hardware los tiempos serán distintos. Las respuestas inmediatas no necesitan Ollama; la IA sí (<a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/pruebas/asistente/RESULTADOS.md">resultados completos</a>).</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="seccion" id="capturas" aria-labelledby="t-capturas">
+      <div class="contenedor">
+        <header class="encabezado">
+          <h2 id="t-capturas">Capturas</h2>
+          <p>Imágenes reales de la aplicación con datos del equipo de pruebas. Selecciona una para ampliarla; con las flechas del teclado pasas a la siguiente.</p>
+        </header>
+        <div class="filtros" role="group" aria-label="Filtrar capturas">
+          <button type="button" aria-pressed="true" data-filtro="todas">Todas</button>
+          <button type="button" aria-pressed="false" data-filtro="mipc">Mi PC</button>
+          <button type="button" aria-pressed="false" data-filtro="seguridad">Seguridad</button>
+          <button type="button" aria-pressed="false" data-filtro="conectar">Conectar</button>
+          <button type="button" aria-pressed="false" data-filtro="herramientas">Herramientas</button>
+        </div>
+        <ul class="galeria" id="galeria">
+          <li data-cat="mipc"><a href="img/34_panel_general.webp" data-galeria="Panel general (v0.2.0)"><img src="img/34_panel_general-p.webp" width="720" height="450" loading="lazy" alt="Panel general con CPU, RAM, disco y red"><span>Panel general</span></a></li>
+          <li data-cat="mipc"><a href="img/04_procesos.webp" data-galeria="Lista de procesos"><img src="img/04_procesos-p.webp" width="720" height="462" loading="lazy" alt="Lista de procesos con búsqueda y filtros"><span>Procesos</span></a></li>
+          <li data-cat="mipc"><a href="img/05_detalle_proceso.webp" data-galeria="Detalle de un proceso con ruta, firma y respuestas"><img src="img/05_detalle_proceso-p.webp" width="720" height="462" loading="lazy" alt="Detalle de un proceso"><span>Detalle de un proceso</span></a></li>
+          <li data-cat="mipc"><a href="img/06_arbol_procesos.webp" data-galeria="Árbol padre-hijo de procesos"><img src="img/06_arbol_procesos-p.webp" width="720" height="462" loading="lazy" alt="Árbol de procesos"><span>Árbol de procesos</span></a></li>
+          <li data-cat="mipc"><a href="img/21_estadisticas.webp" data-galeria="Estadísticas de mi PC (v0.2.0)"><img src="img/21_estadisticas-p.webp" width="720" height="462" loading="lazy" alt="Estadísticas de uso del equipo"><span>Estadísticas</span></a></li>
+          <li data-cat="mipc"><a href="img/07_optimizar.webp" data-galeria="Optimización supervisada con acciones confirmadas"><img src="img/07_optimizar-p.webp" width="720" height="462" loading="lazy" alt="Optimización supervisada"><span>Optimizar</span></a></li>
+          <li data-cat="seguridad"><a href="img/09_seguridad.webp" data-galeria="Centro de seguridad"><img src="img/09_seguridad-p.webp" width="720" height="462" loading="lazy" alt="Centro de seguridad"><span>Seguridad</span></a></li>
+          <li data-cat="seguridad"><a href="img/22_auditoria_30_controles.webp" data-galeria="Auditoría de 30 controles (v0.2.0)"><img src="img/22_auditoria_30_controles-p.webp" width="720" height="462" loading="lazy" alt="Auditoría de 30 controles"><span>Auditoría de 30 controles</span></a></li>
+          <li data-cat="seguridad"><a href="img/10_analisis_script.webp" data-galeria="Análisis de un script sin ejecutarlo"><img src="img/10_analisis_script-p.webp" width="720" height="462" loading="lazy" alt="Análisis de un script"><span>Análisis de scripts</span></a></li>
+          <li data-cat="seguridad"><a href="img/11_script_lineas_attack.webp" data-galeria="Explicación línea por línea con MITRE ATT&amp;CK"><img src="img/11_script_lineas_attack-p.webp" width="720" height="462" loading="lazy" alt="Script línea por línea con técnicas ATT&amp;CK"><span>Script línea por línea</span></a></li>
+          <li data-cat="conectar"><a href="img/23_remoto_desactivado.webp" data-galeria="Acceso remoto desactivado (demostración en un solo equipo)"><img src="img/23_remoto_desactivado-p.webp" width="720" height="450" loading="lazy" alt="Acceso remoto apagado"><span>Acceso remoto apagado</span></a></li>
+          <li data-cat="conectar"><a href="img/24_remoto_activado.webp" data-galeria="Acceso remoto activado con código y huella (demostración; el código ya no es válido)"><img src="img/24_remoto_activado-p.webp" width="720" height="450" loading="lazy" alt="Acceso remoto activo"><span>Acceso remoto activo</span></a></li>
+          <li data-cat="conectar"><a href="img/25_remoto_solicitud.webp" data-galeria="Solicitud de vinculación pendiente de autorizar (demostración)"><img src="img/25_remoto_solicitud-p.webp" width="720" height="450" loading="lazy" alt="Solicitud de vinculación"><span>Autorizar un dispositivo</span></a></li>
+          <li data-cat="conectar" class="vertical"><a href="img/26_celular_vincular.webp" data-galeria="Vista remota: vincular el celular (navegador con tamaño de teléfono)"><img src="img/26_celular_vincular-p.webp" width="360" height="779" loading="lazy" alt="Pantalla de vinculación en el celular"><span>Vincular el celular</span></a></li>
+          <li data-cat="conectar" class="vertical"><a href="img/27_celular_en_vivo.webp" data-galeria="Vista remota en vivo (navegador con tamaño de teléfono)"><img src="img/27_celular_en_vivo-p.webp" width="360" height="779" loading="lazy" alt="Vista remota en vivo en el celular"><span>Vista desde el celular</span></a></li>
+          <li data-cat="conectar"><a href="img/30_mis_computadoras.webp" data-galeria="Mis computadoras (equipos simulados en un mismo computador)"><img src="img/30_mis_computadoras-p.webp" width="720" height="450" loading="lazy" alt="Consola Mis computadoras"><span>Mis computadoras</span></a></li>
+          <li data-cat="conectar"><a href="img/31_detalle_otra_pc.webp" data-galeria="Detalle de otro equipo (simulado)"><img src="img/31_detalle_otra_pc-p.webp" width="720" height="450" loading="lazy" alt="Detalle de otro equipo"><span>Detalle de otro equipo</span></a></li>
+          <li data-cat="conectar"><a href="img/32_equipo_desconectado.webp" data-galeria="Equipo desconectado con sus últimas cifras (simulado)"><img src="img/32_equipo_desconectado-p.webp" width="720" height="450" loading="lazy" alt="Equipo desconectado"><span>Equipo desconectado</span></a></li>
+          <li data-cat="herramientas"><a href="img/33_asistente_modos.webp" data-galeria="Asistente: respuesta inmediata y respuesta con IA rápida"><img src="img/33_asistente_modos-p.webp" width="720" height="450" loading="lazy" alt="Modos del asistente"><span>Modos del asistente</span></a></li>
+          <li data-cat="herramientas"><a href="img/13_comparar.webp" data-galeria="Comparar dos diagnósticos"><img src="img/13_comparar-p.webp" width="720" height="462" loading="lazy" alt="Comparar diagnósticos"><span>Comparar mi PC</span></a></li>
+          <li data-cat="herramientas"><a href="img/15_informes.webp" data-galeria="Informes PDF y HTML"><img src="img/15_informes-p.webp" width="720" height="462" loading="lazy" alt="Pantalla de informes"><span>Informes</span></a></li>
+          <li data-cat="herramientas" class="vertical"><a href="img/19_informe_pdf.webp" data-galeria="Informe PDF generado"><img src="img/19_informe_pdf-p.webp" width="360" height="509" loading="lazy" alt="Página de un informe PDF"><span>Informe PDF</span></a></li>
+          <li data-cat="herramientas"><a href="img/20_ajustes_privacidad.webp" data-galeria="Ajustes de privacidad"><img src="img/20_ajustes_privacidad-p.webp" width="720" height="462" loading="lazy" alt="Ajustes de privacidad"><span>Privacidad</span></a></li>
+          <li data-cat="herramientas"><a href="img/16_modo_claro.webp" data-galeria="Interfaz en modo claro"><img src="img/16_modo_claro-p.webp" width="720" height="462" loading="lazy" alt="Interfaz en modo claro"><span>Modo claro</span></a></li>
+        </ul>
+        <p class="pequeno">Las capturas de procesos, seguridad, scripts, optimizar, comparar, informes, privacidad y modo claro son de la versión 0.1.0; esos módulos no cambiaron de aspecto. Los originales en PNG están en <a href="https://github.com/JorgeGutho21/ScriptLens/tree/main/docs/capturas">docs/capturas</a>.</p>
+      </div>
+    </section>
+
+    <!-- Instalación -->
+    <section class="seccion alterna" id="instalacion" aria-labelledby="t-instalacion">
+      <span id="guia"></span><span id="ayuda"></span>
+      <div class="contenedor angosto">
+        <header class="encabezado">
+          <h2 id="t-instalacion">Cómo instalar ScriptLens</h2>
+          <p>Diez pasos, de la descarga al primer diagnóstico. No necesitas permisos de administrador.</p>
+        </header>
+
+        <ol class="instalacion">
+          <li>
+            <h3>Entra en la página oficial</h3>
+            <p>Estás en ella: <a href="https://jorgegutho21.github.io/ScriptLens/">jorgegutho21.github.io/ScriptLens</a>. Descarga ScriptLens solo desde aquí o desde la <a href="https://github.com/JorgeGutho21/ScriptLens/releases/tag/v0.2.0">release v0.2.0 de GitHub</a>.</p>
+          </li>
+          <li id="descarga">
+            <h3>Descarga la versión publicada</h3>
+            <p>Descarga el instalador <strong class="archivo">ScriptLens-IA_0.2.0_x64-setup.exe</strong> (52 MB) y su archivo de verificación. El navegador los guarda en <strong>Descargas</strong>.</p>
+            <div class="acciones">
+              <a class="boton principal" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe"><svg class="ico" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar instalador</a>
+              <a class="boton" href="https://github.com/JorgeGutho21/ScriptLens/releases/download/v0.2.0/ScriptLens-IA_0.2.0_x64-setup.exe.sha256">Descargar SHA-256</a>
+            </div>
+            <a class="miniatura ancha" href="img/03_assets.webp" data-galeria="Archivos de la versión v0.2.0 en GitHub"><img src="img/03_assets-p.webp" width="720" height="132" loading="lazy" alt="Apartado Assets de la release v0.2.0 con el instalador y su archivo SHA-256"></a>
+          </li>
+          <li>
+            <h3>Comprueba la integridad (SHA-256)</h3>
+            <p>Abre la carpeta Descargas, escribe <code>powershell</code> en la barra de direcciones del Explorador y pulsa <kbd>Enter</kbd>. Pega este comando:</p>
+            <pre><code>Get-FileHash ".\ScriptLens-IA_0.2.0_x64-setup.exe" -Algorithm SHA256</code></pre>
+            <p>El valor de <strong>Hash</strong> debe ser exactamente este:</p>
+            <code class="huella">FAE79D9D26BDE040E14E9F2504F304554FAF6A166DDA0F0F88B2EFE099813E2C</code>
+            <p>Si un solo carácter es distinto, no abras el archivo y vuelve a descargarlo.</p>
+          </li>
+          <li>
+            <h3>Abre el instalador</h3>
+            <p>Haz doble clic en el archivo. Si aparece <strong>«Windows protegió su PC»</strong>, es el aviso de SmartScreen para programas sin firma comercial, como este. No lo ignores por costumbre: continúa con <strong>Más información → Ejecutar de todas formas</strong> solo si descargaste el archivo de esta página y la huella del paso 3 coincide. Si Windows indica una amenaza o tu organización bloquea la instalación, detente.</p>
+          </li>
+          <li>
+            <h3>Sigue cada pantalla</h3>
+            <div class="pantallas">
+              <a class="miniatura" href="img/10_instalador_bienvenida.webp" data-galeria="Bienvenida: pulsa Siguiente"><img src="img/10_instalador_bienvenida-p.webp" width="585" height="479" loading="lazy" alt="Pantalla de bienvenida del instalador"><span>Bienvenida: <strong>Siguiente</strong></span></a>
+              <a class="miniatura" href="img/11_instalador_licencia.webp" data-galeria="Licencia MIT: pulsa Acepto"><img src="img/11_instalador_licencia-p.webp" width="585" height="479" loading="lazy" alt="Acuerdo de licencia MIT"><span>Licencia MIT: <strong>Acepto</strong></span></a>
+              <a class="miniatura" href="img/13_instalador_carpeta.webp" data-galeria="Carpeta de instalación: deja la propuesta y pulsa Siguiente"><img src="img/13_instalador_carpeta-p.webp" width="585" height="479" loading="lazy" alt="Carpeta de instalación"><span>Carpeta: <strong>Siguiente</strong></span></a>
+              <a class="miniatura" href="img/14_instalador_instalando.webp" data-galeria="Copiando archivos"><img src="img/14_instalador_instalando-p.webp" width="585" height="479" loading="lazy" alt="Barra de progreso de la instalación"><span>Espera unos segundos</span></a>
+            </div>
+            <p class="pequeno">Si ya tenías una versión anterior, el instalador ofrece <strong>Añadir o reinstalar componentes</strong>: elígelo y pulsa Siguiente. Tus datos se conservan.</p>
           </li>
           <li>
             <h3>Finaliza la instalación</h3>
-            <figure class="captura-guia">
-              <a href="instalacion/16_instalador_finalizar.png"><img src="instalacion/16_instalador_finalizar.png" loading="lazy" alt="Pantalla final con opciones para ejecutar la aplicación y crear un acceso directo"></a>
-              <figcaption>Figura 8. Deja marcada <strong>Ejecutar ScriptLens IA</strong> para abrir la aplicación al terminar. El acceso directo del escritorio es opcional. Pulsa <strong>Terminar</strong>.</figcaption>
-            </figure>
+            <p>Deja marcada <strong>Ejecutar ScriptLens IA</strong> y pulsa <strong>Terminar</strong>. El acceso directo en el escritorio es opcional.</p>
+            <a class="miniatura media" href="img/16_instalador_finalizar.webp" data-galeria="Pantalla final del instalador"><img src="img/16_instalador_finalizar-p.webp" width="585" height="479" loading="lazy" alt="Pantalla final con la opción Ejecutar ScriptLens IA"></a>
           </li>
           <li>
-            <h3>Abre ScriptLens IA</h3>
-            <p class="nota">Las capturas de la aplicación se tomaron en v0.1.0. Los pasos también se aplican a v0.2.0.</p>
-            <p>Abre <strong>Inicio</strong> en Windows, escribe <strong>ScriptLens IA</strong> y selecciona la aplicación. Si ya se abrió al terminar la instalación, sigue el asistente de bienvenida. Dale hasta 30 segundos para iniciar el motor la primera vez.</p>
-            <figure class="captura-guia">
-              <a href="capturas/01_bienvenida.png"><img src="capturas/01_bienvenida.png" loading="lazy" alt="Asistente de bienvenida dentro de ScriptLens IA"></a>
-              <figcaption>Figura 9. Asistente de primera ejecución.</figcaption>
-            </figure>
+            <h3>Abre ScriptLens desde Windows</h3>
+            <p>Busca <strong>ScriptLens IA</strong> en el menú Inicio. La primera vez, el motor tarda hasta 30 segundos en arrancar y aparece un asistente de bienvenida.</p>
           </li>
           <li>
-            <h3>Haz tu primer diagnóstico</h3>
-            <p>En el menú lateral, abre <strong>Panel general</strong>. Deja que la aplicación recopile alrededor de un minuto de mediciones. Revisa si el uso de CPU, memoria o disco se mantiene alto y lee las explicaciones del panel. Para conservar una referencia, ve a <strong>Comparar mi PC</strong> y pulsa <strong>Guardar diagnóstico</strong>.</p>
-            <figure class="captura-guia">
-              <a href="capturas/02_panel_general.png"><img src="capturas/02_panel_general.png" loading="lazy" alt="Panel general con mediciones de CPU, memoria, disco y red"></a>
-              <figcaption>Figura 10. Panel general con mediciones del equipo.</figcaption>
-            </figure>
+            <h3>Haz el primer diagnóstico</h3>
+            <p>Abre <strong>Panel general</strong> y deja que mida durante un minuto. Lee la frase de estado: te dice si el equipo va bien y qué lo está cargando.</p>
           </li>
           <li>
-            <h3>Consulta procesos, seguridad e informes</h3>
-            <ul class="modulos-guia">
-              <li><strong>Procesos.</strong> Busca un programa y selecciónalo para ver su ruta y firma. Revisa los detalles antes de decidir si lo cierras.</li>
-              <li><strong>Seguridad.</strong> Consulta el estado de Defender, firewall e inicio automático. Abre cada hallazgo para leer la evidencia y las sugerencias.</li>
-              <li><strong>Informes.</strong> Pulsa <strong>Crear PDF</strong> o <strong>Crear HTML</strong>. Para localizar el resultado, pulsa <strong>Abrir carpeta</strong> en <strong>Informes guardados</strong>.</li>
-            </ul>
-            <div class="pantallas">
-              <figure class="captura-guia">
-                <a href="capturas/04_procesos.png"><img src="capturas/04_procesos.png" loading="lazy" alt="Tabla de procesos con búsqueda y filtros"></a>
-                <figcaption>Figura 11. Lista de procesos.</figcaption>
-              </figure>
-              <figure class="captura-guia">
-                <a href="capturas/09_seguridad.png"><img src="capturas/09_seguridad.png" loading="lazy" alt="Resumen del centro de seguridad"></a>
-                <figcaption>Figura 12. Centro de seguridad.</figcaption>
-              </figure>
-              <figure class="captura-guia">
-                <a href="capturas/15_informes.png"><img src="capturas/15_informes.png" loading="lazy" alt="Pantalla de informes con los botones Crear PDF y Crear HTML"></a>
-                <figcaption>Figura 13. Generación de informes.</figcaption>
-              </figure>
-            </div>
+            <h3>Recorre las funciones</h3>
+            <p>Prueba <strong>Procesos</strong>, <strong>Estadísticas</strong>, <strong>Seguridad</strong>, la <strong>Auditoría de 30 controles</strong> y el <strong>Asistente IA</strong>. Ninguna acción que cambie el sistema se realiza sin tu confirmación.</p>
           </li>
-          <li id="ayuda">
-            <h3>Soluciona errores habituales</h3>
-            <details>
-              <summary>PowerShell dice que no encuentra el archivo</summary>
-              <p>Vuelve a la carpeta del instalador y abre PowerShell desde su barra de direcciones. Comprueba que la descarga terminó y que el nombre coincide con el del comando. Si el navegador añadió un sufijo como <code>(1)</code>, usa el nombre real entre comillas.</p>
-            </details>
-            <details>
-              <summary>Windows muestra un aviso de SmartScreen</summary>
-              <p>El instalador v0.2.0 se distribuye sin firma de código. Comprueba la procedencia y la huella del paso 3. Si solo se trata del aviso de reputación y coincide la verificación, puedes elegir <strong>Más información</strong> y <strong>Ejecutar de todas formas</strong> cuando Windows ofrezca esa opción. Si se detecta una amenaza o tu organización bloquea la instalación, detente.</p>
-            </details>
-            <details>
-              <summary>La aplicación se queda iniciando</summary>
-              <p>Espera 30 segundos y, si el aviso persiste, cierra ScriptLens IA y ábrelo de nuevo desde Inicio. Si la aplicación indica que falta WebView2, consulta los <a href="#requisitos">requisitos de Windows</a>. Si el problema continúa, <a href="https://github.com/JorgeGutho21/ScriptLens/issues">repórtalo en GitHub</a> con tu versión de Windows y el mensaje que aparece.</p>
-            </details>
-            <details>
-              <summary>El asistente funciona en modo sin IA</summary>
-              <p>Abre <strong>Asistente IA</strong> y consulta las instrucciones para activar Ollama y descargar el modelo local. Puedes usar el diagnóstico, los procesos y los informes mientras el asistente funciona en modo sin IA.</p>
-            </details>
+          <li>
+            <h3>Activa las funciones remotas, si las necesitas</h3>
+            <p>Son opcionales y empiezan apagadas. Sigue el <a href="#remoto">paso a paso del acceso remoto</a> para ver tu PC desde el celular o supervisar otras computadoras.</p>
           </li>
         </ol>
-        <a class="boton" href="docs/Guia_Instalacion_ScriptLens_IA.pdf">Consultar la guía en PDF</a>
-      </div>
-    </section>
 
-    <section class="seccion" id="usar">
-      <div class="contenedor angosto">
-        <h2>Cómo usar ScriptLens IA</h2>
-        <ol class="pasos-simples">
-          <li><strong>Abra ScriptLens</strong> desde el menú Inicio. El <em>Panel general</em> empieza a medir solo: procesador, memoria, disco, red y tiempo encendido.</li>
-          <li><strong>Mi PC → Procesos</strong> muestra qué programas consumen más y si alguno merece revisión.</li>
-          <li><strong>Mi PC → Estadísticas</strong> muestra el consumo por hora, día y semana, cuándo se encendió el equipo y cuánto tiempo se usó de forma activa. Puede pausarlas, borrarlas y exportarlas en HTML o CSV.</li>
-          <li><strong>Seguridad → Auditoría 30 controles</strong> revisa 30 configuraciones de Windows (solo lectura) y genera un informe PDF o HTML.</li>
-          <li><strong>Herramientas → Asistente IA</strong> responde preguntas: las simples al instante con los datos medidos; las explicaciones, con IA local (Ollama).</li>
-          <li><strong>Herramientas → Informes</strong> genera el diagnóstico completo en PDF o HTML (se guarda en <em>Documentos\ScriptLens IA\Informes</em>).</li>
-        </ol>
-      </div>
-    </section>
+        <div class="incluido">
+          <div>
+            <h3>Incluido en el instalador</h3>
+            <p>Diagnóstico, procesos, estadísticas, seguridad, auditoría, análisis de scripts, informes, acceso remoto, Mis computadoras y respuestas inmediatas del asistente.</p>
+          </div>
+          <div>
+            <h3>Opcional</h3>
+            <p><a href="https://ollama.com">Ollama</a> y un modelo Qwen3 para las respuestas con IA. Se instala aparte; la sección Asistente IA explica cómo.</p>
+          </div>
+        </div>
 
-    <section class="seccion alterna" id="remoto">
-      <div class="contenedor angosto">
-        <h2>Ver la PC desde el celular y conectar otra computadora</h2>
-        <p>El acceso remoto es <strong>de solo lectura</strong>, funciona solo en la <strong>misma red</strong> (WiFi, cable o hotspot) y está apagado hasta que usted lo activa.</p>
-        <h3>Desde el celular u otra laptop</h3>
-        <ol class="pasos-simples">
-          <li>En la PC, abra <strong>Conectar → Acceso remoto</strong> y pulse <strong>Activar acceso remoto</strong>.</li>
-          <li>Si Windows pregunta, permita el acceso solo en <strong>Redes privadas</strong>.</li>
-          <li>En el celular, conectado a la misma red, abra la dirección que muestra la PC (por ejemplo <code>https://192.168.1.25:8765/</code>). Acepte el aviso del certificado después de comparar la huella.</li>
-          <li>Escriba el <strong>código de 6 cifras</strong> y un nombre para el dispositivo.</li>
-          <li>En la PC, pulse <strong>Autorizar</strong> si la frase de verificación coincide. El celular verá los datos en vivo, sin poder cambiar nada.</li>
-        </ol>
-        <h3>Supervisar otra computadora</h3>
-        <ol class="pasos-simples">
-          <li>Instale ScriptLens en la segunda PC y active allí el acceso remoto.</li>
-          <li>En la PC principal, abra <strong>Conectar → Mis computadoras → Vincular computadora</strong> y escriba la IP, el puerto y el código de la segunda PC.</li>
-          <li>Autorice la solicitud en la segunda PC. Su tarjeta mostrará CPU, RAM, disco, alertas y si está <em>Conectada</em> o <em>Desconectada</em>.</li>
-        </ol>
-        <p>Para quitar el acceso: <strong>Revocar</strong> (un dispositivo) o <strong>Desactivar y desconectar todo</strong>. Guía completa: <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/guias/Conectar_y_supervisar_computadoras.md">Conectar y supervisar computadoras</a>.</p>
-      </div>
-    </section>
-
-    <section class="seccion">
-      <div class="contenedor angosto">
-        <h2>Qué es</h2>
-        <p>ScriptLens IA explica, en lenguaje sencillo, por qué un computador va lento, qué programas están funcionando, qué arranca con el sistema y si algo merece revisión. Analiza scripts BAT, CMD y PowerShell <strong>sin ejecutarlos</strong> y responde preguntas con un asistente de inteligencia artificial que funciona <strong>dentro del propio equipo</strong>. Ninguna acción que modifique el sistema se realiza sin la confirmación del usuario, y la IA no puede ejecutar acciones.</p>
-      </div>
-    </section>
-
-    <section class="seccion alterna" id="funciones">
-      <div class="contenedor">
-        <h2>Funcionalidades</h2>
-        <div class="tarjetas">
-          <article><h3>Panel general</h3><p>CPU, memoria, disco, red y tiempo encendido medidos en tiempo real. Diagnostica el consumo sostenido (promedio de un minuto), no los picos.</p></article>
-          <article><h3>Procesos</h3><p>Búsqueda, filtros, árbol padre-hijo, ruta, firma digital y respuestas a «¿qué hace?», «¿puedo cerrarlo?» y «¿es sospechoso?».</p></article>
-          <article><h3>Seguridad</h3><p>Revisión de solo lectura de Microsoft Defender, firewall, inicio automático, tareas programadas, servicios y eventos.</p></article>
-          <article><h3>Análisis de scripts</h3><p>43 reglas asociadas a MITRE ATT&amp;CK, desofuscación estática, explicación línea por línea y un clasificador evaluado con datos no vistos.</p></article>
-          <article><h3>Asistente con IA local</h3><p>Respuestas inmediatas con los datos medidos y modos de IA rápida o detallada en el propio equipo con Ollama. Cada cifra se comprueba contra las mediciones.</p></article>
-          <article><h3>Optimización supervisada</h3><p>Recomendaciones basadas en mediciones, acciones reversibles o confirmadas y registro con mediciones antes y después.</p></article>
-          <article><h3>Comparar mi PC</h3><p>Guarda diagnósticos en una base local y compara dos momentos sin atribuir causas sin evidencia.</p></article>
-          <article><h3>Informes</h3><p>Exporta informes PDF y HTML con métricas, evidencias, recomendaciones y limitaciones.</p></article>
-          <article><h3>Estadísticas de mi PC</h3><p>Consumo por hora, día y semana; hora de encendido; tiempo de sesión y de uso activo por separado; alertas por consumo sostenido.</p></article>
-          <article><h3>Auditoría 30 controles</h3><p>Los 30 controles de seguridad de Windows del taller, con evidencia, explicación y recomendación. Solo lectura.</p></article>
-          <article><h3>Acceso remoto</h3><p>Ver la PC desde el celular por HTTPS en la red local, con código temporal y aprobación. Nadie puede cambiar nada desde fuera.</p></article>
-          <article><h3>Mis computadoras</h3><p>Supervise varias PC con ScriptLens desde una sola: estado, CPU, RAM, disco, alertas, historial y comparación.</p></article>
+        <div class="acciones centrado">
+          <a class="boton" href="docs/Guia_Instalacion_ScriptLens_IA.pdf"><svg class="ico" aria-hidden="true"><use href="#i-informe"/></svg>Guía de instalación en PDF</a>
+          <a class="boton" href="docs/Manual_Usuario_ScriptLens_IA.pdf"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg>Manual de usuario en PDF</a>
         </div>
       </div>
     </section>
 
-    <section class="seccion" id="capturas">
-      <div class="contenedor">
-        <h2>Capturas reales</h2>
-        <p class="subtitulo">Capturas de la aplicación instalada con datos reales del equipo de pruebas. Las de auditoría y estadísticas son de la versión 0.2.0; las demás, de la 0.1.0 (esos módulos no cambiaron de forma).</p>
-        <div class="galeria">
-          <figure><img src="capturas/22_auditoria_30_controles.png" alt="Auditoría de Windows de 30 controles con 19 que cumplen, 5 que no, 4 que requieren revisión y 2 que no aplican" loading="lazy"><figcaption>Auditoría de 30 controles (v0.2.0)</figcaption></figure>
-          <figure><img src="capturas/21_estadisticas.png" alt="Estadísticas de mi PC con tiempo desde el arranque, sesión, uso activo y horarios de actividad" loading="lazy"><figcaption>Estadísticas de mi PC (v0.2.0)</figcaption></figure>
-          <figure><img src="capturas/05_detalle_proceso.png" alt="Detalle de un proceso" loading="lazy"><figcaption>Detalle de un proceso</figcaption></figure>
-          <figure><img src="capturas/09_seguridad.png" alt="Centro de seguridad" loading="lazy"><figcaption>Centro de seguridad</figcaption></figure>
-          <figure><img src="capturas/11_script_lineas_attack.png" alt="Análisis de un script línea por línea con técnicas MITRE ATT&amp;CK" loading="lazy"><figcaption>Análisis de scripts con MITRE ATT&amp;CK</figcaption></figure>
-          <figure><img src="capturas/12_asistente_ia.png" alt="Asistente con IA local" loading="lazy"><figcaption>Asistente con IA local</figcaption></figure>
-          <figure><img src="capturas/07_optimizar.png" alt="Optimización supervisada" loading="lazy"><figcaption>Optimización supervisada</figcaption></figure>
-          <figure><img src="capturas/16_modo_claro.png" alt="Interfaz en modo claro" loading="lazy"><figcaption>Modo claro</figcaption></figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="seccion alterna" id="requisitos">
+    <!-- Requisitos -->
+    <section class="seccion" id="requisitos" aria-labelledby="t-requisitos">
       <div class="contenedor angosto">
-        <h2>Requisitos de Windows</h2>
+        <header class="encabezado">
+          <h2 id="t-requisitos">Requisitos</h2>
+        </header>
         <div class="tabla-envoltura">
           <table>
-            <thead><tr><th></th><th>Mínimo</th><th>Recomendado para la IA local</th></tr></thead>
+            <thead><tr><th scope="col"></th><th scope="col">Mínimo</th><th scope="col">Recomendado para la IA local</th></tr></thead>
             <tbody>
-              <tr><th>Sistema operativo</th><td>Windows 10 (1809 o posterior) u 11, 64 bits</td><td>Windows 11 de 64 bits actualizado</td></tr>
-              <tr><th>Memoria RAM</th><td>4 GB</td><td>8 GB o más</td></tr>
-              <tr><th>Disco libre</th><td>200 MB</td><td>3 GB (incluye el modelo de IA)</td></tr>
-              <tr><th>Componentes</th><td><a href="https://developer.microsoft.com/microsoft-edge/webview2/#download">Microsoft Edge WebView2</a> (incluido en Windows 11)</td><td>Ollama</td></tr>
-              <tr><th>Permisos</th><td>Cuenta de usuario estándar; no requiere administrador</td><td>—</td></tr>
+              <tr><th scope="row">Sistema operativo</th><td>Windows 10 (1809 o posterior) u 11, 64 bits</td><td>Windows 11 de 64 bits actualizado</td></tr>
+              <tr><th scope="row">Memoria RAM</th><td>4 GB</td><td>8 GB o más</td></tr>
+              <tr><th scope="row">Disco libre</th><td>200 MB</td><td>3 GB (incluye el modelo de IA)</td></tr>
+              <tr><th scope="row">Componentes</th><td><a href="https://developer.microsoft.com/microsoft-edge/webview2/">Microsoft Edge WebView2</a> (incluido en Windows 11)</td><td>Ollama</td></tr>
+              <tr><th scope="row">Permisos</th><td>Cuenta de usuario estándar</td><td>Igual</td></tr>
+              <tr><th scope="row">Acceso remoto</th><td>Ambos dispositivos en la misma red</td><td>Red privada o hotspot de un celular</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="nota">No compatible con Windows de 32 bits, Windows 7/8, macOS ni Linux. Los entornos realmente probados figuran en la <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/pruebas/compatibilidad.md">matriz de compatibilidad</a>.</p>
+        <p class="pequeno">No funciona en Windows de 32 bits, Windows 7 u 8, macOS ni Linux. Probado en Windows 11 Pro 25H2; Windows 10 y equipos de 4 GB están pendientes de prueba (<a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/pruebas/compatibilidad.md">matriz de compatibilidad</a>).</p>
       </div>
     </section>
 
-    <section class="seccion" id="preguntas">
+    <!-- Preguntas -->
+    <section class="seccion alterna" id="preguntas" aria-labelledby="t-preguntas">
       <div class="contenedor angosto">
-        <h2>Preguntas frecuentes</h2>
-        <details><summary>¿Alguien de mi red puede ver mi PC sin permiso?</summary><p>No. El acceso remoto está apagado por defecto y, cuando se activa, cada dispositivo necesita un código temporal y que usted pulse «Autorizar» en la PC. Puede revocarlo cuando quiera.</p></details>
-        <details><summary>¿Se puede cerrar programas o cambiar algo desde el celular?</summary><p>No. La vista remota es de solo lectura: el servidor remoto ni siquiera tiene las rutas de acciones.</p></details>
-        <details><summary>¿Por qué el navegador avisa de que la conexión no es segura?</summary><p>La conexión está cifrada, pero con un certificado propio de su PC (no hay una autoridad para direcciones como 192.168.x.x). Compare la huella que muestra ScriptLens y continúe.</p></details>
-        <details><summary>En la universidad no conecta, ¿qué hago?</summary><p>Muchas redes institucionales aíslan a los dispositivos. Active el hotspot de un celular y conecte ahí la PC y el otro dispositivo.</p></details>
-        <details><summary>¿Las estadísticas registran lo que escribo o las páginas que visito?</summary><p>No. Solo cuentan segundos de actividad. El registro de aplicaciones guarda únicamente el nombre del programa y solo si usted lo activa. Las páginas web no se registran.</p></details>
-        <details><summary>¿Necesito Internet o pagar por la IA?</summary><p>No. El asistente usa Ollama en su propio equipo; las preguntas simples se responden sin IA.</p></details>
+        <header class="encabezado">
+          <h2 id="t-preguntas">Preguntas frecuentes</h2>
+        </header>
+        <div class="preguntas">
+          <details><summary>¿Alguien de mi red puede ver mi PC sin permiso?</summary><p>No. El acceso remoto está apagado por defecto. Cuando lo activas, cada dispositivo necesita un código temporal y que pulses «Autorizar» en la PC. Puedes revocarlo cuando quieras.</p></details>
+          <details><summary>¿Se puede cerrar programas o cambiar algo desde el celular?</summary><p>No. La vista remota es de solo lectura: el servidor remoto ni siquiera tiene las rutas de acciones.</p></details>
+          <details><summary>¿Por qué el navegador avisa de que la conexión no es segura?</summary><p>La conexión está cifrada, pero con un certificado propio de tu PC, porque no existe una autoridad que certifique direcciones como 192.168.x.x. Compara la huella que muestra ScriptLens y continúa solo si coincide.</p></details>
+          <details><summary>En la universidad no conecta, ¿qué hago?</summary><p>Muchas redes institucionales aíslan a los dispositivos entre sí. Activa el hotspot de un celular y conecta ahí la PC y el otro dispositivo.</p></details>
+          <details><summary>¿Las estadísticas registran lo que escribo o las páginas que visito?</summary><p>No. Solo cuentan segundos de actividad. El registro de aplicaciones guarda únicamente el nombre del programa y solo si lo activas. Las páginas web no se registran.</p></details>
+          <details><summary>¿Necesito Internet o pagar por la IA?</summary><p>No. El asistente usa Ollama en tu propio equipo y las preguntas simples se responden sin IA. Internet solo hace falta para descargar ScriptLens y el modelo.</p></details>
+          <details><summary>¿ScriptLens cambia la configuración de seguridad de Windows?</summary><p>No. La seguridad y la auditoría solo leen la configuración. Las acciones de optimización piden confirmación y quedan registradas con mediciones antes y después.</p></details>
+          <details><summary>La aplicación se queda iniciando, ¿qué hago?</summary><p>Espera 30 segundos. Si sigue igual, ciérrala y ábrela de nuevo desde Inicio. Si falta WebView2, revisa los <a href="#requisitos">requisitos</a>. Si continúa, <a href="https://github.com/JorgeGutho21/ScriptLens/issues">repórtalo en GitHub</a> con tu versión de Windows y el mensaje.</p></details>
+        </div>
       </div>
     </section>
 
-    <section class="seccion" id="documentos">
+    <!-- Documentación -->
+    <section class="seccion" id="documentacion" aria-labelledby="t-documentacion">
       <div class="contenedor">
-        <h2>Documentos</h2>
-        <div class="tarjetas documentos">
-          <a href="docs/Guia_Instalacion_ScriptLens_IA.pdf"><h3>Guía de instalación</h3><p>Paso a paso para principiantes, con capturas reales del instalador. PDF.</p></a>
-          <a href="docs/Manual_Usuario_ScriptLens_IA.pdf"><h3>Manual de usuario</h3><p>Uso de cada módulo, preguntas frecuentes y solución de errores. PDF.</p></a>
-          <a href="docs/ExpoSoftware_2026_II_ScriptLens_IA.pdf"><h3>Informe ExpoSoftware 2026-II</h3><p>Problema, objetivos, metodología, resultados y conclusiones en normas APA. PDF.</p></a>
-          <a href="docs/Documentacion_Tecnica_ScriptLens_IA.pdf"><h3>Documentación técnica</h3><p>Arquitectura, motor de análisis, clasificador, seguridad y pruebas. PDF.</p></a>
-        </div>
+        <header class="encabezado">
+          <h2 id="t-documentacion">Documentación</h2>
+        </header>
+        <ul class="documentos">
+          <li><a href="docs/Guia_Instalacion_ScriptLens_IA.pdf"><svg class="ico" aria-hidden="true"><use href="#i-descarga"/></svg><span><strong>Guía de instalación</strong>Paso a paso con capturas del instalador. PDF.</span></a></li>
+          <li><a href="docs/Manual_Usuario_ScriptLens_IA.pdf"><svg class="ico" aria-hidden="true"><use href="#i-libro"/></svg><span><strong>Manual de usuario</strong>Cada módulo, preguntas frecuentes y solución de errores. PDF.</span></a></li>
+          <li><a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/guias/Conectar_y_supervisar_computadoras.md"><svg class="ico" aria-hidden="true"><use href="#i-red"/></svg><span><strong>Conectar y supervisar computadoras</strong>Acceso remoto, Mis computadoras y diagnóstico de red para la clase.</span></a></li>
+          <li><a href="docs/Documentacion_Tecnica_ScriptLens_IA.pdf"><svg class="ico" aria-hidden="true"><use href="#i-script"/></svg><span><strong>Documentación técnica</strong>Arquitectura, motor de análisis, clasificador, seguridad y pruebas. PDF.</span></a></li>
+          <li><a href="docs/ExpoSoftware_2026_II_ScriptLens_IA.pdf"><svg class="ico" aria-hidden="true"><use href="#i-informe"/></svg><span><strong>Informe ExpoSoftware 2026-II</strong>Problema, objetivos, metodología y resultados en normas APA. PDF.</span></a></li>
+          <li><a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/PRIVACIDAD.md"><svg class="ico" aria-hidden="true"><use href="#i-candado"/></svg><span><strong>Privacidad</strong>Qué datos se guardan, dónde y cómo borrarlos.</span></a></li>
+        </ul>
       </div>
     </section>
   </main>
@@ -316,19 +635,30 @@
   <footer class="pie">
     <div class="contenedor pie-interior">
       <div>
-        <p><strong>ScriptLens IA</strong> · Desarrollado por Jorge Gutiérrez (<a href="https://github.com/JorgeGutho21">@JorgeGutho21</a>)</p>
+        <p class="pie-marca"><img src="logo.svg" alt="" width="24" height="24">ScriptLens IA</p>
+        <p>Desarrollado por <strong>Jorge Gutiérrez</strong> (<a href="https://github.com/JorgeGutho21">@JorgeGutho21</a>)</p>
         <p>Docente: Oswaldo Rueda Carreño</p>
-        <p>Universidad Popular del Cesar · ExpoSoftware 2026-II</p>
+        <p>Universidad Popular del Cesar, Ingeniería de Sistemas. ExpoSoftware 2026-II.</p>
       </div>
-      <nav aria-label="Avisos legales">
+      <nav aria-label="Enlaces del proyecto">
         <a href="https://github.com/JorgeGutho21/ScriptLens">Código fuente</a>
+        <a href="https://github.com/JorgeGutho21/ScriptLens/releases">Versiones</a>
         <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/LICENSE">Licencia MIT</a>
         <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/THIRD_PARTY_NOTICES.md">Avisos de terceros</a>
-        <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/docs/PRIVACIDAD.md">Privacidad</a>
         <a href="https://github.com/JorgeGutho21/ScriptLens/blob/main/SECURITY.md">Seguridad</a>
       </nav>
     </div>
     <p class="contenedor legal">Windows, Microsoft Defender y WebView2 son marcas de Microsoft Corporation. MITRE ATT&amp;CK es una marca de The MITRE Corporation. Su mención es solo descriptiva.</p>
   </footer>
+
+  <dialog class="visor" id="visor" aria-label="Captura ampliada">
+    <figure>
+      <img id="visor-img" alt="">
+      <figcaption id="visor-texto"></figcaption>
+    </figure>
+    <button type="button" class="visor-boton visor-cerrar" data-cerrar aria-label="Cerrar"><svg class="ico" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+    <button type="button" class="visor-boton visor-ant" data-mover="-1" aria-label="Captura anterior"><svg class="ico" aria-hidden="true"><use href="#i-izq"/></svg></button>
+    <button type="button" class="visor-boton visor-sig" data-mover="1" aria-label="Captura siguiente"><svg class="ico" aria-hidden="true"><use href="#i-der"/></svg></button>
+  </dialog>
 </body>
 </html>

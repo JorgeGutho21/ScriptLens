@@ -32,8 +32,9 @@ jobs:
       - uses: actions/checkout@v7
       - name: Reunir archivos
         run: |
-          mkdir -p _site/capturas _site/instalacion _site/docs
-          cp site/index.html site/estilos.css _site/
+          mkdir -p _site/capturas _site/instalacion _site/docs _site/img
+          cp site/index.html site/estilos.css site/app.js _site/
+          cp site/img/*.webp _site/img/
           cp assets/branding/scriptlens-icon.svg _site/logo.svg
           cp docs/capturas/*.png _site/capturas/
           cp docs/instalacion/capturas/03_assets.png docs/instalacion/capturas/1*.png _site/instalacion/

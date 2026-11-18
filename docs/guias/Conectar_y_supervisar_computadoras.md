@@ -33,11 +33,13 @@ solo lectura**: desde otro dispositivo se puede mirar, pero no cerrar programas,
 
 1. **Instale ScriptLens en la PC principal.** Descargue el instalador desde
    <https://jorgegutho21.github.io/ScriptLens/>, compruebe su SHA-256 y ejecútelo (no requiere administrador).
-2. **Abra «Configuración» y luego «Acceso remoto»** en el menú de la izquierda (grupo *Conectar*).
+2. **Abra «Acceso remoto»** en el menú de la izquierda (grupo *Conectar*).
 3. **Pulse «Activar acceso remoto».** ScriptLens comprueba la red y muestra:
    - la **dirección** (por ejemplo `https://192.168.1.25:8765/`),
    - un **código temporal** de 6 cifras (dura 5 minutos y sirve para un solo dispositivo),
    - la **huella del certificado** (por ejemplo `F3:03:1E:CF:…`).
+
+   ![Acceso remoto activo con dirección, código y huella](../capturas/24_remoto_activado.png)
 4. **Autorice la conexión en Windows.** Si aparece *Alerta de seguridad de Windows*, marque solo
    **Redes privadas** y pulse *Permitir acceso*. ScriptLens no cambia el firewall por su cuenta.
 5. **Conecte el celular a la misma red** que la PC (misma WiFi o el hotspot del celular, ver Parte 4).
@@ -47,9 +49,13 @@ solo lectura**: desde otro dispositivo se puede mirar, pero no cerrar programas,
 7. **Complete la vinculación:** escriba el código de 6 cifras y un nombre (por ejemplo «Celular de Ana»).
    En la PC aparecerá la solicitud con una **frase de verificación** (por ejemplo `KS-KU`); si es la misma que ve en
    el celular, pulse **Autorizar**.
+
+   <img src="../capturas/26b_celular_esperando.png" width="220" alt="El celular espera la autorización y muestra la frase"> ![Solicitud en la PC con la misma frase y el botón Autorizar](../capturas/25_remoto_solicitud.png)
 8. **Consulte CPU y RAM.** El celular muestra en vivo el procesador (total y por núcleo), la memoria, los discos,
    la red, el tiempo encendido y los hallazgos. Arriba se ve «En vivo»; si la PC deja de responder aparece
    «Desconectado» con la hora de la última lectura.
+
+   <img src="../capturas/27b_celular_en_vivo_completa.png" width="260" alt="Vista remota completa en el celular">
 9. **Vea los procesos.** La tarjeta «Programas con mayor consumo» se ordena por CPU o RAM. Solo se comparten nombres y
    consumo; nunca rutas, usuarios ni líneas de comando. El propietario puede ocultarla en «Qué puede ver el otro dispositivo».
 
@@ -61,9 +67,13 @@ solo lectura**: desde otro dispositivo se puede mirar, pero no cerrar programas,
 11. **Selecciónela desde «Mis computadoras».** Cada equipo aparece en su propia tarjeta (CPU, RAM, disco, tiempo
     encendido, alertas y estado *Conectado / Desconectado*). «Esta PC (principal)» siempre aparece aparte para no
     confundirla. Al pulsar una tarjeta se abre su detalle con un aviso de que está viendo **otra PC**.
+
+    ![Mis computadoras con tres equipos, uno de ellos desconectado](../capturas/32_equipo_desconectado.png)
 12. **Consulte su historial.** El detalle incluye la gráfica de CPU y RAM de las últimas 24 horas, guardada en la
     consola (una lectura cada ~10 s, durante 7 días), y la tabla de programas con mayor consumo. Con dos o más equipos
     aparece la **comparación entre computadoras**.
+
+    ![Detalle de otra PC con historial y programas](../capturas/31b_detalle_otra_pc_completa.png)
 
 ## Parte 3 — Auditoría, informes y desconexión
 
@@ -121,6 +131,10 @@ Ejemplo de diagnóstico paso a paso, desde la segunda PC: `ipconfig` (¿estoy en
 problema es el firewall o el acceso remoto está apagado; si nada responde, hay aislamiento de red.
 
 ## Qué se probó y qué no
+
+> **Sobre las capturas de esta guía.** Son reales, pero se tomaron en un solo equipo: el acceso remoto escuchaba solo
+> en `127.0.0.1`, la vista del celular se abrió en un navegador con tamaño de teléfono y PC-LAB-01 y PC-LAB-02 son
+> instancias aisladas de ScriptLens (`scripts/demo_capturas.py`). En una red real verá la IP local de la PC.
 
 - **Probado en este proyecto:** acceso remoto por HTTPS a través de la IP de red local (192.168.1.20) desde un
   cliente que simula un segundo dispositivo, en Windows 11 Pro 25H2; dos agentes y una consola reales en el mismo
