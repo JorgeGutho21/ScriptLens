@@ -51,6 +51,11 @@
       if (desplazar && !vertical()) tab.scrollIntoView({ block: 'nearest', inline: 'nearest' })
     }
     elegir(tabs[0], false, false)
+    // Las tarjetas «De un vistazo» abren directamente su módulo
+    document.querySelectorAll('[data-modulo]').forEach((a) => a.addEventListener('click', () => {
+      const tab = document.getElementById(a.dataset.modulo)
+      if (tab) elegir(tab, false, false)
+    }))
     tabs.forEach((t, i) => {
       t.addEventListener('click', () => elegir(t, false))
       t.addEventListener('keydown', (e) => {
@@ -59,6 +64,22 @@
         if (e.key === 'Home') { e.preventDefault(); elegir(tabs[0], true) }
         if (e.key === 'End') { e.preventDefault(); elegir(tabs[tabs.length - 1], true) }
       })
+    })
+  }
+
+  // Aparición suave al desplazarse. Si se pidió reducir el movimiento, o no hay
+  // IntersectionObserver, todo se muestra sin animación.
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const grupos = ['.encabezado', '.cifras', '.vistazo > li', '.garantias', '.tramo', '.bloque', '.tareas > article', '.qr-tarjeta', '.instalacion > li', '.documentos > li']
+    const revelables = document.querySelectorAll(grupos.join(','))
+    const vis = new IntersectionObserver((entradas) => {
+      for (const en of entradas) if (en.isIntersecting) { en.target.classList.add('visible'); vis.unobserve(en.target) }
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+    revelables.forEach((el) => {
+      const hermanos = el.parentElement ? [...el.parentElement.children] : []
+      if (el.matches('li, article, .qr-tarjeta')) el.style.setProperty('--retraso', `${Math.min(hermanos.indexOf(el), 6) * 60}ms`)
+      el.classList.add('revelar')
+      vis.observe(el)
     })
   }
 
