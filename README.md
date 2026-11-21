@@ -38,7 +38,7 @@ Las capturas de acceso remoto y de varias computadoras se tomaron en un solo equ
 
 ## Contenido
 
-[Novedades](#novedades-de-la-versión-020) · [Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Acceso remoto y varias PC](#ver-la-pc-desde-el-celular-y-supervisar-varias-computadoras) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Licencias](#licencias) · [Soporte](#soporte)
+[Novedades](#novedades-de-la-versión-020) · [Qué es](#qué-es) · [Problema y objetivos](#problema-que-resuelve-y-objetivos) · [Funcionalidades](#funcionalidades) · [Requisitos](#requisitos-mínimos-y-sistemas-compatibles) · [Descarga e instalación](#descarga-e-instalación) · [Asistente de IA](#configurar-el-asistente-de-ia-opcional) · [Primer análisis](#primer-análisis) · [Acceso remoto y varias PC](#ver-la-pc-desde-el-celular-y-supervisar-varias-computadoras) · [Módulos](#qué-hace-cada-módulo) · [Preguntas al asistente](#ejemplos-de-preguntas-al-asistente) · [Acciones supervisadas](#acciones-supervisadas) · [Informes](#exportar-informes) · [Actualizaciones](#actualizaciones) · [Solución de errores](#solución-de-errores) · [Desinstalación](#desinstalación) · [Privacidad](#privacidad) · [Códigos QR](#códigos-qr-para-la-exposición) · [Licencias](#licencias) · [Soporte](#soporte)
 
 ## Qué es
 
@@ -265,6 +265,19 @@ Más casos en [docs/instalacion/INSTALACION.md](docs/instalacion/INSTALACION.md)
 ## Privacidad
 
 El análisis y la IA son locales. ScriptLens no envía listas de procesos, registros ni datos personales a ningún servidor; la única conexión opcional es «Buscar actualizaciones». Detalles en [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md) y [SECURITY.md](SECURITY.md).
+
+## Códigos QR para la exposición
+
+Para el póster de ExpoSoftware 2026-II y las demostraciones. Apuntan directamente a las URL oficiales, sin acortadores, y se verificaron decodificándolos con dos bibliotecas ([resultado](docs/qr/VERIFICACION.md)).
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/qr/qr_scriptlens_pagina_oficial.svg" width="150" alt="Código QR de la página oficial de ScriptLens IA"><br><strong>Escanea y descubre ScriptLens IA</strong><br><a href="https://jorgegutho21.github.io/ScriptLens/">jorgegutho21.github.io/ScriptLens</a></td>
+    <td align="center"><img src="docs/qr/qr_scriptlens_github.svg" width="120" alt="Código QR del repositorio de ScriptLens IA en GitHub"><br><strong>Ver código fuente y documentación</strong><br><a href="https://github.com/JorgeGutho21/ScriptLens">github.com/JorgeGutho21/ScriptLens</a></td>
+  </tr>
+</table>
+
+Archivos PNG y SVG de cada código, la composición para el póster (PNG, SVG y PDF de impresión) e instrucciones de tamaño en [docs/qr](docs/qr/README.md).
 
 ## Licencias
 

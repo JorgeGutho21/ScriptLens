@@ -7,6 +7,7 @@ on:
       - 'site/**'
       - 'docs/capturas/**'
       - 'docs/instalacion/capturas/**'
+      - 'docs/qr/**'
       - 'docs/**/*.pdf'
       - 'assets/branding/**'
       - '.github/workflows/pages.yml'
@@ -16,6 +17,7 @@ on:
       - 'site/**'
       - 'docs/capturas/**'
       - 'docs/instalacion/capturas/**'
+      - 'docs/qr/**'
       - 'docs/**/*.pdf'
       - 'assets/branding/**'
       - '.github/workflows/pages.yml'
@@ -32,7 +34,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: Reunir archivos
         run: |
-          mkdir -p _site/capturas _site/instalacion _site/docs _site/img
+          mkdir -p _site/capturas _site/instalacion _site/docs _site/img _site/qr
           cp site/index.html site/estilos.css site/app.js _site/
           cp site/img/*.webp _site/img/
           cp assets/branding/scriptlens-icon.svg _site/logo.svg
@@ -42,6 +44,7 @@ jobs:
              docs/manual_usuario/Manual_Usuario_ScriptLens_IA.pdf \
              docs/expo_software/ExpoSoftware_2026_II_ScriptLens_IA.pdf \
              docs/desarrollo/Documentacion_Tecnica_ScriptLens_IA.pdf _site/docs/
+          cp docs/qr/*.svg docs/qr/*.png docs/qr/qr_scriptlens_poster.pdf _site/qr/
           touch _site/.nojekyll
       - name: Validar archivos y anclas
         run: python site/verificar_enlaces.py _site
